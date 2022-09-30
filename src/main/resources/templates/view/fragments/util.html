@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<th:block th:fragment="slideshow">
+  <!-- Hero/Intro Slider Start -->
+  <div class="section ">
+    <div class="hero-slider swiper-container slider-nav-style-1 slider-dot-style-1">
+      <!-- Hero slider Active -->
+      <div class="swiper-wrapper">
+        <!-- Single slider item -->
+        <div class="hero-slide-item slider-height swiper-slide d-flex">
+          <div class="container align-self-center">
+            <div class="row">
+              <div class="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
+                <div class="hero-slide-content slider-animated-1">
+                  <span class="category">New Products</span>
+                  <h2 class="title-1">Flexible Chair </h2>
+                  <p>Torem ipsum dolor sit amet, consectetur adipisicing elitsed do eiusmo tempor incididunt ut labore et dolore magna</p>
+                  <a href="home.html#" class="btn btn-lg btn-primary btn-hover-dark mt-5">Shop Now</a>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-5 col-md-5 col-sm-5">
+                <div class="hero-slide-image">
+                  <img src="assets/images/slider-image/slider-1.png" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Single slider item -->
+        <div class="hero-slide-item slider-height swiper-slide d-flex">
+          <div class="container align-self-center">
+            <div class="row">
+              <div class="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
+                <div class="hero-slide-content slider-animated-1">
+                  <span class="category">New Products</span>
+                  <h2 class="title-1">Flexible Chair </h2>
+                  <p>Torem ipsum dolor sit amet, consectetur adipisicing elitsed do eiusmo tempor incididunt ut labore et dolore magna</p>
+                  <a href="home.html#" class="btn btn-lg btn-primary btn-hover-dark mt-5">Shop Now</a>
+                </div>
+              </div>
+              <div class="col-xl-6 col-lg-5 col-md-5 col-sm-5">
+                <div class="hero-slide-image">
+                  <img src="assets/images/slider-image/slider-2.png" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add Pagination -->
+      <div class="swiper-pagination swiper-pagination-white"></div>
+      <!-- Add Arrows -->
+      <div class="swiper-buttons">
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero/Intro Slider End -->
+</th:block>
+
+<th:block th:fragment="category-start">
+  <!-- Product Category Start -->
+  <div class="section pt-100px pb-100px">
+    <div class="container">
+      <div class="category-slider swiper-container" data-aos="fade-up">
+        <div class="category-wrapper swiper-wrapper">
+          <!-- Single Category -->
+          <div class=" swiper-slide">
+            <a href="shop-left-sidebar.html" class="category-inner ">
+              <div class="category-single-item">
+                <img src="assets/images/icons/1.png" alt="">
+                <span class="title">Office Chair</span>
+              </div>
+            </a>
+          </div>
+          <!-- Single Category -->
+          <div class=" swiper-slide">
+            <a href="shop-left-sidebar.html" class="category-inner ">
+              <div class="category-single-item">
+                <img src="assets/images/icons/2.png" alt="">
+                <span class="title">Book Shelf</span>
+              </div>
+            </a>
+          </div>
+          <!-- Single Category -->
+          <div class=" swiper-slide">
+            <a href="shop-left-sidebar.html" class="category-inner ">
+              <div class="category-single-item">
+                <img src="assets/images/icons/3.png" alt="">
+                <span class="title">Light & Sofa</span>
+              </div>
+            </a>
+          </div>
+          <!-- Single Category -->
+          <div class=" swiper-slide">
+            <a href="shop-left-sidebar.html" class="category-inner ">
+              <div class="category-single-item">
+                <img src="assets/images/icons/4.png" alt="">
+                <span class="title">Reading Table</span>
+              </div>
+            </a>
+          </div>
+          <!-- Single Category -->
+          <div class="swiper-slide">
+            <a href="shop-left-sidebar.html" class="category-inner ">
+              <div class="category-single-item">
+                <img src="assets/images/icons/5.png" alt="">
+                <span class="title">Corner Table</span>
+              </div>
+            </a>
+          </div>
+          <!-- Single Category -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product Category End -->
+</th:block>
+
+</body>
+</html>
