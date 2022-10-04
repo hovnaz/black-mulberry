@@ -9,6 +9,6 @@ public class BasketController {
     @GetMapping("/basket")
     public String basketPage(){
         // todo find all products in basket
-        return "view/busket";
+        return "basket";
     }
 }
