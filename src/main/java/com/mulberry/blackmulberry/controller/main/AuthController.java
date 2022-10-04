@@ -8,7 +8,7 @@ public class AuthController {
 
     @GetMapping("/auth")
     public String authPage(){
-        return "view/login-registration";
+        return "auth";
     }
     // todo logic for login/registration
 
