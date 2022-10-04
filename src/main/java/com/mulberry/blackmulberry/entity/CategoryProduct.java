@@ -1,4 +1,5 @@
-package com.mulberry.blackmulberry.model.entities;
+package com.mulberry.blackmulberry.entity;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,12 +13,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "product_invoice")
-public class ProductBasket {
+@Table(name = "category_product")
+public class CategoryProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    private String name;
     @ManyToOne
-    private ProductInvoice productInvoice;
-    private int quantity;
+    private CategoryParent catParent;
 }

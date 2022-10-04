@@ -1,5 +1,4 @@
-package com.mulberry.blackmulberry.model.entities;
-
+package com.mulberry.blackmulberry.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,10 +12,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "category_parent")
-public class CategoryParent {
+@Table(name = "product_invoice")
+public class ProductInvoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String name;
+    private Boolean isPaid;
+    @ManyToOne
+    User user;
 }
