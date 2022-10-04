@@ -1,6 +1,6 @@
-package com.mulberry.blackmulberry.model.entities;
+package com.mulberry.blackmulberry.entity;
 
-import com.mulberry.blackmulberry.model.enums.Role;
+import com.mulberry.blackmulberry.entity.model.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -26,11 +26,9 @@ public class User {
     private String phone;
     private Role role;
     private String password;
-    @Column(name = "create_at")
     private Date createAt;
     @ManyToOne
     private CategoryProduct catProduct;
-    @Column(name = "is_delete")
     private Boolean isDelete;
     @ManyToOne
     private User user;
