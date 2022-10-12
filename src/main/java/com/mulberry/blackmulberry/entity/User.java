@@ -24,13 +24,9 @@ public class User {
     private String surname;
     private String email;
     private String phone;
+    @Enumerated(value = EnumType.STRING)
     private Role role;
     private String password;
     private Date createAt;
-    @ManyToOne
-    private CategoryProduct catProduct;
     private Boolean isDelete;
-    @ManyToOne
-    private User user;
-
 }
