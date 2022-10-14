@@ -1,23 +1,21 @@
 package com.mulberry.blackmulberry.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "product_invoice")
-public class ProductInvoice {
+@Table(name = "product_basket_item")
+public class ProductBasketItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Boolean isPaid;
+    private int quantity;
     @ManyToOne
-    User user;
+    private ProductBasket productBasket;
 }
