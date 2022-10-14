@@ -1,21 +1,17 @@
 package com.mulberry.blackmulberry.entity;
 
 import com.mulberry.blackmulberry.entity.model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import javax.persistence.*;
 import java.sql.Date;
 
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "user")
+@Table(name = "user_model")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +28,4 @@ public class User {
     private Boolean isDelete;
     @ManyToOne
     private User user;
-
 }
