@@ -2,10 +2,8 @@ package com.mulberry.blackmulberry.entity;
 
 import com.mulberry.blackmulberry.entity.model.Role;
 import lombok.*;
-
 import javax.persistence.*;
 import java.sql.Date;
-
 
 @Getter
 @Setter
@@ -30,5 +28,4 @@ public class User {
     private Boolean isDelete;
     @ManyToOne
     private User user;
-
 }
