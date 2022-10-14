@@ -24,6 +24,12 @@ public class Product {
     private String picUrl;
     private Date createAt;
     private String description;
-
+    @ManyToOne
+    @JoinColumn(name="cat_id")
+    private CategoryProduct categoryProduct;
+    @Column(name = "is_delete")
+    private boolean isDelete;
+    @ManyToOne
+    private User user;
 
 }

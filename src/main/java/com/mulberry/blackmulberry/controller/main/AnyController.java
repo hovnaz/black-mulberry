@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class AnyController {
 
     @GetMapping("/")
-    public String productFilterPage(){
+    public String HomePage(){
         return "view/home";
     }
 }
