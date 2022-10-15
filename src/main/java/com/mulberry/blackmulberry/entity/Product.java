@@ -25,7 +25,7 @@ public class Product {
     private Date createAt;
     private String description;
     @ManyToOne
-    @JoinColumn(name="cat_id")
+    @JoinColumn(name= "category_id")
     private CategoryProduct categoryProduct;
     @Column(name = "is_delete")
     private boolean isDelete;
