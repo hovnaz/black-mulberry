@@ -1,13 +1,16 @@
 package com.mulberry.blackmulberry.entity;
 
-import com.mulberry.blackmulberry.entity.model.Role;
+import com.mulberry.blackmulberry.entity.model.UserRole;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
 
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -23,7 +26,8 @@ public class User {
     private String email;
     private String phone;
     @Enumerated(value = EnumType.STRING)
-    private Role role;
+    private UserRole role;
     private String password;
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createAt;
 }
