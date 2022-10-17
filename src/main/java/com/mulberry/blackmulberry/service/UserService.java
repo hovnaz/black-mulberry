@@ -12,11 +12,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
-    private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     public void save(User user) throws DuplicateResourceException {
-        if (userService.findByEmail(user.getEmail()).isPresent()){
+        if (userRepository.findByEmail(user.getEmail()).isPresent()){
             throw new DuplicateResourceException("User already exists!");
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
