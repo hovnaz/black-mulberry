@@ -18,14 +18,11 @@ public class User {
     private int id;
     private String name;
     private String surname;
+    @Column(nullable = false, unique = true)
     private String email;
     private String phone;
+    @Enumerated(value = EnumType.STRING)
     private Role role;
     private String password;
     private Date createAt;
-    @ManyToOne
-    private CategoryProduct catProduct;
-    private Boolean isDelete;
-    @ManyToOne
-    private User user;
 }
