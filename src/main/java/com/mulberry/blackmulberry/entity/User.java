@@ -3,7 +3,8 @@ package com.mulberry.blackmulberry.entity;
 import com.mulberry.blackmulberry.entity.model.Role;
 import lombok.*;
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
+
 
 @Getter
 @Setter
