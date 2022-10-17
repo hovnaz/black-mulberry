@@ -20,5 +20,6 @@ public class CategoryProduct {
     private int id;
     private String name;
     @ManyToOne
+    @JoinColumn(name= "category_parent_id")
     private CategoryParent catParent;
 }
