@@ -28,7 +28,7 @@ public class ProductController {
 
    private final   CategoryProductRepository categoryProductRepository;
 
-    @Value("${blackMulberryProject.images.folder}")
+    @Value("${blackMulberryProject.images.product}")
     private String folderPath;
 
 
