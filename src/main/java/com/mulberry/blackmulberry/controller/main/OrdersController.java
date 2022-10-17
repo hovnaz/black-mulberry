@@ -1,4 +1,4 @@
-package com.mulberry.blackmulberry.controller.user;
+package com.mulberry.blackmulberry.controller.main;
 
 import com.mulberry.blackmulberry.entity.Product;
 import com.mulberry.blackmulberry.repository.ProductRepository;

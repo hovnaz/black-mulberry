@@ -1,4 +1,4 @@
-package com.mulberry.blackmulberry.controller.product;
+package com.mulberry.blackmulberry.controller.main;
 
 import com.mulberry.blackmulberry.entity.CategoryProduct;
 import com.mulberry.blackmulberry.entity.Product;

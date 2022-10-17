@@ -1,4 +1,4 @@
-package com.mulberry.blackmulberry.controller.user;
+package com.mulberry.blackmulberry.controller.main;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
