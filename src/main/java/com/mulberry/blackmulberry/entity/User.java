@@ -23,6 +23,7 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     private String phone;
+    @Enumerated(EnumType.STRING)
     private UserRole role;
     private String password;
     @CreationTimestamp
