@@ -2,11 +2,9 @@ package com.mulberry.blackmulberry.entity;
 
 import com.mulberry.blackmulberry.entity.model.UserRole;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
+import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.util.Date;
-
 
 @Getter
 @Setter
@@ -19,15 +17,16 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String surname;
     @Column(nullable = false, unique = true)
     private String email;
     private String phone;
-    @Enumerated(value = EnumType.STRING)
     private UserRole role;
     private String password;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_at", nullable = false, updatable = false)
     private Date createAt;
 }
