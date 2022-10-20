@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("basket")
+@RequestMapping("/basket")
 public class BasketController {
 
     @GetMapping("/")
