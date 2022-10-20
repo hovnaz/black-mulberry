@@ -37,7 +37,7 @@ public class BlackMulberryApplication implements CommandLineRunner {
                     .name("admin")
                     .surname("admin")
                     .email("admin@mail.com")
-                    .password(passwordEncoder().encode("admin"))
+                    .password("$2a$10$MSM0ckZ/KkBdUPNtVRfcrezV/0tTSpzl5wxJJmewux6nda7Rh4u5m")
                     .phone("+37444444444")
                     .role(UserRole.ADMIN)
                     .build());
