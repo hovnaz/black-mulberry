@@ -1,6 +1,6 @@
 package com.mulberry.blackmulberry.exception;
 
-public class DuplicateResourceException extends Exception {
+public class DuplicateResourceException extends RuntimeException {
 
     public DuplicateResourceException() {
     }
