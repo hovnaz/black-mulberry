@@ -434,7 +434,7 @@
         Scroll Up
     --------------------- */
     $.scrollUp({
-        scrollText: '<i class="ion-android-arrow-up"></i>',
+        scrollText: "<i class='bx bxs-to-top' ></i>",
         easingType: "linear",
         scrollSpeed: 900,
         animation: "fade",

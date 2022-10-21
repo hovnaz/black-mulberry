@@ -1,6 +1,6 @@
 package com.mulberry.blackmulberry.entity.model;
 
-public enum Role {
+public enum UserRole {
     USER,
     ADMIN
 }

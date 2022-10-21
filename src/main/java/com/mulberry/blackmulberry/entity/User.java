@@ -1,13 +1,14 @@
 package com.mulberry.blackmulberry.entity;
 
-import com.mulberry.blackmulberry.entity.model.Role;
+import com.mulberry.blackmulberry.entity.model.UserRole;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import java.util.Date;
 
-
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -16,14 +17,17 @@ import java.util.Date;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
     private String name;
     private String surname;
     @Column(nullable = false, unique = true)
     private String email;
     private String phone;
-    @Enumerated(value = EnumType.STRING)
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
     private String password;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "create_at", nullable = false, updatable = false)
     private Date createAt;
 }
