@@ -1,6 +1,5 @@
-package com.mulberry.blackmulberry.transfer.request;
+package com.mulberry.blackmulberry.transfer.request.user;
 
-import com.mulberry.blackmulberry.entity.model.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserRequest {
-
-    private Long id;
-    private String name;
-    private String surname;
+public class UserSignUpRequest {
     private String email;
     private String phone;
-    private UserRole role;
     private String password;
 }
