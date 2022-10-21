@@ -1,6 +1,7 @@
 package com.mulberry.blackmulberry.service.impl;
 
 import com.mulberry.blackmulberry.entity.User;
+import com.mulberry.blackmulberry.entity.model.UserRole;
 import com.mulberry.blackmulberry.exception.EmailExistException;
 import com.mulberry.blackmulberry.exception.UserNotFoundException;
 import com.mulberry.blackmulberry.mapper.UserMapper;
@@ -13,6 +14,7 @@ import com.mulberry.blackmulberry.transfer.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -28,21 +30,21 @@ public class UserServiceImpl implements UserService {
     private final UserSignUpMapper userSignUpMapper;
 
     /**
-     *
      * @param userRequest
      * @return UserResponse
      */
     @Override
     public UserResponse create(UserSignUpRequest userRequest) {
         Optional<User> byEmail = userRepository.findByEmail(userRequest.getEmail());
-        if (byEmail.isPresent()){
+        if (byEmail.isPresent()) {
             throw new EmailExistException(
                     "User with email: " + userRequest.getEmail() + " already exist"
             );
         }
-        User user =User.builder()
+        User user = User.builder()
                 .phone(userRequest.getPhone())
                 .email(userRequest.getEmail())
+                .role(UserRole.USER)
                 .password(passwordEncoder.encode(userRequest.getPassword()))
                 .build();
         User save = userRepository.save(user);
@@ -53,19 +55,15 @@ public class UserServiceImpl implements UserService {
      * This method receive data for add new user
      *
      * @param userRequest it's a new user
-     * @return saved user
+     * @return update user
      */
-    // todo To be continued
     @Override
     public UserResponse update(UserRequest userRequest) {
-        Optional<User> user = userRepository.findByEmail(userRequest.getEmail());
-        if (user.isPresent()) {
-            throw new EmailExistException(
-                    "User with email: " + userRequest.getEmail() + " already exist"
-            );
-        }
-        userRequest.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        User save = userRepository.save(userMapper.toEntity(userRequest));
+        long userId = userRequest.getId();
+        User user = findByIdOrElseThrow(userId);
+        user.setName(userRequest.getName());
+        user.setSurname(userRequest.getSurname());
+        User save = userRepository.save(user);
         return userMapper.toResponse(save);
     }
 
@@ -76,9 +74,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(
-                "user with id: " + id + " NOT FOUND"
-        ));
+        User user = findByIdOrElseThrow(id);
         return userMapper.toResponse(user);
     }
 
@@ -88,5 +84,10 @@ public class UserServiceImpl implements UserService {
         return userList.stream()
                 .map(userMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
+    }
+    private User findByIdOrElseThrow(long id){
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(
+                "user with id: " + id + " NOT FOUND"
+        ));
     }
 }
