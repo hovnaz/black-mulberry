@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+
+<head>
+    <title>Furns - Furniture eCommerce HTML Template</title>
+    <th:block th:insert="view/fragments/import::headerImport"></th:block>
+</head>
+
+<body>
+    <th:block th:insert="view/fragments/layout::header"></th:block>
+
+    <div class="offcanvas-overlay"></div>
+
+    <th:block th:insert="view/fragments/util::slideshow"></th:block>
+    <th:block th:insert="view/fragments/util::category-start"></th:block>
+
+    <th:block th:insert="view/fragments/util::product-tab-area"></th:block>
+
+   <th:block th:insert="view/fragments/util::banner-section"></th:block>
+
+    <th:block th:insert="view/fragments/util::product-slideshow-more"></th:block>
+
+    <th:block th:insert="view/fragments/layout::footer"></th:block>
+
+
+    <th:block th:insert="view/fragments/import::footerImport"></th:block>
+</body>
+
+</html>
