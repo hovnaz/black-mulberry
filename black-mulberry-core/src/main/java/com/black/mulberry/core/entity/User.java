@@ -29,7 +29,6 @@ public class User {
     private UserRole role;
     private String password;
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDate createAt;
 }
