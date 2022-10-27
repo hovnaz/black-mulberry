@@ -1,19 +1,20 @@
 package com.black.mulberry.core.service.impl;
 
-import com.black.mulberry.data.transfer.model.UserRole;
+import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.EmailExistException;
 import com.black.mulberry.core.exception.UserNotFoundException;
 import com.black.mulberry.core.mapper.UserMapper;
 import com.black.mulberry.core.mapper.UserSignUpMapper;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.UserService;
-import com.black.mulberry.core.entity.User;
+import com.black.mulberry.data.transfer.model.UserRole;
 import com.black.mulberry.data.transfer.request.user.UserRequest;
 import com.black.mulberry.data.transfer.request.user.UserSignUpRequest;
 import com.black.mulberry.data.transfer.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
