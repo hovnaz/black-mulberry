@@ -1,18 +1,38 @@
 CREATE TABLE IF NOT EXISTS category_parent
 (
-    id   BIGSERIAL PRIMARY KEY,
-    name VARCHAR(255) NOT NULL
-);
+    id
+    BIGSERIAL
+    PRIMARY
+    KEY,
+    name
+    VARCHAR
+(
+    255
+) NOT NULL
+    );
 ALTER TABLE category_parent
     owner to postgres;
 
 CREATE TABLE IF NOT EXISTS category_product
 (
-    id         BIGSERIAL PRIMARY KEY,
-    name       VARCHAR(255),
+    id
+    BIGSERIAL
+    PRIMARY
+    KEY,
+    name
+    VARCHAR
+(
+    255
+),
     cat_par_id BIGINT NOT NULL,
-    FOREIGN KEY (cat_par_id) REFERENCES category_parent (id)
-);
+    FOREIGN KEY
+(
+    cat_par_id
+) REFERENCES category_parent
+(
+    id
+)
+    );
 ALTER TABLE category_product
     owner to postgres;
 
@@ -38,11 +58,11 @@ CREATE TABLE product
     id          BIGSERIAL PRIMARY KEY,
     title       VARCHAR(255) NOT NULL,
     price       DECIMAL      NOT NULL,
-    stock       INT               DEFAULT NULL,
+    stock       INT     DEFAULT NULL,
     pic_url     VARCHAR(255) NOT NULL,
-    create_at   TIMESTAMP    NULL DEFAULT NULL,
+    create_at   TIMESTAMP NULL DEFAULT NULL,
     description TEXT,
-    is_delete   BOOLEAN           DEFAULT FALSE,
+    is_delete   BOOLEAN DEFAULT FALSE,
     cat_id      BIGINT       NOT NULL,
     user_id     BIGINT       NOT NULL,
     FOREIGN KEY (cat_id) REFERENCES category_product (id),
@@ -78,7 +98,7 @@ CREATE TABLE product_basket_item
 (
     id                BIGSERIAL PRIMARY KEY,
     quantity          INT    NOT NULL,
-    product_id BIGINT NOT NULL,
+    product_id        BIGINT NOT NULL,
     product_basket_id BIGINT NOT NULL,
     FOREIGN KEY (product_basket_id) REFERENCES product_basket (id),
     FOREIGN KEY (product_id) REFERENCES product (id)

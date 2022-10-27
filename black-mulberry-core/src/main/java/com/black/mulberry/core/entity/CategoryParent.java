@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "category_parent")
 public class CategoryParent {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

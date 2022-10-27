@@ -85,7 +85,8 @@ public class UserServiceImpl implements UserService {
                 .map(userMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
-    private User findByIdOrElseThrow(long id){
+
+    private User findByIdOrElseThrow(long id) {
         return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException(
                 "user with id: " + id + " NOT FOUND"
         ));
