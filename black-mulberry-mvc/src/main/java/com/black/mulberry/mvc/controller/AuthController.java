@@ -1,16 +1,16 @@
-package com.black.mulberry.mvc.controller.main;
+package com.black.mulberry.mvc.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/basket")
-public class BasketController {
+@RequestMapping("/auth")
+public class AuthController {
 
     @GetMapping("/")
-    public String basketPage(){
-        // todo find all products in basket
-        return "view/basket";
+    public String authPage(){
+        return "view/auth";
     }
+
 }

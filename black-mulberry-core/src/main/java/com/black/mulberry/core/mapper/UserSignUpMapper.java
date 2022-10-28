@@ -2,7 +2,7 @@ package com.black.mulberry.core.mapper;
 
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.mapper.base.BaseMapper;
-import com.black.mulberry.data.transfer.request.user.UserSignUpRequest;
+import com.black.mulberry.data.transfer.request.UserSignUpRequest;
 import com.black.mulberry.data.transfer.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;

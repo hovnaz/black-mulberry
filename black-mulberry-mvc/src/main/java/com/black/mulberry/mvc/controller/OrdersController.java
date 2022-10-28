@@ -1,4 +1,4 @@
-package com.black.mulberry.mvc.controller.main;
+package com.black.mulberry.mvc.controller;
 
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.repository.ProductRepository;

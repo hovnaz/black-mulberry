@@ -1,4 +1,4 @@
-package com.black.mulberry.data.transfer.request.user;
+package com.black.mulberry.data.transfer.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,7 +1,7 @@
 package com.black.mulberry.core.service;
 
-import com.black.mulberry.data.transfer.request.user.UserRequest;
-import com.black.mulberry.data.transfer.request.user.UserSignUpRequest;
+import com.black.mulberry.data.transfer.request.UserRequest;
+import com.black.mulberry.data.transfer.request.UserSignUpRequest;
 import com.black.mulberry.data.transfer.response.UserResponse;
 
 import java.util.List;
