@@ -1,0 +1,26 @@
+version: '3.5'
+services:
+  app-rest:
+    container_name: app-rest
+    image: app-black_mulberry-rest
+    build: ./black-mulberry-rest
+    ports:
+      - "8000:8000"
+    depends_on:
+      - dbpostgresql
+  app-mvc:
+    container_name: app-mvc
+    image: app-black_mulberry-mvc
+    build: ./black-mulberry-mvc
+    ports:
+      - "8080:8080"
+    depends_on:
+      - dbpostgresql
+  dbpostgresql:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=black_mulberry
