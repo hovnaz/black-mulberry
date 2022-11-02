@@ -7,7 +7,7 @@ import com.black.mulberry.core.mapper.UserMapper;
 import com.black.mulberry.core.mapper.UserRegistrationMapper;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.AuthService;
-import com.black.mulberry.core.util.UserServiceUtil;
+import com.black.mulberry.core.service.support.UserServiceSupport;
 import com.black.mulberry.data.transfer.model.UserRole;
 import com.black.mulberry.data.transfer.request.UserAuthRequest;
 import com.black.mulberry.data.transfer.request.UserRegistrationRequest;
@@ -22,14 +22,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
-    private final UserServiceUtil userServiceUtil;
+    private final UserServiceSupport userServiceSupport;
     private final UserMapper userMapper;
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserRepository userRepository;
 
     @Override
     public UserAuthResponse auth(UserAuthRequest userAuthRequest) {
-        User user = userServiceUtil.findByEmail(userAuthRequest.getEmail());
+        User user = userServiceSupport.findByEmail(userAuthRequest.getEmail());
         if (passwordEncoder.matches(userAuthRequest.getPassword(), user.getPassword())) {
             return UserAuthResponse.builder()
                     .user(userMapper.toResponse(user))

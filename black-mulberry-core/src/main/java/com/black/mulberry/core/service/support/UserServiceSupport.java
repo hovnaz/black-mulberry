@@ -1,14 +1,14 @@
-package com.black.mulberry.core.util;
+package com.black.mulberry.core.service.support;
 
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.UserNotFoundException;
 import com.black.mulberry.core.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 @RequiredArgsConstructor
-public class UserServiceUtil {
+public class UserServiceSupport {
     private final UserRepository userRepository;
 
     public User findById(long id) {

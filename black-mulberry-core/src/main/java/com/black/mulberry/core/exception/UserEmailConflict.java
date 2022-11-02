@@ -2,9 +2,6 @@ package com.black.mulberry.core.exception;
 
 public class UserEmailConflict extends RuntimeException {
 
-    public UserEmailConflict() {
-    }
-
     public UserEmailConflict(String message) {
         super(message);
     }
