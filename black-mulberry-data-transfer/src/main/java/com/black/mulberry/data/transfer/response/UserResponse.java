@@ -14,7 +14,7 @@ import java.util.Date;
 @Data
 public class UserResponse {
 
-    private Long id;
+    private long id;
     private String name;
     private String surname;
     private String email;
