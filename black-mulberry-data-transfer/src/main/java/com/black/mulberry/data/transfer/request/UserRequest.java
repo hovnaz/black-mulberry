@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserRequest {
 
-    private long id;
     private String name;
     private String surname;
     private String email;
