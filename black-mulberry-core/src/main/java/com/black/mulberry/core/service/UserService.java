@@ -1,6 +1,6 @@
 package com.black.mulberry.core.service;
 
-import com.black.mulberry.data.transfer.request.UserRequest;
+import com.black.mulberry.data.transfer.request.UserUpdateRequest;
 import com.black.mulberry.data.transfer.response.UserResponse;
 
 import java.util.List;
@@ -13,14 +13,14 @@ public interface UserService {
      * @param userRequest
      * @return UserResponse
      */
-    UserResponse update(UserRequest userRequest);
+    UserResponse update(final UserUpdateRequest userRequest, final long userId);
 
     /**
      * Remove user from database
      *
      * @param id "user id"
      */
-    void deleteById(long id);
+    void deleteById(final long id);
 
     /**
      * Find user by id
@@ -28,7 +28,7 @@ public interface UserService {
      * @param id "user id"
      * @return UserResponse
      */
-    UserResponse findById(long id);
+    UserResponse findById(final long id);
 
     /**
      * Find user by email
@@ -36,7 +36,7 @@ public interface UserService {
      * @param email
      * @return User
      */
-    UserResponse findByEmail(String email);
+    UserResponse findByEmail(final String email);
 
     /**
      * Find all user list from database
