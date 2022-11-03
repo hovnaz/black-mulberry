@@ -5,7 +5,7 @@ import com.black.mulberry.core.exception.UserNotFoundException;
 import com.black.mulberry.core.mapper.UserMapper;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.UserService;
-import com.black.mulberry.data.transfer.request.UserRequest;
+import com.black.mulberry.data.transfer.request.UserUpdateRequest;
 import com.black.mulberry.data.transfer.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,29 +25,29 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public UserResponse update(UserRequest userRequest) {
-        log.info("Request from user {} to update", userRequest.getEmail());
-        Optional<User> optionalUser = userRepository.findByEmail(userRequest.getEmail());
+    public UserResponse update(final UserUpdateRequest userRequest, final long userId) {
+        log.info("Request from user by id: {} to update", userId);
+        Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
-            log.debug("User with email {} already exists", userRequest.getEmail());
-            throw new UserNotFoundException("User with email: " + userRequest.getEmail() + " already exists");
+            log.debug("User with id: {} already exists", userId);
+            throw new UserNotFoundException("User with id: " + userId + " already exists");
         }
         User user = optionalUser.get();
         user.setName(userRequest.getName());
         user.setSurname(userRequest.getSurname());
         User save = userRepository.save(user);
-        log.info("Succeed updated data from user {}", userRequest.getEmail());
+        log.info("Succeed updated data from user {}", user.getEmail());
         return userMapper.toResponse(save);
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(final long id) {
         log.info("Request delete by id: {} user", id);
         userRepository.deleteById(id);
     }
 
     @Override
-    public UserResponse findById(long id) {
+    public UserResponse findById(final long id) {
         log.info("Find by id user");
         User user = userRepository.findById(id).orElseThrow(() -> {
             log.debug("User with id: {} not found", id);
@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse findByEmail(String email) {
+    public UserResponse findByEmail(final String email) {
         log.info("Find by email user");
         User user = userRepository.findByEmail(email).orElseThrow(() -> {
             log.debug("User with email: {} not found", email);
