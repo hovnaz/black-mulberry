@@ -11,6 +11,7 @@ import com.black.mulberry.data.transfer.model.UserRole;
 import com.black.mulberry.data.transfer.request.UserAuthRequest;
 import com.black.mulberry.data.transfer.request.UserRegistrationRequest;
 import com.black.mulberry.data.transfer.response.UserAuthResponse;
+import com.black.mulberry.data.transfer.response.UserRegistrationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,15 +38,14 @@ public class AuthServiceImpl implements AuthService {
             log.debug("{}: Provided wrong credentials for authentication", userAuthRequest.getEmail());
             throw new AuthenticatedException(userAuthRequest.getEmail() + ": Provided wrong credentials for authentication");
         }
-        UserAuthResponse userBuild = UserAuthResponse.builder()
+        log.info("Succeed get user by email: {}", userAuthRequest.getEmail());
+        return UserAuthResponse.builder()
                 .user(userMapper.toResponse(optionalUser.get()))
                 .build();
-        log.info("Succeed get user by email: {}", userAuthRequest.getEmail());
-        return userBuild;
     }
 
     @Override
-    public void registration(final UserRegistrationRequest userRequest) {
+    public UserRegistrationResponse registration(final UserRegistrationRequest userRequest) {
         log.info("Request from user {} to registration", userRequest.getEmail());
         Optional<User> byEmail = userRepository.findByEmail(userRequest.getEmail());
         if (byEmail.isPresent()) {
@@ -57,6 +57,6 @@ public class AuthServiceImpl implements AuthService {
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         userRepository.save(user);
         log.info("Succeed registered user by email: {}", userRequest.getEmail());
-
+        return userRegistrationMapper.toResponse(user);
     }
 }

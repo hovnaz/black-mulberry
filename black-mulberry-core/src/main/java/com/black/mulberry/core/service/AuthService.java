@@ -3,6 +3,7 @@ package com.black.mulberry.core.service;
 import com.black.mulberry.data.transfer.request.UserAuthRequest;
 import com.black.mulberry.data.transfer.request.UserRegistrationRequest;
 import com.black.mulberry.data.transfer.response.UserAuthResponse;
+import com.black.mulberry.data.transfer.response.UserRegistrationResponse;
 
 public interface AuthService {
     /**
@@ -17,7 +18,8 @@ public interface AuthService {
      * New user
      *
      * @param userRegistrationRequest
+     * @return UserRegistrationResponse
      */
-    void registration(UserRegistrationRequest userRegistrationRequest);
+    UserRegistrationResponse registration(UserRegistrationRequest userRegistrationRequest);
 
 }
