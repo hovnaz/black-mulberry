@@ -18,7 +18,7 @@ public class SpringFoxConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.black.mulberry.rest.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.black.mulberry.rest.endpoint"))
                 .paths(PathSelectors.any())
                 .build();
     }
