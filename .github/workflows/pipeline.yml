@@ -1,0 +1,26 @@
+name: docker-compose-actions-workflow
+on: 
+  push:
+    branches:
+    - master
+    - dev
+  merge_group:
+    branches: 
+    - master
+    - dev
+  pull_request:
+    
+    
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          java-version: '11'
+          distribution: 'temurin'
+          cache: maven
+      - name: Build with Maven
+        run: mvn install -DskipTests
+      - name: Build the stack
+        run: docker-compose up -d

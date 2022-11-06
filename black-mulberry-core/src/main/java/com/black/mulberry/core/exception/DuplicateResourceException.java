@@ -2,9 +2,6 @@ package com.black.mulberry.core.exception;
 
 public class DuplicateResourceException extends RuntimeException {
 
-    public DuplicateResourceException() {
-    }
-
     public DuplicateResourceException(String message) {
         super(message);
     }

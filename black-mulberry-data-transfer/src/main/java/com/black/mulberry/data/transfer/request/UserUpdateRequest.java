@@ -9,10 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserRequest {
-
+public class UserUpdateRequest {
     private String name;
     private String surname;
-    private String email;
-    private String phone;
 }
