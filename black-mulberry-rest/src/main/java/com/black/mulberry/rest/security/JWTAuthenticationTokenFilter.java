@@ -1,4 +1,5 @@
 package com.black.mulberry.rest.security;
+
 import com.black.mulberry.rest.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class JWTAuthenticationTokenFilter extends OncePerRequestFilter {
 
 
     @Override
-    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException {
         String requestHeader = httpServletRequest.getHeader("Authorization");
 
         String username = null;
@@ -48,8 +49,10 @@ public class JWTAuthenticationTokenFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
-
+        try {
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

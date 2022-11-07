@@ -14,13 +14,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import javax.management.relation.Role;
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
 
     private final CurrentUserDetailServiceImpl userDetailsService;
 
@@ -36,9 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
                 .and()
                 .authorizeRequests()
-
                 .anyRequest().permitAll();
-
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
         http.headers().cacheControl();
     }
@@ -53,5 +48,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public JWTAuthenticationTokenFilter authenticationTokenFilterBean() throws Exception {
         return new JWTAuthenticationTokenFilter();
     }
-
 }

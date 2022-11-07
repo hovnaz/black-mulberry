@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@ComponentScan({"com.black.mulberry.core.*","com.black.mulberry.rest.*"})
+@ComponentScan({"com.black.mulberry.core.*", "com.black.mulberry.rest.*"})
 @EnableJpaRepositories(basePackages = {"com.black.mulberry.core.repository"})
 @EntityScan({"com.black.mulberry.core.entity"})
 @SpringBootApplication

@@ -1,62 +1,32 @@
 package com.black.mulberry.rest.endpoint;
 
-import com.black.mulberry.core.entity.User;
-import com.black.mulberry.core.mapper.UserMapper;
-import com.black.mulberry.core.mapper.base.BaseMapper;
-import com.black.mulberry.core.repository.UserRepository;
-import com.black.mulberry.data.transfer.model.CreateUserDto;
-import com.black.mulberry.data.transfer.model.UserRole;
-import com.black.mulberry.rest.util.JwtTokenUtil;
+import com.black.mulberry.core.service.AuthService;
+import com.black.mulberry.data.transfer.request.UserAuthRequest;
+import com.black.mulberry.data.transfer.request.UserRegistrationRequest;
+import com.black.mulberry.data.transfer.response.UserAuthResponse;
+import com.black.mulberry.data.transfer.response.UserRegistrationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.Optional;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
 @Slf4j
+@RequestMapping("/user")
 public class UserEndpoint {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final AuthService authService;
 
-    private final BaseMapper baseMapper;
-
-    private final JwtTokenUtil jwtTokenUtil;
-
-    @PostMapping("/user")
-    public ResponseEntity<?> register(@RequestBody CreateUserDto createUserDto) {
-        Optional<User> existingUser = userRepository.findByEmail(createUserDto.getEmail());
-        if (existingUser.isPresent()) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).build();
-        }
-
-        User user = baseMapper.map(createUserDto);
-        user.setRole(UserRole.USER);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok().build();
+    @GetMapping("/auth")
+    public ResponseEntity<?> userAuth(@RequestBody UserAuthRequest userAuthRequest) {
+        UserAuthResponse auth = authService.auth(userAuthRequest);
+        return ResponseEntity.ok(auth);
     }
 
-//    @PostMapping("/user/auth")
-//    public ResponseEntity<?> auth(@RequestBody UserAuthDto userAuthDto) {
-//        Optional<User> byEmail = userRepository.findByEmail(userAuthDto.getEmail());
-//        if (byEmail.isPresent()) {
-//            User user = byEmail.get();
-//            if (passwordEncoder.matches(userAuthDto.getPassword(), user.getPassword())) {
-//                log.info("User with username {} get auth token", user.getEmail());
-//                return ResponseEntity.ok(UserAuthResponseDto.builder()
-//                        .token(jwtTokenUtil.generateToken(user.getEmail()))
-//                        .user(userMapper.map(user))
-//                        .build()
-//                );
-//            }
-//        }
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-//    }
+    @PostMapping("/register")
+    public ResponseEntity<?> userRegister(@RequestBody UserRegistrationRequest userRegistrationRequest) {
+        UserRegistrationResponse register = authService.registration(userRegistrationRequest);
+        return ResponseEntity.ok(register);
+    }
 }
