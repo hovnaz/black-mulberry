@@ -10,10 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.List;
 
 @RestController
@@ -23,7 +20,6 @@ public class ProductEndpoint {
     private final ProductServiceImpl productService;
     @Value("blackMulberry.product.images")
     private String folderPath;
-
 
     @GetMapping
     public List<ProductResponse> getAllProducts() {
@@ -36,9 +32,15 @@ public class ProductEndpoint {
     }
 
     @GetMapping(value = "/product/getProductPic", produces = MediaType.IMAGE_JPEG_VALUE)
-    public @ResponseBody byte[] getImage(@RequestParam("fileName") String fileName) throws IOException {
-        InputStream inputStream = new FileInputStream(folderPath + File.separator + fileName);
-        return IOUtils.toByteArray(inputStream);
+    public @ResponseBody byte[] getImage(@RequestParam("fileName") String fileName)  {
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(folderPath + File.separator + fileName);
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            return  bytes;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @PostMapping
