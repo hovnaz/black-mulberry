@@ -5,7 +5,7 @@ steps:
   # Docker Build Image
   - name: gcr.io/cloud-builders/docker
     id  : BUILD
-    args: ['build', '-t', '$_SERVICE_IMAGE', '.', '-f', 'docker-compose']
+    args: ['build', '-t', '$_SERVICE_IMAGE', '.', '-f', 'Dockerfile']
 
   # Docker Push Image to Artifact Registry
   - name: gcr.io/cloud-builders/docker
