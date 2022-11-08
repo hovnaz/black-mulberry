@@ -2,10 +2,13 @@
 # CloudBuild Pipeline for Prod CloudRun
 #-----------------------------------------
 steps:
-  # Docker Build Image
-  - name: gcr.io/cloud-builders/docker
-    id  : BUILD
-    args: ['build', '-t', '$_SERVICE_IMAGE', '.']
+  # Install dependencies.
+  - name: 'gcr.io/cloud-builders/mvn'
+    args: [ 'install' ]
+
+  # Build the new docker image.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/$_SERVICE_PROJECT/gcb-docker-compose:latest', '.' ]
 
   # Docker Push Image to Artifact Registry
   - name: gcr.io/cloud-builders/docker
