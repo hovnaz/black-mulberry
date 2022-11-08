@@ -1,0 +1,7 @@
+#docker postgres host
+#flyway:
+spring:
+  datasource:
+    url: jdbc:postgresql://dbpostgresql:5432/black_mulberry
+  flyway:
+    url: jdbc:postgresql://dbpostgresql:5432/black_mulberry
