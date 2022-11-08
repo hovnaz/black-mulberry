@@ -6,14 +6,25 @@ steps:
   - name: 'gcr.io/cloud-builders/mvn'
     args: [ 'install', '-DskipTests' ]
 
+#  # Build the new docker image.
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: [ 'build', '-t', 'gcr.io/$_SERVICE_PROJECT/gcb-docker-compose:latest', '.' ]
+#
+#  # Docker Push Image to Artifact Registry
+#  - name: gcr.io/cloud-builders/docker
+#    id  : PUSH
+#    args: ['push', '$_SERVICE_IMAGE']
   # Build the new docker image.
   - name: 'gcr.io/cloud-builders/docker'
     args: [ 'build', '-t', 'gcr.io/$_SERVICE_PROJECT/gcb-docker-compose:latest', '.' ]
 
-  # Docker Push Image to Artifact Registry
-  - name: gcr.io/cloud-builders/docker
-    id  : PUSH
-    args: ['push', '$_SERVICE_IMAGE']
+  # Run the app and dependencies in the background using docker-compose.
+  # Warning: this won't be cleaned up, which might be an issue if you run it
+  # with the local builder.
+  - name: 'docker/compose:1.15.0'
+    args: [ 'up', '-d' ]
+    env:
+      - 'PROJECT_ID=$_SERVICE_PROJECT'
 
   # Docker Deploy image to Cloud Run
   - name: gcr.io/cloud-builders/gcloud
