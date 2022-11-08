@@ -4,7 +4,7 @@
 steps:
   # Install dependencies.
   - name: 'gcr.io/cloud-builders/mvn'
-    args: [ 'install' ]
+    args: [ 'install', '-DskipTests' ]
 
   # Build the new docker image.
   - name: 'gcr.io/cloud-builders/docker'
