@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +26,7 @@ public class ProductMapper implements BaseMapper<Product,ProductRequest, Product
     public ProductResponse toResponse(Product product) {
         return modelMapper.map(product, ProductResponse.class);
     }
+
+
 
 }

@@ -12,6 +12,7 @@ import com.black.mulberry.core.service.ProductService;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService {
     private final ProductRepository productRepository;
     private final CategoryProductRepository categoryProductRepository;
@@ -39,38 +41,45 @@ public class ProductServiceImpl implements ProductService {
     private String folderPath;
 
     @Override
-    public ProductResponse save(ProductRequest productRequest) {
-        Optional<User> optionalUser = userRepository.findById(productRequest.getUserId());
+    public Product save(ProductRequest productRequest,User user) {
+        log.info("request from user: {} to create product",user.getName());
+        Optional<User> optionalUser = userRepository.findById(user.getId());
         Optional<CategoryProduct> categoryProduct = categoryProductRepository.findById(productRequest.getCategoryProductId());
-        if(optionalUser.isEmpty() || categoryProduct.isEmpty()){
-           throw new NullPointerException("user or category is null");
+        if(categoryProduct.isEmpty()){
+            log.debug("category can't be null");
+            throw new NullPointerException("category is null");
         }
         Product product = productMapper.toEntity(productRequest);
         product.setCategoryProduct(categoryProduct.get());
         product.setUser(optionalUser.get());
         Product save = productRepository.save(product);
-        return productMapper.toResponse(save);
+        log.info("product with id: {} succesfully created", save.getId());
+        return save;
     }
     @Override
-    public ProductResponse findById(long id){
-        Product product = productRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> new ProductNotExistException(
-                "product with id: " + id + " does not exist"
-        ));
-        return productMapper.toResponse(product);
+    public Product findById(long id){
+        log.info("request to get product with id: {}",id);
+        Product product = productRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> {
+            log.debug("product with id: {} not found",id);
+           return new ProductNotExistException("product with id: " + id + " does not exist");
+        });
+        log.info("succesfully found product with id: {}",id);
+        return product;
     }
 
     @Override
-    public List<ProductResponse> findAll() {
+    public List<Product> findAll() {
+        log.info("request to get product list");
         List<Product> productList = productRepository.findAllByIsDeleteFalse();
-        return productList.stream()
-                .map(productMapper::toResponse)
-                .collect(Collectors.toCollection(LinkedList::new));
+        return productList;
     }
     @Override
-    public ProductResponse update(long id, ProductRequest productRequest) {
+    public Product update(long id, ProductRequest productRequest) {
+        log.info("request to update product with id: {}",id);
         Optional<Product> productById = productRepository.findByIdAndIsDeleteFalse(id);
         Optional<CategoryProduct> categoryProduct = categoryProductRepository.findById(productRequest.getCategoryProductId());
         if (productById.isEmpty()){
+            log.debug("product with id: {} not found",id);
             throw new ProductNotExistException("product with id: " + id + " does not exist");
         }
         Product product = productMapper.toEntity(productRequest);
@@ -78,18 +87,23 @@ public class ProductServiceImpl implements ProductService {
         product.setCategoryProduct(categoryProduct.get());
         product.setUser(productById.get().getUser());
         Product save = productRepository.save(product);
-        return productMapper.toResponse(save);
+        log.info(" product with id: {} successfully updated",id);
+        return save;
     }
 
     @Override
     public void deleteById(long id) {
         Optional<Product> productById = productRepository.findByIdAndIsDeleteFalse(id);
+        log.info("request from user {} to delete product with id: {}",productById.get().getUser().getName(),id);
+
         if (productById.isPresent()){
             Product product = productById.get();
             product.setDelete(true);
             productRepository.save(product);
+            log.info("product with id: {} successfully  deleted",id);
         }
         else {
+            log.debug("product with id: {} can't be found",id);
             throw new ProductNotExistException("product with " + id +" don't exist");
         }
     }
