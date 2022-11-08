@@ -1,4 +1,4 @@
-package com.black.mulberry.rest.util;
+package com.black.mulberry.core.util;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

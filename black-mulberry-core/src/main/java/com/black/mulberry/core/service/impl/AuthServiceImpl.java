@@ -7,6 +7,7 @@ import com.black.mulberry.core.mapper.UserMapper;
 import com.black.mulberry.core.mapper.UserRegistrationMapper;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.AuthService;
+import com.black.mulberry.core.util.JwtTokenUtil;
 import com.black.mulberry.data.transfer.model.UserRole;
 import com.black.mulberry.data.transfer.request.UserAuthRequest;
 import com.black.mulberry.data.transfer.request.UserRegistrationRequest;
@@ -28,6 +29,8 @@ public class AuthServiceImpl implements AuthService {
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserRepository userRepository;
 
+    private final JwtTokenUtil jwtTokenUtil;
+
     @Override
     public UserAuthResponse auth(final UserAuthRequest userAuthRequest) {
         log.info("Request from user {} to get authenticated", userAuthRequest.getEmail());
@@ -38,10 +41,11 @@ public class AuthServiceImpl implements AuthService {
             log.debug("{}: Provided wrong credentials for authentication", userAuthRequest.getEmail());
             throw new AuthenticatedException(userAuthRequest.getEmail() + ": Provided wrong credentials for authentication");
         }
-        log.info("Succeed get user by email: {}", userAuthRequest.getEmail());
-        return UserAuthResponse.builder()
-                .user(userMapper.toResponse(optionalUser.get()))
-                .build();
+            log.info("Succeed get user by email: {}", userAuthRequest.getEmail());
+            return UserAuthResponse.builder()
+                    .token(jwtTokenUtil.generateToken(userAuthRequest.getEmail()))
+                    .user(userMapper.toResponse(optionalUser.get()))
+                    .build();
     }
 
     @Override
