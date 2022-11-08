@@ -1,6 +1,7 @@
 package com.black.mulberry.core.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -22,6 +23,8 @@ public class Product {
     private BigDecimal price;
     private int stock;
     private String picUrl;
+    @CreationTimestamp
+    @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDate createAt;
     private String description;
     @ManyToOne
