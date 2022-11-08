@@ -12,8 +12,15 @@ import com.black.mulberry.core.service.ProductService;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -27,6 +34,10 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryProductRepository categoryProductRepository;
     private final UserRepository userRepository;
     private final ProductMapper productMapper;
+
+    @Value("blackMulberry.product.images")
+    private String folderPath;
+
     @Override
     public ProductResponse save(ProductRequest productRequest) {
         Optional<User> optionalUser = userRepository.findById(productRequest.getUserId());
@@ -80,6 +91,18 @@ public class ProductServiceImpl implements ProductService {
         }
         else {
             throw new ProductNotExistException("product with " + id +" don't exist");
+        }
+    }
+
+    @Override
+    public byte[] getImage(@RequestParam("fileName") String fileName)  {
+        InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(folderPath + File.separator + fileName);
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            return  bytes;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
