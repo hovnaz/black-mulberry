@@ -1,7 +1,5 @@
 package com.black.mulberry.data.transfer.request;
 
-import com.black.mulberry.data.transfer.response.ProductResponse;
-import com.black.mulberry.data.transfer.response.UserResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
