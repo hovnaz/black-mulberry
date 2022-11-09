@@ -1,0 +1,50 @@
+#-----------------------------------------
+# CloudBuild Pipeline for Prod CloudRun
+#-----------------------------------------
+steps:
+  # Install dependencies.
+  - name: 'gcr.io/cloud-builders/mvn'
+    args: [ 'install', '-DskipTests' ]
+
+#  # Build the new docker image.
+#  - name: 'gcr.io/cloud-builders/docker'
+#    args: [ 'build', '-t', 'gcr.io/$_SERVICE_PROJECT/gcb-docker-compose:latest', '.' ]
+#
+#  # Docker Push Image to Artifact Registry
+#  - name: gcr.io/cloud-builders/docker
+#    id  : PUSH
+#    args: ['push', '$_SERVICE_IMAGE']
+  # Build the new docker image.
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/$_SERVICE_PROJECT/gcb-docker-compose:latest', '.' ]
+
+  # Run the app and dependencies in the background using docker-compose.
+  # Warning: this won't be cleaned up, which might be an issue if you run it
+  # with the local builder.
+  - name: 'docker/compose:1.15.0'
+    args: [ 'up', '-d' ]
+    env:
+      - 'PROJECT_ID=$_SERVICE_PROJECT'
+
+  # Docker Deploy image to Cloud Run
+  - name: gcr.io/cloud-builders/gcloud
+    id  : DEPLOY
+    args:
+      - run
+      - services
+      - update
+      - $_SERVICE_NAME
+      - --project=$_SERVICE_PROJECT
+      - --region=$_SERVICE_REGION
+      - --image=$_SERVICE_IMAGE
+
+images: # Display the image in the build results - Build Artifacts
+  - $_SERVICE_IMAGE
+
+substitutions:
+  _SERVICE_IMAGE    : northamerica-northeast1-docker.pkg.dev/${PROJECT_ID}/${_DOCKER_REGISTRY}/${_DOCKER_IMAGENAME}:${SHORT_SHA}
+  _SERVICE_REGION   : northamerica-northeast1
+  _SERVICE_PROJECT  : black-mulberry-367918
+  _SERVICE_NAME     : black-mulberry-docker-app-prod
+  _DOCKER_REGISTRY  : black-mulberry-docker-repo
+  _DOCKER_IMAGENAME : myapp-prod

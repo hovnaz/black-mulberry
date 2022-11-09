@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserAuthResponse {
+public class CategoryProductResponse {
 
-    private UserResponse user;
-    private String token;
+    private long id;
+    private String name;
+    private CategoryParentResponse categoryParent;
 }

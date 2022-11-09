@@ -1,4 +1,4 @@
-package com.black.mulberry.data.transfer.response;
+package com.black.mulberry.data.transfer.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class UserAuthResponse {
-
-    private UserResponse user;
-    private String token;
+public class CategoryParentRequest {
+    private String name;
 }

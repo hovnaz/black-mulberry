@@ -1,6 +1,6 @@
 package com.black.mulberry.rest.security;
 
-import com.black.mulberry.rest.util.JwtTokenUtil;
+import com.black.mulberry.core.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
