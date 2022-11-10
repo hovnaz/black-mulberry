@@ -26,7 +26,7 @@ public class ProductEndpoint {
         return productService.findAll();
     }
 
-    @GetMapping("/my")
+    @GetMapping("/myList")
     public List<ProductResponse> getAllProductsByUserId(@AuthenticationPrincipal CurrentUser currentUser) {
         return productService.findAllByUserId(currentUser.getUser().getId());
     }

@@ -60,6 +60,14 @@ public interface ProductService {
     List<ProductResponse> findAll();
 
     /**
+     * find products list by user id
+     *
+     * @param userId
+     * @return
+     */
+    List<ProductResponse> findAllByUserId(long userId);
+
+    /**
      * get product image
      *
      * @param fileName

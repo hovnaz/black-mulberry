@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductResponse> findAll() {
-        log.info("Find all list Users");
+        log.info("Find all Product list");
         List<Product> productList = productRepository.findAllByIsDeleteFalse();
         return productList.stream()
                 .map(productMapper::toResponse)
@@ -100,6 +100,7 @@ public class ProductServiceImpl implements ProductService {
         CategoryProduct categoryById = categoryProductService.findById(productRequest.getCategoryProductId());
         product.setId(productById.getId());
         product.setCategoryProduct(categoryById);
+        product.setUser(productById.getUser());
         Product save = productRepository.save(product);
         log.info("product with id: {} successfully updated", productId);
         return save;
