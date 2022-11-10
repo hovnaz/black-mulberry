@@ -26,6 +26,11 @@ public class ProductEndpoint {
         return productService.findAll();
     }
 
+    @GetMapping("/my")
+    public List<ProductResponse> getAllProductsByUserId(@AuthenticationPrincipal CurrentUser currentUser) {
+        return productService.findAllByUserId(currentUser.getUser().getId());
+    }
+
     @GetMapping("/{id}")
     public ProductResponse getById(@PathVariable("id") long id) {
         return productMapper.toResponse(productService.findById(id));

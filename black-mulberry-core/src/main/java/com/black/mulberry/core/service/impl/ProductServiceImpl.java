@@ -84,6 +84,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<ProductResponse> findAllByUserId(long userId) {
+        log.info("Find all Product list by user id: {}", userId);
+        List<Product> productList = productRepository.findAllByIsDeleteFalseAndUserId(userId);
+        return productList.stream()
+                .map(productMapper::toResponse)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
     public Product update(long productId, long userId, ProductRequest productRequest) {
         log.info("request to update product with id: {} and by UserId {}", productId, userId);
         Product product = productMapper.toEntity(productRequest);
