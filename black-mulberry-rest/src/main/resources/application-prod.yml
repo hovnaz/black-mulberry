@@ -1,3 +1,13 @@
 spring:
   datasource:
     password: root
+logging:
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz
+      max-file-size: 10MB
+  file:
+    name: D:\black-mulberry\log\rest\application.log
+  level:
+    root: error
+    com.mulberry: error

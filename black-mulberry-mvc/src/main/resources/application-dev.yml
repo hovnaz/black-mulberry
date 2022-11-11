@@ -5,3 +5,7 @@ spring:
     url: jdbc:postgresql://dbpostgresql:5432/black_mulberry
   flyway:
     url: jdbc:postgresql://dbpostgresql:5432/black_mulberry
+logging:
+  level:
+    root: debug
+    com.mulberry: debug

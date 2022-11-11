@@ -37,3 +37,7 @@ server:
 jwt:
       secret: k205j@dkjf0%^@
       expiration: 330000
+logging:
+  level:
+    root: info
+    com.mulberry: info
