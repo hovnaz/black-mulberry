@@ -1,4 +1,4 @@
-<h1 align="center">Black Mulberry Rest module</h1>
+<h1 align="center">Black Mulberry Mvc module</h1>
 <p align="center">
 <br>
   <i>This module is for client</i>
