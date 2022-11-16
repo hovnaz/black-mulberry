@@ -31,11 +31,10 @@ spring:
     validate-on-migrate: false
     baseline-on-migrate: true
 server:
+  servlet:
+    contextPath: /api
   port: 8080
-jwt:
-  secret: k205j@dkjf0%^@
-  expiration: 330000
-
-blackMulberry:
-  product:
-    images: D://black-mulberry//images//product
+logging:
+  level:
+    root: info
+    com.mulberry: info

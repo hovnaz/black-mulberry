@@ -37,7 +37,7 @@ server:
 jwt:
       secret: k205j@dkjf0%^@
       expiration: 330000
-
-blackMulberry:
-  product:
-    images: D://black-mulberry//images//product
+logging:
+  level:
+    root: info
+    com.mulberry: info
