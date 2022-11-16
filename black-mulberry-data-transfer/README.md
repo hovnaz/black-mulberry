@@ -5,3 +5,9 @@ m  <br>
     <br>contains dto's model of the project.</i>
   <br>
 </p>
+
+### Module structure
+
+- model: enum types
+- request: *DTO models*
+- response: *DTO models*
