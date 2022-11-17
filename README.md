@@ -19,23 +19,13 @@
 
 ## install devtools
 
-Install the Java 11 :
+<!-- TOC -->
 
-```
-https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html
-```
+* [Install ORACLE JDK 11](https://www.oracle.com/java/technologies/javase/jdk11-archive-downloads.html)
+* [Install Maven package manager](https://maven.apache.org/download.cgi)
+* [Install PostgresSQL database](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)
 
-Install Maven package manager:
-
-```
-https://maven.apache.org/download.cgi
-```
-
-Install PostgreSQL database:
-
-```
-https://www.enterprisedb.com/downloads/postgres-postgresql-downloads
-```
+<!-- TOC -->
 
 ## Setting Up a Project
 
@@ -75,12 +65,9 @@ docker-compose up
 
 Rest Module
 
-```
-http://localhost:8000/api/
-```
+[http://localhost:8000/api/](http://localhost:8000/api/)
 
 Mvc Module
 
-```
-http://localhost:8080/
-```
+[http://localhost:8080/](http://localhost:8080/)
+

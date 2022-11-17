@@ -19,7 +19,7 @@
 
 ## devtools
 
-swagger - documentation API
+[Swagger](http://localhost:8000/api/swagger-ui/) - documentation API
 
 ```
 http://localhost:8000/api/swagger-ui/
@@ -27,4 +27,4 @@ http://localhost:8000/api/swagger-ui/
 
 ## Url website
 
-    http://localhost:8000/api/
+[http://localhost:8000/api/](http://localhost:8000/api/)

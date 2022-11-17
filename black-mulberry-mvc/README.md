@@ -19,12 +19,10 @@
 
 ### Pages
 
-login/registration
-
-```
-http://localhost:8080/auth
-```
+<!-- TOC -->
+  * [login registration](http://localhost:8080/auth)
+<!-- TOC -->
 
 ## Url website
 
-    http://localhost:8080/
+[http://localhost:8080/](http://localhost:8080/)
