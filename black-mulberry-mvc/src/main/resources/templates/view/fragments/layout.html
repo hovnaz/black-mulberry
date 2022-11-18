@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org/" lang="en">
 <body>
 
-<th:block th:fragment="header">
+      <th:block th:fragment="header">
   <!-- Header Area start  -->
   <div class="header section">
     <!-- Header Top Message Start -->
@@ -51,7 +51,7 @@
       <div class="container position-relative">
         <div class="row align-self-center">
           <!-- Header Logo Start -->
-          <div class="col-auto align-self-center">
+          <div class="col-auto align-self-center" >
             <div class="header-logo">
               <a href="/">Black Mulberry</a>
             </div>
@@ -74,9 +74,11 @@
               <div class="header-bottom-set dropdown">
                 <button class="dropdown-toggle header-action-btn" data-bs-toggle="dropdown"><i class='bx bxs-user' ></i></button>
                 <ul class="dropdown-menu dropdown-menu-right">
-                  <li><a class="dropdown-item" href="/account/">My account</a></li>
-                  <li><a class="dropdown-item"  href="/product/add/">Add Product</a></li>
-                  <li><a class="dropdown-item" href="/auth/">Sign in / sign up</a></li>
+                  <th:block th:if="${currentUser == null}">
+                    <li><a class="dropdown-item" href="/account/">My account</a></li>
+                    <li><a class="dropdown-item" href="/v1/auth/">Sign in / sign up</a></li>
+                  </th:block>
+                  <li><a class="dropdown-item" href="/v1/auth/logout" th:if="${currentUser != null}">Logout</a></li>
                 </ul>
               </div>
               <!-- Single Wedge End -->
@@ -210,7 +212,6 @@
                   <ul class="sub-menu">
                     <li><a href="/">Home</a></li>
                     <li><a href="/account/">Account</a></li>
-                    <li><a href="/auth/">Sign in / Sign up</a></li>
                     <li><a href="/basket/">Basket</a></li>
                     <li><a href="/checkout/">Checkout</a></li>
                     <li><a href="/orders/">Orders</a></li>

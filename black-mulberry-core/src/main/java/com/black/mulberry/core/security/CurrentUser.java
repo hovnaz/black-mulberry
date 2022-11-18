@@ -1,4 +1,4 @@
-package com.black.mulberry.mvc.security;
+package com.black.mulberry.core.security;
 
 import com.black.mulberry.core.entity.User;
 import org.springframework.security.core.authority.AuthorityUtils;
