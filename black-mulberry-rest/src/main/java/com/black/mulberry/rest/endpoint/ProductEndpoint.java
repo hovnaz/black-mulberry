@@ -5,7 +5,7 @@ import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.service.impl.ProductServiceImpl;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
-import com.black.mulberry.rest.security.CurrentUser;
+import com.black.mulberry.core.security.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
