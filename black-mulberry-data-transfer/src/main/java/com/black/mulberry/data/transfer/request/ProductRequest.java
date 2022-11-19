@@ -18,5 +18,4 @@ public class ProductRequest {
     private String picUrl;
     private String description;
     private long categoryProductId;
-    private long userId;
 }
