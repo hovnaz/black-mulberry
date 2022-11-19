@@ -1,4 +1,4 @@
-package com.black.mulberry.rest.security;
+package com.black.mulberry.core.security;
 
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.repository.UserRepository;

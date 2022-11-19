@@ -27,8 +27,8 @@ public class ProductController {
 
     private final CategoryProductRepository categoryProductRepository;
 
-    @Value("${blackMulberry.product.images}")
-    private String folderPath;
+//    @Value("${blackMulberry.mvc.images.product}")
+    private String folderPath = "todo";
 
     @GetMapping("/product/add")
     public String goToProductAddPage(ModelMap modelMap) {

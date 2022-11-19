@@ -31,10 +31,12 @@ spring:
     validate-on-migrate: false
     baseline-on-migrate: true
 server:
-  servlet:
-    contextPath: /api
   port: 8080
 logging:
   level:
     root: info
     com.mulberry: info
+
+jwt:
+  secret: k205j@dkjf0%^@
+  expiration: 330000

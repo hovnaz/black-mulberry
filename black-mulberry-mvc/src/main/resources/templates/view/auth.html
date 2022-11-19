@@ -56,13 +56,12 @@
                             <div id="lg1" class="tab-pane active">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="/login" method="post">
-                                            <input type="text" name="user-name" placeholder="Username" />
-                                            <input type="password" name="user-password" placeholder="Password" />
+                                        <form action="/v1/auth" method="post">
+                                            <input type="email" name="username" placeholder="Email" required />
+                                            <input type="password" name="password" placeholder="Password" required />
+                                            <span style="color: red" th:if="${param.error != null}">Invalid credentials</span>
                                             <div class="button-box">
                                                 <div class="login-toggle-btn">
-                                                    <input type="checkbox" />
-                                                    <a class="flote-none" href="javascript:void(0)">Remember me</a>
                                                     <a href="login.html#">Forgot Password?</a>
                                                 </div>
                                                 <button type="submit"><span>Login</span></button>
@@ -74,10 +73,12 @@
                             <div id="lg2" class="tab-pane">
                                 <div class="login-form-container">
                                     <div class="login-register-form">
-                                        <form action="/register" method="post">
-                                            <input type="text" name="user-name" placeholder="Username" />
-                                            <input type="password" name="user-password" placeholder="Password" />
-                                            <input name="user-email" placeholder="Email" type="email" />
+                                        <form action="/v1/auth/registration" method="post">
+                                            <input type="text" name="name" placeholder="Name" required />
+                                            <input type="text" name="surname" placeholder="Surname" required />
+                                            <input type="email" name="email" placeholder="Email" required />
+                                            <input type="text" name="phone" placeholder="PhoneNumber" required />
+                                            <input type="password" name="password" placeholder="Password" />
                                             <div class="button-box">
                                                 <button type="submit"><span>Register</span></button>
                                             </div>

@@ -1,6 +1,6 @@
 package com.black.mulberry.rest.config;
 
-import com.black.mulberry.rest.security.CurrentUserDetailServiceImpl;
+import com.black.mulberry.core.security.CurrentUserDetailServiceImpl;
 import com.black.mulberry.rest.security.JWTAuthenticationTokenFilter;
 import com.black.mulberry.rest.security.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;

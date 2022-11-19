@@ -16,16 +16,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.headers().frameOptions().disable()
+                .and()
                 .csrf().disable()
                 .formLogin()
+                .loginPage("/v1/auth")
+                .permitAll()
+                .failureUrl("/v1/auth/?error=true")
+                .defaultSuccessUrl("/")
                 .and()
                 .logout()
+                .logoutUrl("/v1/auth/logout")
+                .logoutSuccessUrl("/")
                 .and()
                 .authorizeRequests()
-                .antMatchers("/v1/auth/**").permitAll()
-                .anyRequest()
-                .authenticated();
+                .anyRequest().permitAll();
     }
 
     @Override
