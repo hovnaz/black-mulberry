@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
-    public UserResponse update(final UserUpdateRequest userRequest, final long userId) {
+    public User update(final UserUpdateRequest userRequest, final long userId) {
         log.info("Request from user by id: {} to update", userId);
         Optional<User> optionalUser = userRepository.findById(userId);
         if (optionalUser.isEmpty()) {
@@ -35,9 +35,9 @@ public class UserServiceImpl implements UserService {
         User user = optionalUser.get();
         user.setName(userRequest.getName());
         user.setSurname(userRequest.getSurname());
-        User save = userRepository.save(user);
+        User userSave = userRepository.save(user);
         log.info("Succeed updated data from user {}", user.getEmail());
-        return userMapper.toResponse(save);
+        return userSave;
     }
 
     @Override
@@ -47,23 +47,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse findById(final long id) {
+    public User findById(final long id) {
         log.info("Find by id user");
-        User user = userRepository.findById(id).orElseThrow(() -> {
+        return userRepository.findById(id).orElseThrow(() -> {
             log.debug("User with id: {} not found", id);
             return new UserNotFoundException("User with id: " + id + " NOT FOUND");
         });
-        return userMapper.toResponse(user);
     }
 
     @Override
-    public UserResponse findByEmail(final String email) {
+    public User findByEmail(final String email) {
         log.info("Find by email user");
-        User user = userRepository.findByEmail(email).orElseThrow(() -> {
+        return userRepository.findByEmail(email).orElseThrow(() -> {
             log.debug("User with email: {} not found", email);
             return new UserNotFoundException("User with email: " + email + " NOT FOUND");
         });
-        return userMapper.toResponse(user);
     }
 
     @Override

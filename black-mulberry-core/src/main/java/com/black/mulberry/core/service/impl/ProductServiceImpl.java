@@ -6,7 +6,7 @@ import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.ProductNotExistException;
 import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
-import com.black.mulberry.core.repository.UserRepository;
+import com.black.mulberry.core.service.UserService;
 import com.black.mulberry.core.service.ProductService;
 import com.black.mulberry.core.util.IOUtil;
 import com.black.mulberry.data.transfer.request.ProductRequest;
@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +28,7 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final CategoryProductImpl categoryProductService;
     private final ProductMapper productMapper;
     private final IOUtil ioUtil;
@@ -40,12 +39,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product save(ProductRequest productRequest, User user) {
         log.info("request from user: {} to create product", user.getEmail());
-        // todo after userService changes change to userService
-        Optional<User> userOptional = userRepository.findById(user.getId());
+        User userById = userService.findById(user.getId());
         CategoryProduct categoryById = categoryProductService.findById(productRequest.getCategoryProductId());
         Product product = productMapper.toEntity(productRequest);
         product.setCategoryProduct(categoryById);
-        product.setUser(userOptional.get());
+        product.setUser(userById);
         Product save = productRepository.save(product);
         log.info("product with id: {} succesfully created", save.getId());
         return save;
