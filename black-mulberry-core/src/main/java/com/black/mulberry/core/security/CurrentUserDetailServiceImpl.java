@@ -1,27 +1,21 @@
 package com.black.mulberry.core.security;
 
 import com.black.mulberry.core.entity.User;
-import com.black.mulberry.core.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.black.mulberry.core.service.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
+@RequiredArgsConstructor
 public class CurrentUserDetailServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserService userService;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        Optional<User> user = userRepository.findByEmail(username);
-        if (user.isEmpty()) {
-            throw new UsernameNotFoundException("Username not found");
-        }
-        return new CurrentUser(user.get());
+        User user = userService.findByEmail(username);
+        return new CurrentUser(user);
     }
 }

@@ -1,5 +1,6 @@
 package com.black.mulberry.core.service;
 
+import com.black.mulberry.core.entity.User;
 import com.black.mulberry.data.transfer.request.UserUpdateRequest;
 import com.black.mulberry.data.transfer.response.UserResponse;
 
@@ -13,7 +14,7 @@ public interface UserService {
      * @param userRequest
      * @return UserResponse
      */
-    UserResponse update(final UserUpdateRequest userRequest, final long userId);
+    User update(final UserUpdateRequest userRequest, final long userId);
 
     /**
      * Remove user from database
@@ -28,7 +29,7 @@ public interface UserService {
      * @param id "user id"
      * @return UserResponse
      */
-    UserResponse findById(final long id);
+    User findById(final long id);
 
     /**
      * Find user by email
@@ -36,7 +37,7 @@ public interface UserService {
      * @param email
      * @return User
      */
-    UserResponse findByEmail(final String email);
+    User findByEmail(final String email);
 
     /**
      * Find all user list from database
