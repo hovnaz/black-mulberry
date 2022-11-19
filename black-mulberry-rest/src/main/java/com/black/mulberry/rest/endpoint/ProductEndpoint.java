@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/products")
+@RequestMapping("/v1/products")
 public class ProductEndpoint {
 
     private final ProductServiceImpl productService;
@@ -26,7 +26,7 @@ public class ProductEndpoint {
         return productService.findAll();
     }
 
-    @GetMapping("/myList")
+    @GetMapping("/my-list")
     public List<ProductResponse> getAllProductsByUserId(@AuthenticationPrincipal CurrentUser currentUser) {
         return productService.findAllByUserId(currentUser.getUser().getId());
     }

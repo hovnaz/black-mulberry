@@ -5,6 +5,7 @@ import com.black.mulberry.core.entity.User;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
@@ -73,6 +74,6 @@ public interface ProductService {
      * @param fileName
      * @return byte[] buffer
      */
-    byte[] getImage(String fileName);
+    byte[] getImage(String fileName) throws IOException;
 
 }

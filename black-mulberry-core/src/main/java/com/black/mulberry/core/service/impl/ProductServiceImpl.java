@@ -8,18 +8,16 @@ import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.ProductService;
+import com.black.mulberry.core.util.IOUtil;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -34,6 +32,7 @@ public class ProductServiceImpl implements ProductService {
     private final UserRepository userRepository;
     private final CategoryProductImpl categoryProductService;
     private final ProductMapper productMapper;
+    private final IOUtil ioUtil;
 
     @Value("blackMulberry.product.images")
     private String folderPath;
@@ -56,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
     public Product findById(long id) {
         log.info("Request to get product with id: {}", id);
         Product product = productRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> {
-            log.debug("product with id: {} not found", id);
+            log.error("product with id: {} not found", id);
             throw new ProductNotExistException("product with id: " + id + " does not exist");
         });
         log.info("succesfully found product with id: {}", id);
@@ -67,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
     public Product findByIdAndUserId(long productId, long userId) {
         log.info("request to get product with id: {}", productId);
         Product product = productRepository.findByIdAndIsDeleteFalseAndUserId(productId, userId).orElseThrow(() -> {
-            log.debug("product with id: {} not found", productId);
+            log.error("product with id: {} not found", productId);
             throw new ProductNotExistException("product with id: " + productId + " does not exist");
         });
         log.info("succesfully found product with id: {}", productId);
@@ -116,14 +115,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public byte[] getImage(String fileName) {
-        log.info("request get image");
-        InputStream inputStream;
-        try {
-            inputStream = new FileInputStream(folderPath + File.separator + fileName);
-            return IOUtils.toByteArray(inputStream);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public byte[] getImage(String fileName) throws IOException {
+        return ioUtil.getAllBytesByUrl(folderPath + File.separator + fileName);
+
     }
 }
