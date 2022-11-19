@@ -5,105 +5,118 @@ import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.ProductNotExistException;
 import com.black.mulberry.core.mapper.ProductMapper;
-import com.black.mulberry.core.repository.CategoryProductRepository;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.ProductService;
+import com.black.mulberry.core.util.IOUtil;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.io.IOUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ProductServiceImpl implements ProductService {
+
     private final ProductRepository productRepository;
-    private final CategoryProductRepository categoryProductRepository;
     private final UserRepository userRepository;
+    private final CategoryProductImpl categoryProductService;
     private final ProductMapper productMapper;
+    private final IOUtil ioUtil;
 
     @Value("blackMulberry.product.images")
     private String folderPath;
 
     @Override
-    public ProductResponse save(ProductRequest productRequest) {
-        Optional<User> optionalUser = userRepository.findById(productRequest.getUserId());
-        Optional<CategoryProduct> categoryProduct = categoryProductRepository.findById(productRequest.getCategoryProductId());
-        if(optionalUser.isEmpty() || categoryProduct.isEmpty()){
-           throw new NullPointerException("user or category is null");
-        }
+    public Product save(ProductRequest productRequest, User user) {
+        log.info("request from user: {} to create product", user.getEmail());
+        // todo after userService changes change to userService
+        Optional<User> userOptional = userRepository.findById(user.getId());
+        CategoryProduct categoryById = categoryProductService.findById(productRequest.getCategoryProductId());
         Product product = productMapper.toEntity(productRequest);
-        product.setCategoryProduct(categoryProduct.get());
-        product.setUser(optionalUser.get());
+        product.setCategoryProduct(categoryById);
+        product.setUser(userOptional.get());
         Product save = productRepository.save(product);
-        return productMapper.toResponse(save);
+        log.info("product with id: {} succesfully created", save.getId());
+        return save;
     }
+
     @Override
-    public ProductResponse findById(long id){
-        Product product = productRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> new ProductNotExistException(
-                "product with id: " + id + " does not exist"
-        ));
-        return productMapper.toResponse(product);
+    public Product findById(long id) {
+        log.info("Request to get product with id: {}", id);
+        Product product = productRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> {
+            log.error("product with id: {} not found", id);
+            throw new ProductNotExistException("product with id: " + id + " does not exist");
+        });
+        log.info("succesfully found product with id: {}", id);
+        return product;
+    }
+
+    @Override
+    public Product findByIdAndUserId(long productId, long userId) {
+        log.info("request to get product with id: {}", productId);
+        Product product = productRepository.findByIdAndIsDeleteFalseAndUserId(productId, userId).orElseThrow(() -> {
+            log.error("product with id: {} not found", productId);
+            throw new ProductNotExistException("product with id: " + productId + " does not exist");
+        });
+        log.info("succesfully found product with id: {}", productId);
+        return product;
     }
 
     @Override
     public List<ProductResponse> findAll() {
+        log.info("Find all Product list");
         List<Product> productList = productRepository.findAllByIsDeleteFalse();
         return productList.stream()
                 .map(productMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
+
     @Override
-    public ProductResponse update(long id, ProductRequest productRequest) {
-        Optional<Product> productById = productRepository.findByIdAndIsDeleteFalse(id);
-        Optional<CategoryProduct> categoryProduct = categoryProductRepository.findById(productRequest.getCategoryProductId());
-        if (productById.isEmpty()){
-            throw new ProductNotExistException("product with id: " + id + " does not exist");
-        }
+    public List<ProductResponse> findAllByUserId(long userId) {
+        log.info("Find all Product list by user id: {}", userId);
+        List<Product> productList = productRepository.findAllByIsDeleteFalseAndUserId(userId);
+        return productList.stream()
+                .map(productMapper::toResponse)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @Override
+    public Product update(long productId, long userId, ProductRequest productRequest) {
+        log.info("request to update product with id: {} and by UserId {}", productId, userId);
         Product product = productMapper.toEntity(productRequest);
-        product.setId(id);
-        product.setCategoryProduct(categoryProduct.get());
-        product.setUser(productById.get().getUser());
+        Product productById = findByIdAndUserId(productId, userId);
+        CategoryProduct categoryById = categoryProductService.findById(productRequest.getCategoryProductId());
+        product.setId(productById.getId());
+        product.setCategoryProduct(categoryById);
+        product.setUser(productById.getUser());
         Product save = productRepository.save(product);
-        return productMapper.toResponse(save);
+        log.info("product with id: {} successfully updated", productId);
+        return save;
     }
 
     @Override
-    public void deleteById(long id) {
-        Optional<Product> productById = productRepository.findByIdAndIsDeleteFalse(id);
-        if (productById.isPresent()){
-            Product product = productById.get();
-            product.setDelete(true);
-            productRepository.save(product);
-        }
-        else {
-            throw new ProductNotExistException("product with " + id +" don't exist");
-        }
+    public void deleteById(long productId, long userId) {
+        Product productById = findByIdAndUserId(productId, userId);
+        log.info("request from user {} to delete product with id: {}", productById.getUser().getName(), productId);
+        productById.setDelete(true);
+        productRepository.save(productById);
+        log.info("product with id: {} successfully  deleted", productId);
     }
 
     @Override
-    public byte[] getImage(@RequestParam("fileName") String fileName)  {
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(folderPath + File.separator + fileName);
-            byte[] bytes = IOUtils.toByteArray(inputStream);
-            return  bytes;
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public byte[] getImage(String fileName) throws IOException {
+        return ioUtil.getAllBytesByUrl(folderPath + File.separator + fileName);
 
+    }
 }
