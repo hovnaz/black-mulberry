@@ -50,7 +50,7 @@ public class ProductEndpoint {
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable("id") long id, @RequestBody ProductRequest productRequest,
                                                          @AuthenticationPrincipal CurrentUser currentUser) {
-        Product updatedProduct = productService.update(id, currentUser.getUser().getId(), productRequest);
+        Product updatedProduct = productService.update(id, currentUser.getId(), productRequest);
         return ResponseEntity.ok(productMapper.toResponse(updatedProduct));
     }
 }
