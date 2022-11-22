@@ -3,6 +3,7 @@ package com.black.mulberry.mvc.controller;
 import com.black.mulberry.core.service.AuthService;
 import com.black.mulberry.data.transfer.request.UserRegistrationRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +17,7 @@ public class AuthController {
 
     private final AuthService authService;
 
+    @PreAuthorize("isAnonymous()")
     @GetMapping("/")
     public String authPage() {
         return "view/auth";
