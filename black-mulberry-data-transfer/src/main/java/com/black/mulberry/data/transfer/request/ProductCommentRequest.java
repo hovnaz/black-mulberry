@@ -4,6 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Builder
 @NoArgsConstructor
@@ -11,6 +16,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class ProductCommentRequest {
 
+    @NotNull(message = "product id is not null")
+    @Range(min = 1, message = "product id is invalid")
     private long productId;
+    @NotBlank(message = "product is not blank")
+    @Size(min = 3, max = 600, message = "content length is between 3-600")
     private String content;
 }
