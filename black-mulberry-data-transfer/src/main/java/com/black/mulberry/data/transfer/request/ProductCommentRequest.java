@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @Data
 public class ProductCommentRequest {
 
-    @Range(min = 1, message = "product id is invalid")
+    @Min(value = 1, message = "product id is invalid")
     private long productId;
     @NotBlank(message = "product is not blank")
     @Size(min = 3, max = 600, message = "content length is between 3-600")
