@@ -10,6 +10,8 @@
 
 ## Modules
 
+<hr>
+
 - Mvc: Run in port 8080
 - Rest: Run in port 8000
 - Core
@@ -17,7 +19,9 @@
 
 ## Development Setup instruction
 
-## install devtools
+### install devtools
+
+<hr>
 
 <!-- TOC -->
 
@@ -28,6 +32,8 @@
 <!-- TOC -->
 
 ## Setting Up a Project
+
+<hr>
 
 Setup PostgresSQL
 
@@ -57,11 +63,15 @@ java -jar black-mulberry-rest/.target/${MMODULE_VERSION}.jar
 
 ## Docker Compose Run
 
+<hr>
+
 ```
 docker-compose up
 ```
 
 ## Url website
+
+<hr>
 
 Rest Module
 
@@ -71,3 +81,24 @@ Mvc Module
 
 [http://localhost:8080/](http://localhost:8080/)
 
+## Links
+
+<hr>
+
+<!-- TOC -->
+
+* [Trello Project](https://trello.com/w/decodeitspace/)
+
+<!-- TOC -->
+
+## Contributors
+
+<hr>
+
+| Name                                                       | Position                               |
+|------------------------------------------------------------|----------------------------------------|
+| [Hovhannes Nazaryan](https://github.com/hovnaz)            | Software Engineer                      |
+| [Mesrop Mkhitaryan](https://github.com/MesropMkhitaryan)   | Java Backend Engineer                  |
+| [Sevak Martirosyan](https://github.com/sevakmartirosyan92) | Java Backend Engineer                  |
+| [Karen Gasparyan](https://github.com/mrkaren)              | Delivery & Resource Manager **Mentor** |                                 |
+| [Mushegh Ghazaryan](https://github.com/Mushegh128)         | Java Software Engineer **Mentor**      |
