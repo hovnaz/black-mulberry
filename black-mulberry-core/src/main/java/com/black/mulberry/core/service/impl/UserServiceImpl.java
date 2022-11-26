@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         log.info("Find by id user");
         return userRepository.findById(id).orElseThrow(() -> {
             log.debug("User with id: {} not found", id);
-            return new UserNotFoundException("User with id: " + id + " NOT FOUND");
+            throw new UserNotFoundException("User with id: " + id + " NOT FOUND");
         });
     }
 
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
         log.info("Find by email user");
         return userRepository.findByEmail(email).orElseThrow(() -> {
             log.debug("User with email: {} not found", email);
-            return new UserNotFoundException("User with email: " + email + " NOT FOUND");
+            throw new UserNotFoundException("User with email: " + email + " NOT FOUND");
         });
     }
 

@@ -120,7 +120,7 @@ public class ProductRatingServiceImpl implements ProductRatingService {
         log.info("Find Product rating by user id: {} and product id: {}", userId, productId);
         return productRatingRepository.findByUserIdAndProductId(userId, productId).orElseThrow(() -> {
             log.error("Product rating by user id: {} and product id: {} NOT FOUND", userId, productId);
-            return new ProductRatingNotExistException("Product rating with user id: " + userId + " and product id: " + productId + " NOT FOUND");
+            throw new ProductRatingNotExistException("Product rating with user id: " + userId + " and product id: " + productId + " NOT FOUND");
         });
     }
 }
