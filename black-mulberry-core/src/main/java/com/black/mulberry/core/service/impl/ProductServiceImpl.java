@@ -6,14 +6,16 @@ import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.ProductNotExistException;
 import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
-import com.black.mulberry.core.service.UserService;
+import com.black.mulberry.core.service.CategoryProductService;
 import com.black.mulberry.core.service.ProductService;
+import com.black.mulberry.core.service.UserService;
 import com.black.mulberry.core.util.IOUtil;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -29,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
     private final UserService userService;
-    private final CategoryProductImpl categoryProductService;
+    private final CategoryProductService categoryProductService;
     private final ProductMapper productMapper;
     private final IOUtil ioUtil;
 
@@ -45,7 +47,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCategoryProduct(categoryById);
         product.setUser(userById);
         Product save = productRepository.save(product);
-        log.info("product with id: {} succesfully created", save.getId());
+        log.info("product with id: {} successfully created", save.getId());
         return save;
     }
 
@@ -56,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
             log.error("product with id: {} not found", id);
             throw new ProductNotExistException("product with id: " + id + " does not exist");
         });
-        log.info("succesfully found product with id: {}", id);
+        log.info("successfully found product with id: {}", id);
         return product;
     }
 
@@ -67,23 +69,23 @@ public class ProductServiceImpl implements ProductService {
             log.error("product with id: {} not found", productId);
             throw new ProductNotExistException("product with id: " + productId + " does not exist");
         });
-        log.info("succesfully found product with id: {}", productId);
+        log.info("successfully found product with id: {}", productId);
         return product;
     }
 
     @Override
-    public List<ProductResponse> findAll() {
+    public List<ProductResponse> findAll(Pageable pageable) {
         log.info("Find all Product list");
-        List<Product> productList = productRepository.findAllByIsDeleteFalse();
+        List<Product> productList = productRepository.findAllByIsDeleteFalseOrderByCreateAtDesc(pageable);
         return productList.stream()
                 .map(productMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
-    public List<ProductResponse> findAllByUserId(long userId) {
+    public List<ProductResponse> findAllByUserId(long userId, Pageable pageable) {
         log.info("Find all Product list by user id: {}", userId);
-        List<Product> productList = productRepository.findAllByIsDeleteFalseAndUserId(userId);
+        List<Product> productList = productRepository.findAllByIsDeleteFalseAndUserIdOrderByCreateAtDesc(userId, pageable);
         return productList.stream()
                 .map(productMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
@@ -116,5 +118,16 @@ public class ProductServiceImpl implements ProductService {
     public byte[] getImage(String fileName) throws IOException {
         return ioUtil.getAllBytesByUrl(folderPath + File.separator + fileName);
 
+    }
+
+    @Override
+    public long countAll() {
+        return productRepository.countAllByIsDeleteFalse();
+    }
+
+    @Override
+    public long countAllByUserId(long userId) {
+        userService.findById(userId);
+        return productRepository.countAllByIsDeleteFalseAndUserId(userId);
     }
 }
