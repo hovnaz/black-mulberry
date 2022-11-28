@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final UserService userService;
-    private final CategoryProductService categoryProductService;
+    private final UserServiceImpl userService;
+    private final CategoryProductServiceImpl categoryProductService;
     private final ProductMapper productMapper;
     private final IOUtil ioUtil;
 
