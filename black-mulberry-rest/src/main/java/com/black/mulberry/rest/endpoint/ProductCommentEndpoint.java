@@ -31,7 +31,7 @@ public class ProductCommentEndpoint {
     private final ProductCommentService productCommentService;
     private final ProductCommentMapper productCommentMapper;
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user")
     public ResponseEntity<List<ProductCommentResponse>> findPaginatedByUserId(
             @RequestParam("user_id") long userId,
@@ -39,14 +39,14 @@ public class ProductCommentEndpoint {
         return ResponseEntity.ok(productCommentService.findPaginatedByUserId(userId, pageable));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user/count")
     public ResponseEntity<Long> countAllPaginatedByUserId(
             @RequestParam("user_id") long userId) {
         return ResponseEntity.ok(productCommentService.countAllByUserId(userId));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user_and_product")
     public ResponseEntity<List<ProductCommentResponse>> findPaginatedByProductIdAndUserId(
             @RequestParam("user_id") long userId,
@@ -55,7 +55,7 @@ public class ProductCommentEndpoint {
         return ResponseEntity.ok(productCommentService.findPaginatedByProductIdAndUserId(productId, userId, pageable));
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping("/user_and_product/count")
     public ResponseEntity<Long> countAllByProductIdAndUserId(
             @RequestParam("user_id") long userId,

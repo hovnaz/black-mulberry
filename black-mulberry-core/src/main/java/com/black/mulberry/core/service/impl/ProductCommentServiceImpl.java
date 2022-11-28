@@ -84,7 +84,7 @@ public class ProductCommentServiceImpl implements ProductCommentService {
         log.info("Find by product_comment id: {}", id);
         return productCommentRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> {
             log.error("Product comment with id: {} not found", id);
-            return new ProductCommentNotExistException("Comment with id: " + id + " NOT FOUND");
+            throw new ProductCommentNotExistException("Comment with id: " + id + " NOT FOUND");
         });
     }
 
@@ -93,7 +93,7 @@ public class ProductCommentServiceImpl implements ProductCommentService {
         log.info("Find by product comment id: {} and user id: {}", commentId, userId);
         return productCommentRepository.findByIdAndUserIdAndIsDeleteFalse(commentId, userId).orElseThrow(() -> {
             log.error("Product comment with id: {} and user id: {} not found", commentId, userId);
-            return new ProductCommentNotExistException("Product comment with id: " + commentId + " and user id: " + userId + " not found");
+            throw new ProductCommentNotExistException("Product comment with id: " + commentId + " and user id: " + userId + " not found");
         });
     }
 
