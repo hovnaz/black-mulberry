@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class CategoryProductImpl implements CategoryProductService {
+public class CategoryProductServiceImpl implements CategoryProductService {
 
     private final CategoryProductRepository categoryProductRepository;
 

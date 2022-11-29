@@ -4,6 +4,7 @@ import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
+import org.springframework.data.domain.Pageable;
 
 import java.io.IOException;
 import java.util.List;
@@ -58,7 +59,7 @@ public interface ProductService {
      *
      * @return List<ProductResponse>
      */
-    List<ProductResponse> findAll();
+    List<ProductResponse> findAll(Pageable pageable);
 
     /**
      * find products list by user id
@@ -66,7 +67,7 @@ public interface ProductService {
      * @param userId
      * @return
      */
-    List<ProductResponse> findAllByUserId(long userId);
+    List<ProductResponse> findAllByUserId(long userId, Pageable pageable);
 
     /**
      * get product image
@@ -76,4 +77,7 @@ public interface ProductService {
      */
     byte[] getImage(String fileName) throws IOException;
 
+    long countAll();
+
+    long countAllByUserId(long userId);
 }

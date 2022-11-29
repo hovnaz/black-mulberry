@@ -1,19 +1,21 @@
 package com.black.mulberry.core.repository;
 
 import com.black.mulberry.core.entity.Product;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
     /**
      * find all products
      * when product is not deleted
      *
      * @return List<Product>
      */
-    List<Product> findAllByIsDeleteFalse();
+    List<Product> findAllByIsDeleteFalse(Pageable pageable);
 
     /**
      * find all products by userId
@@ -22,14 +24,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      * @param userId
      * @return List<Product>
      */
-    List<Product> findAllByIsDeleteFalseAndUserId(long userId);
+    List<Product> findAllByUserIdAndIsDeleteFalse(long userId, Pageable pageable);
 
     /**
      * find all product by id
      * when product is not deleted
      *
      * @param id
-     * @return
      */
     Optional<Product> findByIdAndIsDeleteFalse(long id);
 
@@ -39,7 +40,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      *
      * @param productId
      * @param userId
-     * @return
      */
-    Optional<Product> findByIdAndIsDeleteFalseAndUserId(long productId, long userId);
+    Optional<Product> findByIdAndUserIdAndIsDeleteFalse(long productId, long userId);
+
+    /**
+     * this method counts all non deleted products
+     * by userId
+     * @param userId
+     * @return long count
+     */
+    long countAllByUserIdAndIsDeleteFalse(long userId);
+
+    /**
+     * this method counts all non deleted products
+     * @return long count
+     */
+    long countAllByIsDeleteFalse();
 }
