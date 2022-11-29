@@ -19,7 +19,7 @@ public class CategoryProductImpl implements CategoryProductService {
     public CategoryProduct findById(long categoryId) {
         CategoryProduct categoryProduct = categoryProductRepository.findById(categoryId).orElseThrow(() -> {
             log.error("category with id: {} not found", categoryId);
-            throw new CategoryNotFoundException("product with id: " + categoryId + " does not exist");
+            throw new CategoryNotFoundException("category with id: " + categoryId + " does not exist");
         });
         log.info("succesfully found category with id: {}", categoryId);
         return categoryProduct;
