@@ -30,8 +30,8 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
-    private final UserServiceImpl userService;
-    private final CategoryProductServiceImpl categoryProductService;
+    private final UserService userService;
+    private final CategoryProductService categoryProductService;
     private final ProductMapper productMapper;
     private final IOUtil ioUtil;
 
@@ -65,7 +65,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findByIdAndUserId(long productId, long userId) {
         log.info("request to get product with id: {}", productId);
-        Product product = productRepository.findByIdAndIsDeleteFalseAndUserId(productId, userId).orElseThrow(() -> {
+        Product product = productRepository.findByIdAndUserIdAndIsDeleteFalse(productId, userId).orElseThrow(() -> {
             log.error("product with id: {} not found", productId);
             throw new ProductNotExistException("product with id: " + productId + " does not exist");
         });
@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> findAll(Pageable pageable) {
         log.info("Find all Product list");
-        List<Product> productList = productRepository.findAllByIsDeleteFalseOrderByCreateAtDesc(pageable);
+        List<Product> productList = productRepository.findAllByIsDeleteFalse(pageable);
         return productList.stream()
                 .map(productMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
@@ -85,7 +85,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ProductResponse> findAllByUserId(long userId, Pageable pageable) {
         log.info("Find all Product list by user id: {}", userId);
-        List<Product> productList = productRepository.findAllByIsDeleteFalseAndUserIdOrderByCreateAtDesc(userId, pageable);
+        List<Product> productList = productRepository.findAllByUserIdAndIsDeleteFalse(userId, pageable);
         return productList.stream()
                 .map(productMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
@@ -128,6 +128,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public long countAllByUserId(long userId) {
         userService.findById(userId);
-        return productRepository.countAllByIsDeleteFalseAndUserId(userId);
+        return productRepository.countAllByUserIdAndIsDeleteFalse(userId);
     }
 }

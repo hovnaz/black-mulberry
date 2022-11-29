@@ -8,6 +8,7 @@ import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,13 +25,13 @@ public class ProductEndpoint {
     private final ProductMapper productMapper;
 
     @GetMapping
-    public List<ProductResponse> getAllProducts(@PageableDefault Pageable pageable) {
+    public List<ProductResponse> getAllProducts(@PageableDefault(sort = {"createAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
         return productService.findAll(pageable);
     }
 
     @GetMapping("/my-list")
-    public List<ProductResponse> getAllProductsByUserId(@AuthenticationPrincipal CurrentUser currentUser, @PageableDefault Pageable pageable) {
-        return productService.findAllByUserId(currentUser.getUser().getId(), pageable);
+    public List<ProductResponse> getAllProductsByUserId(@AuthenticationPrincipal CurrentUser currentUser, @PageableDefault(sort = {"createAt"}, direction = Sort.Direction.DESC) Pageable pageable) {
+        return productService.findAllByUserId(currentUser.getId(), pageable);
     }
 
     @GetMapping("/count")
@@ -40,7 +41,7 @@ public class ProductEndpoint {
 
     @GetMapping("/my/count")
     public ResponseEntity<Long> countAllProductsByUser(@AuthenticationPrincipal CurrentUser currentUser) {
-        return ResponseEntity.ok(productService.countAllByUserId(currentUser.getUser().getId()));
+        return ResponseEntity.ok(productService.countAllByUserId(currentUser.getId()));
     }
 
     @GetMapping("/{id}")
@@ -55,7 +56,7 @@ public class ProductEndpoint {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProductById(@PathVariable("id") int id, @AuthenticationPrincipal CurrentUser currentUser) {
-        productService.deleteById(id, currentUser.getUser().getId());
+        productService.deleteById(id, currentUser.getId());
         return ResponseEntity.noContent().build();
     }
 

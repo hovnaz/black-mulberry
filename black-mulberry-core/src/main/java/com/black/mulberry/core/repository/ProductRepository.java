@@ -8,13 +8,14 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
     /**
      * find all products
      * when product is not deleted
      *
      * @return List<Product>
      */
-    List<Product>  findAllByIsDeleteFalseOrderByCreateAtDesc(Pageable pageable);
+    List<Product> findAllByIsDeleteFalse(Pageable pageable);
 
     /**
      * find all products by userId
@@ -23,14 +24,13 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      * @param userId
      * @return List<Product>
      */
-    List<Product> findAllByIsDeleteFalseAndUserIdOrderByCreateAtDesc(long userId, Pageable pageable);
+    List<Product> findAllByUserIdAndIsDeleteFalse(long userId, Pageable pageable);
 
     /**
      * find all product by id
      * when product is not deleted
      *
      * @param id
-     * @return
      */
     Optional<Product> findByIdAndIsDeleteFalse(long id);
 
@@ -40,11 +40,20 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      *
      * @param productId
      * @param userId
-     * @return
      */
-    Optional<Product> findByIdAndIsDeleteFalseAndUserId(long productId, long userId);
+    Optional<Product> findByIdAndUserIdAndIsDeleteFalse(long productId, long userId);
 
-    long countAllByIsDeleteFalseAndUserId(long id);
+    /**
+     * this method counts all non deleted products
+     * by userId
+     * @param userId
+     * @return long count
+     */
+    long countAllByUserIdAndIsDeleteFalse(long userId);
 
+    /**
+     * this method counts all non deleted products
+     * @return long count
+     */
     long countAllByIsDeleteFalse();
 }
