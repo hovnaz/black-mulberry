@@ -18,7 +18,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PreAuthorize("isAnonymous()")
-    @GetMapping("/")
+    @GetMapping
     public String authPage() {
         return "view/auth";
     }

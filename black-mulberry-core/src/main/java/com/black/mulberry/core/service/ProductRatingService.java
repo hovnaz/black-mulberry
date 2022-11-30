@@ -84,4 +84,12 @@ public interface ProductRatingService {
      * @return canceled rating id
      */
     long canselRating(long userId, long productId);
+
+    /**
+     *
+     * @param productId find product id
+     * @param userId for to be isolated from other users' data
+     * @return product rating by rated user
+     */
+    int findRateByProductIdUserId(long productId, long userId);
 }

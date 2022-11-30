@@ -62,6 +62,6 @@ public interface ProductRatingRepository extends JpaRepository<ProductRating, Lo
      * @param productId for find by id
      * @return int
      */
-    @Query(value = "select AVG(rating) FROM product_rating where product_id = :productId", nativeQuery = true)
-    int avgProduct(@Param("productId") long productId);
+    @Query(value = "select coalesce(AVG(rating), 0) FROM product_rating where product_id = :productId", nativeQuery = true)
+    Integer avgProduct(@Param("productId") long productId);
 }
