@@ -30,7 +30,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserRepository userRepository;
-
     private final JwtTokenUtil jwtTokenUtil;
 
     private final MailSender mailSender;
