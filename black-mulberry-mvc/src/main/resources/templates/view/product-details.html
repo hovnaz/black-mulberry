@@ -88,32 +88,32 @@
             </div>
             <div class="col-lg-7 col-sm-12 col-xs-12" data-aos="fade-up" data-aos-delay="200">
                 <div class="product-details-content quickview-content">
-                    <h2 th:text="${product.title}"></h2>
+                    <h2 th:text="${data.product.title}"></h2>
                     <p class="reference">Category:
-                        <span th:text="${product.getCategoryProduct().getCatParent().name}"></span> |
-                        <span th:text="${product.getCategoryProduct().name}"></span>
+                        <span th:text="${data.product.getCategoryProduct().getCatParent().name}"></span> |
+                        <span th:text="${data.product.getCategoryProduct().name}"></span>
                     </p>
                     <div class="pro-details-rating-wrap">
                         <div class="rating-product">
-                            <i class='bx bxs-star' th:style="${rating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${rating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${rating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${rating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${rating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star' th:style="${data.rating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star' th:style="${data.rating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star' th:style="${data.rating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star' th:style="${data.rating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star' th:style="${data.rating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
                         </div>
 
                         <span class="read-review">
                                 <a class="reviews" href="#">
-                                    <span>Ratings </span>(<span th:text="${ratingCount}"></span>)
+                                    <span>Ratings </span>(<span th:text="${data.ratingCount}"></span>)
                                 </a>
                             </span>
                     </div>
                     <div class="pricing-meta">
                         <ul>
-                            <li class="old-price not-cut" th:text="'$' + ${product.price}"></li>
+                            <li class="old-price not-cut" th:text="'$' + ${data.product.price}"></li>
                         </ul>
                     </div>
-                    <p class="quickview-para" th:maxlength="255" th:text="${product.description}"></p>
+                    <p class="quickview-para" th:maxlength="255" th:text="${data.product.description}"></p>
                     <div class="pro-details-quality">
                         <div class="cart-plus-minus">
                             <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
@@ -130,7 +130,6 @@
     </div>
 </div>
 
-
 <!-- product details description area start -->
 <div class="description-review-area pb-100px" data-aos="fade-up" data-aos-delay="200">
     <div class="container">
@@ -139,27 +138,27 @@
                 <a data-bs-toggle="tab" href="single-product.html#des-details1">Description</a>
                 <a class="active" data-bs-toggle="tab" href="single-product.html#des-details2">Product Details</a>
                 <a data-bs-toggle="tab" href="single-product.html#des-details3">Comments (<span
-                        th:text="${commentCount}"></span>)</a>
+                        th:text="${data.commentCount}"></span>)</a>
             </div>
             <div class="tab-content description-review-bottom">
                 <div id="des-details2" class="tab-pane active">
                     <div class="product-anotherinfo-wrapper">
                         <ul>
-                            <li><span>Stock</span> <span th:text="${product.getStock()}"></span></li>
+                            <li><span>Stock</span> <span th:text="${data.product.getStock()}"></span></li>
                         </ul>
                     </div>
                 </div>
                 <div id="des-details1" class="tab-pane">
                     <div class="product-description-wrapper">
-                        <p th:text="${product.description}"></p>
+                        <p th:text="${data.product.description}"></p>
                     </div>
                 </div>
                 <div id="des-details3" class="tab-pane">
                     <div class="row">
                         <div class="col-lg-7">
                             <div class="review-wrapper" style="overflow: auto; height: 500px; padding-right: 20px;">
-                                <div th:if="${commentCount == 0}" style="font-size: 26px">Comment not found</div>
-                                <div class="single-review" th:each="comment : ${comments}">
+                                <div th:if="${data.commentCount == 0}" style="font-size: 26px">Comment not found</div>
+                                <div class="single-review" th:each="comment : ${data.comments}">
                                     <div class="review-img">
                                         <img src="https://i.stack.imgur.com/34AD2.jpg" alt="avatar"
                                              class="comment-avatar"/>
@@ -172,6 +171,14 @@
                                                         <span th:text="${comment.user.name}"></span>
                                                         <span th:text="${comment.user.surname}"></span>
                                                         <span th:text="${comment.createAt}"></span>
+                                                        <span class="action">
+                                                            <th:block th:if="${currentUser} != null">
+                                                                |
+                                                                <th:block th:if="${currentUser.id} == ${data.product.user.id}">
+                                                                    <span><a th:href="'/v1/comment/product/delete/' + ${data.product.id} + '/'+ ${comment.id}">delete</a></span>
+                                                                </th:block>
+                                                            </th:block>
+                                                        </span>
                                                     </h4>
                                                 </div>
                                             </div>
@@ -191,11 +198,11 @@
                                 </div>
                                 <div class="pro-details-rating-wrap">
                                     <div class="rating-product" style="display: flex">
-                                        <a th:href="'/v1/rating/product/?rating=1&productId='+${product.id}"> <i class='bx bxs-star' th:style="${yourRating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=2&productId='+${product.id}"> <i class='bx bxs-star' th:style="${yourRating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=3&productId='+${product.id}"> <i class='bx bxs-star' th:style="${yourRating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=4&productId='+${product.id}"> <i class='bx bxs-star' th:style="${yourRating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=5&productId='+${product.id}"> <i class='bx bxs-star' th:style="${yourRating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=1&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=2&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=3&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=4&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=5&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
                                     </div>
                                 </div>
                                 <h3 style="margin-bottom: 25px;" disabled="">Add a Comment</h3>
@@ -204,7 +211,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="rating-form-style form-submit">
-                                                    <input type="hidden" name="productId" th:value="${product.id}" readonly>
+                                                    <input type="hidden" name="productId" th:value="${data.product.id}" readonly>
                                                     <textarea name="content" placeholder="Message" minlength="3" maxlength="600" required></textarea>
                                                     <button class="btn btn-primary btn-hover-color-primary"
                                                             type="submit" value="Submit">Submit

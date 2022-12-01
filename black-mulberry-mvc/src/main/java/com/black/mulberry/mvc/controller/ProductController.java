@@ -5,9 +5,8 @@ import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.repository.CategoryProductRepository;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.security.CurrentUser;
-import com.black.mulberry.core.service.ProductCommentService;
-import com.black.mulberry.core.service.ProductRatingService;
 import com.black.mulberry.core.service.ProductService;
+import com.black.mulberry.mvc.util.MapUtil;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.io.IOUtils;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +30,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -38,8 +38,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductCommentService productCommentService;
-    private final ProductRatingService productRatingService;
+    private final MapUtil mapUtil;
     private final ProductRepository productRepository;
 
     private final CategoryProductRepository categoryProductRepository;
@@ -79,13 +78,8 @@ public class ProductController {
     public String viewProductDetail(ModelMap modelMap, @PathVariable long id,
                                     @PageableDefault(size = 25, sort = {"createAt"}, direction = Sort.Direction.DESC) Pageable pageable,
                                     @AuthenticationPrincipal CurrentUser currentUser) {
-        int yourRating = currentUser == null ? 0 : productRatingService.findRateByProductIdUserId(id, currentUser.getId());
-        modelMap.addAttribute("product", productService.findById(id));
-        modelMap.addAttribute("comments", productCommentService.findPaginatedByProductId(id, pageable));
-        modelMap.addAttribute("commentCount", productCommentService.countAllByProductId(id));
-        modelMap.addAttribute("yourRating", yourRating);
-        modelMap.addAttribute("rating", productRatingService.avgProduct(id));
-        modelMap.addAttribute("ratingCount", productRatingService.countAllByProductId(id));
+        Map<String, Object> map = mapUtil.productDetail(id, currentUser, pageable);
+        modelMap.addAttribute("data", map);
         return "view/product-details";
     }
 }
