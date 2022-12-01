@@ -21,4 +21,6 @@ public class CategoryProduct {
     @ManyToOne
     @JoinColumn(name = "category_parent_id")
     private CategoryParent catParent;
+    @Column(name = "is_delete")
+    private boolean isDelete;
 }
