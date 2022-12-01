@@ -14,7 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(value = {CategoryNotFoundException.class, ProductRatingNotExistException.class,
-            ProductNotExistException.class, ProductCommentNotExistException.class, UserNotFoundException.class})
+            ProductNotFoundException.class, ProductCommentNotExistException.class, UserNotFoundException.class,
+            CategoryParentNotFoundException.class})
     public ResponseEntity<Object> handleEntityNotFoundException(Exception ex, WebRequest request){
         RestErrorDto restErrorDto = RestErrorDto.builder()
                 .statusCode(HttpStatus.NOT_FOUND.value())
@@ -35,9 +36,18 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = AuthenticatedException.class)
     public ResponseEntity<Object> handleAuthenticatedException(Exception ex, WebRequest request){
         RestErrorDto restErrorDto = RestErrorDto.builder()
-                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .statusCode(HttpStatus.UNAUTHORIZED.value())
                 .errorMessage(ex.getMessage())
                 .build();
-        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+    }
+
+    @ExceptionHandler(value = {CategoryProductIsNotEmptyException.class, CategoryParentIsNotDeletedException.class})
+    public ResponseEntity<Object> handleNonDeleteableDataException(Exception ex, WebRequest request){
+        RestErrorDto restErrorDto = RestErrorDto.builder()
+                .statusCode(HttpStatus.METHOD_NOT_ALLOWED.value())
+                .errorMessage(ex.getMessage())
+                .build();
+        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED, request);
     }
 }
