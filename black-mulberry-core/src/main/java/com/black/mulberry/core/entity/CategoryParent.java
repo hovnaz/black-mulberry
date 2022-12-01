@@ -4,6 +4,7 @@ package com.black.mulberry.core.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -18,4 +19,5 @@ public class CategoryParent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private boolean isDelete;
 }
