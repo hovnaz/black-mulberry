@@ -20,7 +20,6 @@ public class CategoryProductEndpoint {
     private final CategoryProductService categoryProductService;
     private final CategoryProductMapper categoryProductMapper;
 
-    @PreAuthorize("hasAuthority('ADMIN')")
     @GetMapping
     public List<CategoryProductResponse> getAllCategoryProduct() {
         return categoryProductService.findAll();

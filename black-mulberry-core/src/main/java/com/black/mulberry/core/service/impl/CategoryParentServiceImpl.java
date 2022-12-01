@@ -1,7 +1,7 @@
 package com.black.mulberry.core.service.impl;
 
 import com.black.mulberry.core.entity.CategoryParent;
-import com.black.mulberry.core.exception.CategoryParentIsNotEmptyException;
+import com.black.mulberry.core.exception.CategoryParentIsNotDeletedException;
 import com.black.mulberry.core.exception.CategoryParentNotFoundException;
 import com.black.mulberry.core.mapper.CategoryParentMapper;
 import com.black.mulberry.core.repository.CategoryParentRepository;
@@ -51,7 +51,7 @@ public class CategoryParentServiceImpl implements CategoryParentService {
     @Override
     public void deleteById(long categoryParentId) {
         if (categoryProductRepository.countAllByCatParentId(categoryParentId) != 0){
-            throw new CategoryParentIsNotEmptyException("you can't delete categoryParent with this id: " + categoryParentId + "because it is not empty");
+            throw new CategoryParentIsNotDeletedException("you can't delete categoryParent with this id: " + categoryParentId + "because it is not empty");
         }
         CategoryParent categoryParentById = findById(categoryParentId);
         categoryParentById.setDelete(true);
