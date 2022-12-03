@@ -36,8 +36,8 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryProductService categoryProductService;
     private final ProductMapper productMapper;
     private final IOUtil ioUtil;
-
-    private String folderPath = "D:\\black-mulberry\\images\\product";
+    @Value("${blackMulberry.images.product}")
+    private String folderPath;
 
     @Override
     public Product save(ProductRequest productRequest, long userId) {

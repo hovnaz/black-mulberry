@@ -41,3 +41,6 @@ logging:
   level:
     root: info
     com.mulberry: info
+blackMulberry:
+  images:
+    product: "D:\\black-mulberry\\images\\product"
