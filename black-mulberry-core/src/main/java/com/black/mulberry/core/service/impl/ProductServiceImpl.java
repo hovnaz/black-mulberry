@@ -3,7 +3,7 @@ package com.black.mulberry.core.service.impl;
 import com.black.mulberry.core.entity.CategoryProduct;
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.entity.User;
-import com.black.mulberry.core.exception.ProductNotExistException;
+import com.black.mulberry.core.exception.ProductNotFoundException;
 import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.CategoryProductService;
@@ -17,11 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,7 +55,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("Request to get product with id: {}", id);
         Product product = productRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> {
             log.error("product with id: {} not found", id);
-            throw new ProductNotExistException("product with id: " + id + " does not exist");
+            throw new ProductNotFoundException("product with id: " + id + " does not exist");
         });
         log.info("successfully found product with id: {}", id);
         return product;
@@ -68,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("request to get product with id: {}", productId);
         Product product = productRepository.findByIdAndUserIdAndIsDeleteFalse(productId, userId).orElseThrow(() -> {
             log.error("product with id: {} not found", productId);
-            throw new ProductNotExistException("product with id: " + productId + " does not exist");
+            throw new ProductNotFoundException("product with id: " + productId + " does not exist");
         });
         log.info("successfully found product with id: {}", productId);
         return product;

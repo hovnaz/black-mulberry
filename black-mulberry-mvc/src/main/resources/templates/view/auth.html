@@ -9,9 +9,16 @@
 
 <body>
     <th:block th:insert="view/fragments/layout::header"></th:block>
-
-
-
+    <div class="fail" th:if="${emailConflict} != null" style="position: fixed;
+    bottom: 15px;
+    left: 15px;
+    background-color: #ff9090;
+    color: #fff;
+    height: 25px;
+    z-index: 999999999999;
+    border-radius: 5px;
+    text-align: center;
+    padding: 0 16px;">Fail Registration</div>
     <div class="offcanvas-overlay"></div>
     <!-- breadcrumb-area start -->
     <div class="breadcrumb-area">
@@ -76,6 +83,7 @@
                                         <form action="/v1/auth/registration" method="post">
                                             <input type="text" name="name" placeholder="Name" required />
                                             <input type="text" name="surname" placeholder="Surname" required />
+                                            <span style="color: red" th:if="${emailConflict != null}">email conflict</span>
                                             <input type="email" name="email" placeholder="Email" required />
                                             <input type="text" name="phone" placeholder="PhoneNumber" required />
                                             <input type="password" name="password" placeholder="Password" />
