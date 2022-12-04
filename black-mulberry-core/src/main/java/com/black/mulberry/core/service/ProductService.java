@@ -5,6 +5,8 @@ import com.black.mulberry.core.entity.User;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,7 +19,7 @@ public interface ProductService {
      * @param user
      * @return Product
      */
-    Product save(ProductRequest productRequest, User user);
+    Product save(ProductRequest productRequest, long userId);
 
     /**
      * update product by taking it's id and userId
@@ -76,6 +78,8 @@ public interface ProductService {
      * @return byte[] buffer
      */
     byte[] getImage(String fileName) throws IOException;
+
+    String saveImage(MultipartFile file);
 
     long countAll();
 

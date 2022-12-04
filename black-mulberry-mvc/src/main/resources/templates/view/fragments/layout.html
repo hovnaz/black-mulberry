@@ -212,10 +212,11 @@
                   <ul class="sub-menu">
                     <li><a href="/">Home</a></li>
                     <li><a href="/account/">Account</a></li>
+                    <li th:if="${currentUser != null}"><a href="/v1/product/my">My added products</a></li>
                     <li><a href="/basket/">Basket</a></li>
                     <li><a href="/checkout/">Checkout</a></li>
                     <li><a href="/orders/">Orders</a></li>
-                    <li><a href="/product/add/">Product Add</a></li>
+                    <li><a href="/v1/product/add/">Product Add</a></li>
                   </ul>
                 </li>
               </ul>

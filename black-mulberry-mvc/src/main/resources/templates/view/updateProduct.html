@@ -17,7 +17,7 @@
                 <div class="col-12">
                     <div class="row breadcrumb_box  align-items-center">
                         <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
-                            <h2 class="breadcrumb-title">Add </h2>
+                            <h2 class="breadcrumb-title">Edit</h2>
                         </div>
                         <div class="col-lg-6  col-md-6 col-sm-12">
                             <!-- breadcrumb-list start -->
@@ -36,36 +36,35 @@
     <!-- breadcrumb-area end -->
 
     <!-- checkout area start -->
-    <form action="/v1/product/add" method="post" enctype="multipart/form-data">
+    <form th:each="products : ${product}" th:action="'/v1/product/update/'+${products.id}" method="post" enctype="multipart/form-data">
     <div class="checkout-area pt-100px pb-100px">
         <div class="container">
             <div class="row">
                 <div class="col-lg-7">
                     <div class="billing-info-wrap">
-                        <h3>Product charachteristics</h3>
+                        <h3>Product characteristics</h3>
                         <div class="row">
-
                             <div class="col-lg-12">
                                 <div class="billing-info mb-20px">
                                     <label>Product Title</label>
-                                    <input type="text" name="title" placeholder="Title"/>
+                                    <input type="text" name="title" placeholder="Title" th:value="${products.title}"/>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-20px">
                                     <label>Price</label>
-                                    <input type="number" name="price" />
+                                    <input type="number" name="price" th:value="${products.price}"/>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6">
                                 <div class="billing-info mb-20px">
                                     <label>Stock</label>
-                                    <input type="number" name="stock" />
+                                    <input type="number" name="stock" th:value="${products.stock}"/>
                                 </div>
                             </div>
                             <div class="additional-info">
                                 <label>Description</label>
-                                <textarea placeholder="Description" name="description"></textarea>
+                                <textarea name="description" th:text="${products.description}"></textarea>
                             </div>
                             <div class="col-lg-12">
                                 <div class="billing-select mb-20px">
@@ -80,10 +79,7 @@
                                     <input type="file" name="image">
                                 </div>
                             </div>
-
-
-                            <button class="btn-hover checkout-btn" type="submit">Add Product</button>
-
+                            <button class="btn-hover checkout-btn" type="submit" value="update">Edit product</button>
                         </div>
                     </div>
                 </div>

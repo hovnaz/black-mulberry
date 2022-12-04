@@ -95,11 +95,10 @@ public class ProductRatingServiceImpl implements ProductRatingService {
         Product product = productService.findById(productId);
         Optional<ProductRating> ratingOptional = productRatingRepository.findByUserIdAndProductId(userId, productId);
         ProductRating productRating = productRatingMapper.toEntity(productRatingRequest);
+        ratingOptional.ifPresent(rating -> productRating.setId(rating.getId()));
+        productRating.setUser(user);
+        productRating.setProduct(product);
 
-        if (ratingOptional.isEmpty()) {
-            productRating.setUser(user);
-            productRating.setProduct(product);
-        }
         ProductRating save = productRatingRepository.save(productRating);
         log.info("Successfully rated with user: {} under product id: {}", user.getEmail(), productId);
         return productRatingMapper.toResponse(save);
@@ -114,6 +113,12 @@ public class ProductRatingServiceImpl implements ProductRatingService {
         productRatingRepository.deleteById(ratingId);
         log.info("Successfully canceled rating with user id: {} under product id: {}", userId, productId);
         return ratingId;
+    }
+
+    @Override
+    public int findRateByProductIdUserId(long productId, long userId) {
+        Optional<ProductRating> productRatingOptional = productRatingRepository.findByUserIdAndProductId(userId, productId);
+        return productRatingOptional.map(ProductRating::getRating).orElse(0);
     }
 
     private ProductRating findByUserIdAndProductId(long userId, long productId) {
