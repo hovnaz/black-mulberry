@@ -19,4 +19,6 @@ public class ProductBasketItem {
     private int quantity;
     @ManyToOne
     private ProductBasket productBasket;
+    @ManyToOne
+    private Product product;
 }
