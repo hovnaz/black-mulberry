@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+
+<head>
+    <title>Furns - Furniture eCommerce HTML Template</title>
+
+    <th:block th:insert="view/fragments/import::headerImport"></th:block>
+</head>
+
+<body>
+<th:block th:insert="view/fragments/layout::header"></th:block>
+
+
+<div class="offcanvas-overlay"></div>
+<!-- breadcrumb-area start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-end">
+                            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="breadcrumb-item active">Wishlist</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- breadcrumb-area end -->
+
+<!-- Wishlist Area Start -->
+<div class="cart-main-area pt-100px pb-100px">
+    <div class="container">
+        <h3 class="cart-page-title">All Products List</h3>
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="table-content table-responsive cart-table-content">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Author</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product : ${products}">
+                            <td><a th:href = "'/v1/product/' + ${product.id}"><img src="" width="100 px" th:if="${product.picUrl != null}"
+                                     th:src="'/v1/product/getProductPic/' + ${product.getPicUrl()}"
+                                     class="user-image img-fluid"></a></td>
+                            <td th:text="${product.title}"></td>
+                            <td th:text="${product.price}"></td>
+                            <td th:text="${product.getUser().name}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<th:block th:insert="view/fragments/layout::footer"></th:block>
+
+<th:block th:insert="view/fragments/import::footerImport"></th:block>
+</body>
+
+</html>
