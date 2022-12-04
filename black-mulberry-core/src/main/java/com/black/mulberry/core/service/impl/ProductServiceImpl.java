@@ -17,9 +17,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,14 +34,13 @@ public class ProductServiceImpl implements ProductService {
     private final CategoryProductService categoryProductService;
     private final ProductMapper productMapper;
     private final IOUtil ioUtil;
-
-    @Value("blackMulberry.product.images")
+    @Value("${blackMulberry.images.product}")
     private String folderPath;
 
     @Override
-    public Product save(ProductRequest productRequest, User user) {
-        log.info("request from user: {} to create product", user.getEmail());
-        User userById = userService.findById(user.getId());
+    public Product save(ProductRequest productRequest, long userId) {
+        log.info("request from user id: {} to create product", userId);
+        User userById = userService.findById(userId);
         CategoryProduct categoryById = categoryProductService.findById(productRequest.getCategoryProductId());
         Product product = productMapper.toEntity(productRequest);
         product.setCategoryProduct(categoryById);
@@ -115,9 +114,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public byte[] getImage(String fileName) throws IOException {
+    public byte[] getImage(String fileName) {
         return ioUtil.getAllBytesByUrl(folderPath + File.separator + fileName);
+    }
 
+    @Override
+    public String saveImage(MultipartFile file) {
+        return ioUtil.saveImage(folderPath + File.separator, file);
     }
 
     @Override

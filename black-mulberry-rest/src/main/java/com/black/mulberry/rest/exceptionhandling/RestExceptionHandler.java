@@ -24,7 +24,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler(value = UserEmailConflict.class)
+    @ExceptionHandler(value = UserEmailConflictException.class)
     public ResponseEntity<Object> handleUserEmailConflict(Exception ex, WebRequest request){
         RestErrorDto restErrorDto = RestErrorDto.builder()
                 .statusCode(HttpStatus.CONFLICT.value())

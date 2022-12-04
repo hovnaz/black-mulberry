@@ -2,7 +2,10 @@ package com.black.mulberry.mvc.controller;
 
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.repository.ProductRepository;
+import com.black.mulberry.core.service.ProductService;
+import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,12 +18,12 @@ import java.util.List;
 @RequestMapping("/orders")
 public class OrdersController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @GetMapping("/")
-    public String ordersPage(ModelMap modelMap){
+    public String ordersPage(ModelMap modelMap, Pageable pageable){
         // todo find all products in orders
-        List<Product> products = productRepository.findAll();
+        List<ProductResponse> products = productService.findAll(pageable);
         modelMap.addAttribute("products",products);
         return "view/orders";
     }

@@ -40,3 +40,6 @@ logging:
 jwt:
   secret: k205j@dkjf0%^@
   expiration: 330000
+blackMulberry:
+    images:
+      product: "D:\\black-mulberry\\images\\product"

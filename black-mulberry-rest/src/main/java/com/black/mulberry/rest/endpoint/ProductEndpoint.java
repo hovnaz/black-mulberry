@@ -51,7 +51,7 @@ public class ProductEndpoint {
 
     @PostMapping
     public ResponseEntity<?> saveProduct(@RequestBody ProductRequest productRequest, @AuthenticationPrincipal CurrentUser currentUser) {
-        return ResponseEntity.ok(productMapper.toResponse(productService.save(productRequest, currentUser.getUser())));
+        return ResponseEntity.ok(productMapper.toResponse(productService.save(productRequest, currentUser.getId())));
     }
 
     @DeleteMapping("/{id}")

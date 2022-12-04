@@ -6,14 +6,13 @@ import com.black.mulberry.core.exception.CategoryParentIsNotDeletedException;
 import com.black.mulberry.core.exception.CategoryParentNotFoundException;
 import com.black.mulberry.core.exception.CategoryProductIsNotEmptyException;
 import com.black.mulberry.core.exception.ProductCommentNotExistException;
-import com.black.mulberry.core.exception.ProductNotExistException;
+import com.black.mulberry.core.exception.ProductNotFoundException;
 import com.black.mulberry.core.exception.ProductRatingNotExistException;
 import com.black.mulberry.core.exception.UserEmailConflictException;
 import com.black.mulberry.core.exception.UserNotFoundException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @ControllerAdvice
@@ -22,7 +21,7 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {CategoryNotFoundException.class,
             CategoryParentNotFoundException.class,
             ProductCommentNotExistException.class,
-            ProductNotExistException.class,
+            ProductNotFoundException.class,
             ProductRatingNotExistException.class,
             UserNotFoundException.class
     })
