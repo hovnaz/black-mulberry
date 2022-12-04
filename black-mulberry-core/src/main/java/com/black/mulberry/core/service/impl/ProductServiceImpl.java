@@ -3,7 +3,7 @@ package com.black.mulberry.core.service.impl;
 import com.black.mulberry.core.entity.CategoryProduct;
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.entity.User;
-import com.black.mulberry.core.exception.ProductNotExistException;
+import com.black.mulberry.core.exception.ProductNotFoundException;
 import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.CategoryProductService;
@@ -56,7 +56,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("Request to get product with id: {}", id);
         Product product = productRepository.findByIdAndIsDeleteFalse(id).orElseThrow(() -> {
             log.error("product with id: {} not found", id);
-            throw new ProductNotExistException("product with id: " + id + " does not exist");
+            throw new ProductNotFoundException("product with id: " + id + " does not exist");
         });
         log.info("successfully found product with id: {}", id);
         return product;
@@ -67,7 +67,7 @@ public class ProductServiceImpl implements ProductService {
         log.info("request to get product with id: {}", productId);
         Product product = productRepository.findByIdAndUserIdAndIsDeleteFalse(productId, userId).orElseThrow(() -> {
             log.error("product with id: {} not found", productId);
-            throw new ProductNotExistException("product with id: " + productId + " does not exist");
+            throw new ProductNotFoundException("product with id: " + productId + " does not exist");
         });
         log.info("successfully found product with id: {}", productId);
         return product;
