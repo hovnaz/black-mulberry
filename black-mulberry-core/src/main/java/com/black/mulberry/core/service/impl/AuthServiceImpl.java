@@ -2,7 +2,7 @@ package com.black.mulberry.core.service.impl;
 
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.AuthenticatedException;
-import com.black.mulberry.core.exception.UserEmailConflict;
+import com.black.mulberry.core.exception.UserEmailConflictException;
 import com.black.mulberry.core.mapper.UserMapper;
 import com.black.mulberry.core.mapper.UserRegistrationMapper;
 import com.black.mulberry.core.repository.UserRepository;
@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
         Optional<User> byEmail = userRepository.findByEmail(userRequest.getEmail());
         if (byEmail.isPresent()) {
             log.debug("User with email: {} already exists", userRequest.getEmail());
-            throw new UserEmailConflict("User with email: " + userRequest.getEmail() + " already exists");
+            throw new UserEmailConflictException("User with email: " + userRequest.getEmail() + " already exists");
         }
         User user = userRegistrationMapper.toEntity(userRequest);
         user.setRole(UserRole.USER);
