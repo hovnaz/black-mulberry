@@ -45,7 +45,8 @@
                 <div class="swiper-container zoom-top">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide zoom-image-hover">
-                            <img class="img-responsive m-auto" src="view/images/product-image/zoom-image/1.jpg" alt="">
+                            <img width="1000 px" class="img-responsive m-auto"
+                                 th:src="'/v1/product/getProductPic/' + ${data.product.getPicUrl()}" alt="">
                         </div>
                         <div class="swiper-slide zoom-image-hover">
                             <img class="img-responsive m-auto" src="view/images/product-image/zoom-image/2.jpg" alt="">
@@ -95,11 +96,16 @@
                     </p>
                     <div class="pro-details-rating-wrap">
                         <div class="rating-product">
-                            <i class='bx bxs-star' th:style="${data.rating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${data.rating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${data.rating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${data.rating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                            <i class='bx bxs-star' th:style="${data.rating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star'
+                               th:style="${data.rating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star'
+                               th:style="${data.rating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star'
+                               th:style="${data.rating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star'
+                               th:style="${data.rating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                            <i class='bx bxs-star'
+                               th:style="${data.rating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
                         </div>
 
                         <span class="read-review">
@@ -174,8 +180,10 @@
                                                         <span class="action">
                                                             <th:block th:if="${currentUser} != null">
                                                                 |
-                                                                <th:block th:if="${currentUser.id} == ${data.product.user.id}">
-                                                                    <span><a th:href="'/v1/comment/product/delete/' + ${data.product.id} + '/'+ ${comment.id}">delete</a></span>
+                                                                <th:block
+                                                                        th:if="${currentUser.id} == ${data.product.user.id}">
+                                                                    <span><a
+                                                                            th:href="'/v1/comment/product/delete/' + ${data.product.id} + '/'+ ${comment.id}">delete</a></span>
                                                                 </th:block>
                                                             </th:block>
                                                         </span>
@@ -198,11 +206,21 @@
                                 </div>
                                 <div class="pro-details-rating-wrap">
                                     <div class="rating-product" style="display: flex">
-                                        <a th:href="'/v1/rating/product/?rating=1&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=2&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=3&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=4&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
-                                        <a th:href="'/v1/rating/product/?rating=5&productId='+${data.product.id}"> <i class='bx bxs-star' th:style="${data.yourRating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=1&productId='+${data.product.id}"> <i
+                                                class='bx bxs-star'
+                                                th:style="${data.yourRating} >= 1 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=2&productId='+${data.product.id}"> <i
+                                                class='bx bxs-star'
+                                                th:style="${data.yourRating} >= 2 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=3&productId='+${data.product.id}"> <i
+                                                class='bx bxs-star'
+                                                th:style="${data.yourRating} >= 3 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=4&productId='+${data.product.id}"> <i
+                                                class='bx bxs-star'
+                                                th:style="${data.yourRating} >= 4 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
+                                        <a th:href="'/v1/rating/product/?rating=5&productId='+${data.product.id}"> <i
+                                                class='bx bxs-star'
+                                                th:style="${data.yourRating} >= 5 ? 'color: #fdd835' : 'color: #dee2e6'"></i></a>
                                     </div>
                                 </div>
                                 <h3 style="margin-bottom: 25px;" disabled="">Add a Comment</h3>
@@ -211,8 +229,10 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <div class="rating-form-style form-submit">
-                                                    <input type="hidden" name="productId" th:value="${data.product.id}" readonly>
-                                                    <textarea name="content" placeholder="Message" minlength="3" maxlength="600" required></textarea>
+                                                    <input type="hidden" name="productId" th:value="${data.product.id}"
+                                                           readonly>
+                                                    <textarea name="content" placeholder="Message" minlength="3"
+                                                              maxlength="600" required></textarea>
                                                     <button class="btn btn-primary btn-hover-color-primary"
                                                             type="submit" value="Submit">Submit
                                                     </button>
@@ -246,21 +266,16 @@
         <div class="new-product-slider swiper-container slider-nav-style-1" data-aos="fade-up" data-aos-delay="200">
             <div class="new-product-wrapper swiper-wrapper">
                 <!-- Single Prodect -->
-                <div class="new-product-item swiper-slide">
+                <div class="new-product-item swiper-slide" th:each="product : ${categoryProduct}">
                     <div class="product">
                         <div class="thumb">
-                            <a href="shop-left-sidebar.html" class="image">
-                                <img src="view/images/product-image/1.jpg" alt="Product"/>
-                                <img class="hover-image" src="view/images/product-image/2.jpg" alt="Product"/>
+                            <a th:href="'/v1/product/' + ${data.product.id}" class="image">
+                                <img th:src="'/v1/product/getProductPic/' + ${product.getPicUrl()}" alt="Product"/>
+                                <img class="hover-image" th:src="'/v1/product/getProductPic/' + ${product.getPicUrl()}"
+                                     alt="Product"/>
                             </a>
-                            <span class="badges">
-                                    <span class="sale">-10%</span>
-                                <span class="new">New</span>
-                                </span>
                             <div class="actions">
-                                <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                        class="icon-heart"></i></a>
-                                <a href="single-product.html#" class="action quickview" data-link-action="quickview"
+                                <a th:href="'/v1/product/' + ${data.product.id}"  class="action quickview" data-link-action="quickview"
                                    title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
                                         class="icon-size-fullscreen"></i></a>
                                 <a href="compare.html" class="action compare" title="Compare"><i
@@ -271,104 +286,10 @@
                             </button>
                         </div>
                         <div class="content">
-                            <h5 class="title"><a href="shop-left-sidebar.html">Simple minimal Chair </a></h5>
+                            <h5 class="title" th:text="${product.title}"><a th:href="'/v1/product/' + ${data.product.id}" ></a></h5>
                             <span class="price">
-                                    <span class="new">$18.50</span>
-                                <span class="old">$28.50</span>
-                                </span>
-                        </div>
-                    </div>
-                </div>
-                <!-- Single Prodect -->
-                <div class="new-product-item swiper-slide">
-                    <div class="product">
-                        <div class="thumb">
-                            <a href="shop-left-sidebar.html" class="image">
-                                <img src="view/images/product-image/3.jpg" alt="Product"/>
-                                <img class="hover-image" src="view/images/product-image/4.jpg" alt="Product"/>
-                            </a>
-                            <span class="badges">
-                                    <span class="sale">-7%</span>
-                                </span>
-                            <div class="actions">
-                                <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                        class="icon-heart"></i></a>
-                                <a href="single-product.html#" class="action quickview" data-link-action="quickview"
-                                   title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="icon-size-fullscreen"></i></a>
-                                <a href="compare.html" class="action compare" title="Compare"><i
-                                        class="icon-refresh"></i></a>
-                            </div>
-                            <button title="Add To Cart" class=" add-to-cart">Add
-                                To Cart
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5 class="title"><a href="shop-left-sidebar.html">Wooden decorations</a></h5>
-                            <span class="price">
-                                    <span class="new">$38.50</span>
-                                <span class="old">$43.50</span>
-                                </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Add Arrows -->
-            <div class="swiper-buttons">
-                <div class="no-content swiper-button-next"><i class='bx bx-chevron-right'></i></div>
-                <div class="no-content swiper-button-prev"><i class='bx bx-chevron-left'></i></div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- New Product End -->
-
-<!-- New Product Start -->
-<div class="section pb-100px" data-aos="fade-up" data-aos-delay="200">
-    <div class="container">
-        <!-- section title start -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-title text-start mb-11">
-                    <h2 class="title">12 Other Products In The Same Category:</h2>
-                </div>
-            </div>
-        </div>
-        <!-- section title start -->
-        <div class="new-product-slider swiper-container slider-nav-style-1" data-aos="fade-up" data-aos-delay="200">
-            <div class="new-product-wrapper swiper-wrapper">
-                <!-- Single Prodect -->
-                <div class="new-product-item swiper-slide">
-                    <div class="product">
-                        <div class="thumb">
-                            <a href="shop-left-sidebar.html" class="image">
-                                <img src="view/images/product-image/1.jpg" alt="Product"/>
-                                <img class="hover-image" src="view/images/product-image/2.jpg" alt="Product"/>
-                            </a>
-                            <span class="badges">
-                                    <span class="sale">-10%</span>
-                                <span class="new">New</span>
-                                </span>
-                            <div class="actions">
-                                <a href="wishlist.html" class="action wishlist" title="Wishlist"><i
-                                        class="icon-heart"></i></a>
-                                <a href="single-product.html#" class="action quickview" data-link-action="quickview"
-                                   title="Quick view" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                                        class="icon-size-fullscreen"></i></a>
-                                <a href="compare.html" class="action compare" title="Compare"><i
-                                        class="icon-refresh"></i></a>
-                            </div>
-                            <button title="Add To Cart" class=" add-to-cart">Add
-                                To Cart
-                            </button>
-                        </div>
-                        <div class="content">
-                            <h5 class="title"><a href="shop-left-sidebar.html">Simple minimal Chair </a></h5>
-                            <span class="price">
-                                    <span class="new">$18.50</span>
-                                <span class="old">$28.50</span>
-                                </span>
+                                    <span class="new">$<span th:text="${product.price}"></span></span>
+                            </span>
                         </div>
                     </div>
                 </div>
