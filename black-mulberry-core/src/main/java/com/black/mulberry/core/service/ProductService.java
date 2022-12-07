@@ -84,4 +84,6 @@ public interface ProductService {
     long countAll();
 
     long countAllByUserId(long userId);
+
+    List<ProductResponse> findAllByCategoryProduct(long categoryProductId, Pageable pageable);
 }

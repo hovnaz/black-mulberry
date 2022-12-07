@@ -16,13 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -106,6 +100,8 @@ public class ProductController {
                                     @AuthenticationPrincipal CurrentUser currentUser) {
         Map<String, Object> map = mapUtil.productDetail(id, currentUser, pageable);
         modelMap.addAttribute("data", map);
+        List<ProductResponse> categoryProduct = productService.findAllByCategoryProduct(id, pageable);
+        modelMap.addAttribute("categoryProduct", categoryProduct);
         return "view/product-details";
     }
 }
