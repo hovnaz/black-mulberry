@@ -3,116 +3,126 @@ package com.black.mulberry.core.service.impl;
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.entity.ProductBasket;
 import com.black.mulberry.core.entity.ProductBasketItem;
-import com.black.mulberry.core.entity.User;
-import com.black.mulberry.core.exception.ProductBasketNotExistException;
 import com.black.mulberry.core.mapper.ProductBasketItemMapper;
-import com.black.mulberry.core.mapper.ProductBasketMapper;
 import com.black.mulberry.core.repository.ProductBasketItemRepository;
 import com.black.mulberry.core.repository.ProductBasketRepository;
 import com.black.mulberry.core.service.ProductBasketService;
 import com.black.mulberry.core.service.ProductService;
-import com.black.mulberry.core.service.UserService;
+import com.black.mulberry.core.service.support.ProductBasketServiceSupport;
+import com.black.mulberry.core.service.support.ProductServiceSupport;
+import com.black.mulberry.core.service.support.UserServiceSupport;
 import com.black.mulberry.data.transfer.request.ProductBasketItemRequest;
-import com.black.mulberry.data.transfer.request.ProductBasketRequest;
 import com.black.mulberry.data.transfer.response.ProductBasketItemResponse;
-import com.black.mulberry.data.transfer.response.ProductBasketResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class ProductBasketServiceImpl implements ProductBasketService {
 
-    private final UserService userService;
-//    private final ProductBasketService productBasketService;
+    private final UserServiceSupport userServiceSupport;
     private final ProductBasketRepository productBasketRepository;
     private final ProductBasketItemRepository productBasketItemRepository;
-    private final ProductBasketMapper productBasketMapper;
     private final ProductService productService;
     private final ProductBasketItemMapper productBasketItemMapper;
+    private final ProductBasketServiceSupport productBasketServiceSupport;
+    private final ProductServiceSupport productServiceSupport;
 
     @Override
     public ProductBasketItemResponse add(ProductBasketItemRequest productBasketItemRequest, long userId) {
-        ProductBasket actualBasketOrCreate = findActualBasketOrCreate(userId);
+        userServiceSupport.ifPresentOrElseThrow(userId);
+        log.info("request add product in basket user id: {} and product id: {}", userId, productBasketItemRequest.getProductId());
+        ProductBasket actualBasket = productBasketServiceSupport.findActualBasketOrCreate(userId);
+        userServiceSupport.ifUsersNotEqualsOrElseThrow(userId, actualBasket.getUser().getId());
         Product product = productService.findById(productBasketItemRequest.getProductId());
-        ProductBasketItem productBasketItem = productBasketItemMapper.toEntity(productBasketItemRequest);
-        productBasketItem.setProductBasket(actualBasketOrCreate);
-        productBasketItem.setProduct(product);
+        Optional<ProductBasketItem> productBasketItemOptional = productBasketItemRepository.findByProductBasketIdAndProductId(actualBasket.getId(), product.getId());
+        ProductBasketItem productBasketItem;
+        if (productBasketItemOptional.isPresent()) {
+            productBasketItem = productBasketItemOptional.get();
+            productBasketItem.setQuantity(productBasketItem.getQuantity() + productBasketItemRequest.getQuantity());
+        } else {
+            productBasketItem = productBasketItemMapper.toEntity(productBasketItemRequest);
+            productBasketItem.setProductBasket(actualBasket);
+            productBasketItem.setProduct(product);
+        }
         ProductBasketItem save = productBasketItemRepository.save(productBasketItem);
+        log.info("successfully added product in basket user id: {} and product id: {}", userId, productBasketItemRequest.getProductId());
         return productBasketItemMapper.toResponse(save);
     }
 
     @Override
-    public ProductBasket findByIdAndUserId(long basketId, long userId) {
-        return productBasketRepository.findByUserIdAndIsPaidFalse(userId).orElseThrow(() -> {
-            throw new ProductBasketNotExistException("Product basket with id: " + basketId + "and user id: " + userId + "not found");
-        });
+    public void cancelByProductId(long userId, long productId) {
+        userServiceSupport.ifPresentOrElseThrow(userId);
+        Optional<ProductBasket> productBasketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
+        productBasketOptional.flatMap(productBasket -> productBasketItemRepository.findByProductBasketIdAndProductId(productBasket.getId(), productId))
+                .ifPresent(productBasketItem -> productBasketItemRepository.deleteById(productBasketItem.getId()));
     }
 
     @Override
-    public ProductBasket findById(long id) {
-        return productBasketRepository.findByIdAndIsPaidFalse(id).orElseThrow(() -> {
-            throw new ProductBasketNotExistException("Basket with id: " + id + " NOT FOUND");
-        });
+    public List<ProductBasketItemResponse> findAllByActual(long userId, Pageable pageable) {
+        userServiceSupport.ifPresentOrElseThrow(userId);
+        Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
+        List<ProductBasketItem> productList = new ArrayList<>();
+        if (basketOptional.isPresent()) {
+            productList = productBasketItemRepository.findAllByProductBasketId(basketOptional.get().getId(), pageable);
+        }
+        return productList.stream()
+                .map(productBasketItemMapper::toResponse)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 
     @Override
-    public ProductBasketResponse cancelByProductId(long basketId, long userId) {
-        ProductBasket basket = findByIdAndUserId(basketId, userId);
-        basket.setPaid(true);
-        ProductBasket save = productBasketRepository.save(basket);
-        return productBasketMapper.toResponse(save);
+    public long countAllByUserId(long userId) {
+        userServiceSupport.ifPresentOrElseThrow(userId);
+        Optional<ProductBasket> productBasketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
+        return productBasketOptional.map(productBasket -> productBasketItemRepository.countAllByProductBasketId(productBasket.getId())).orElse(0L);
     }
-
-    @Override
-    public Long countAllByUserId(Long userId) {
-        User user = userService.findById(userId);
-        return productBasketRepository.countAllByUserIdAndIsPaidFalse(userId);
-    }
-
 
     @Override
     public void clear(long userId) {
-        userService.findById(userId);
+        userServiceSupport.ifPresentOrElseThrow(userId);
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
-        if (basketOptional.isPresent()){
-            List<ProductBasketItem> productBasketItems = basketOptional.get().getProductBasketItems();
-            productBasketItemRepository.deleteAll(productBasketItems);
-        }
+        basketOptional.ifPresent(productBasket -> productBasketItemRepository.deleteAllByProductBasketId(productBasket.getId()));
     }
 
     @Override
-    public ProductBasketResponse update(ProductBasketRequest productBasketItemRequest, int quantity, long userId) {
-        return null;
-    }
-
-    @Override
-    public BigDecimal amount() {
-        return null;
-    }
-
-    @Override
-    public BigDecimal amountByProductId(Long productId) {
-        return null;
-    }
-
-    @Override
-    public ProductBasket findActualBasketOrCreate(long userId) {
-        User user = userService.findById(userId);
+    public ProductBasketItemResponse update(ProductBasketItemRequest productBasketItemRequest, long userId) {
+        userServiceSupport.ifPresentOrElseThrow(userId);
+        productServiceSupport.ifPresentOrElseThrow(productBasketItemRequest.getProductId());
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
-        if (basketOptional.isEmpty()) {
-            ProductBasket product = ProductBasket.builder()
-                    .user(user)
-                    .isPaid(false)
-                    .build();
-            return productBasketRepository.save(product);
+        if (basketOptional.isPresent()) {
+            Optional<ProductBasketItem> productBasketItemOptional = productBasketItemRepository.findByProductBasketIdAndProductId(basketOptional.get().getId(), productBasketItemRequest.getProductId());
+            if (productBasketItemOptional.isPresent()) {
+                ProductBasketItem productBasketItem = productBasketItemOptional.get();
+                productBasketItem.setQuantity(productBasketItem.getQuantity());
+                ProductBasketItem save = productBasketItemRepository.save(productBasketItem);
+                return productBasketItemMapper.toResponse(save);
+            }
         }
-        return basketOptional.get();
+        return add(productBasketItemRequest, userId);
+    }
+
+    @Override
+    public BigDecimal amountByUserId(long userId) {
+        userServiceSupport.ifPresentOrElseThrow(userId);
+        Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
+        BigDecimal amount = BigDecimal.ZERO;
+        if (basketOptional.isPresent()) {
+            List<ProductBasketItem> productBasketItemList = productBasketItemRepository.findAllByProductBasketId(basketOptional.get().getId());
+            for (ProductBasketItem productBasketItem : productBasketItemList) {
+                amount = amount.add(productBasketItem.getProduct().getPrice());
+            }
+        }
+        return amount;
     }
 }

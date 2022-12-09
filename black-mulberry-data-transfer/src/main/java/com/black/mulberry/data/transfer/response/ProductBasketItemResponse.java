@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class ProductBasketItemResponse {
+
     private int quantity;
-    private ProductBasketResponse productBasket;
     private ProductResponse product;
 }
