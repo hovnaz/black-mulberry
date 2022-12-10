@@ -19,6 +19,7 @@ public class ProductBasketServiceSupport {
     private final ProductBasketRepository productBasketRepository;
 
     public ProductBasket findActualBasketOrCreate(long userId) {
+        log.info("find actual basket or create by user id: {}", userId);
         User user = userService.findById(userId);
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
         if (basketOptional.isEmpty()) {
@@ -26,8 +27,10 @@ public class ProductBasketServiceSupport {
                     .isPaid(false)
                     .user(user)
                     .build();
+            log.info("find and create actual basket ");
             return productBasketRepository.save(productBasketOptional);
         }
+        log.info("find actual basket by user id: {}", userId);
         return basketOptional.get();
     }
 }

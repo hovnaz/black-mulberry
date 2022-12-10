@@ -62,6 +62,7 @@ public class ProductBasketServiceImpl implements ProductBasketService {
 
     @Override
     public void cancelByProductId(long userId, long productId) {
+        log.info("cansel from actual basket product id: {} and user id: {}", productId, userId);
         userServiceSupport.ifPresentOrElseThrow(userId);
         Optional<ProductBasket> productBasketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
         productBasketOptional.flatMap(productBasket -> productBasketItemRepository.findByProductBasketIdAndProductId(productBasket.getId(), productId))
@@ -70,6 +71,7 @@ public class ProductBasketServiceImpl implements ProductBasketService {
 
     @Override
     public List<ProductBasketItemResponse> findAllByActual(long userId, Pageable pageable) {
+        log.info("find all actual basket product by user id: {}", userId);
         userServiceSupport.ifPresentOrElseThrow(userId);
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
         List<ProductBasketItem> productList = new ArrayList<>();
@@ -83,6 +85,7 @@ public class ProductBasketServiceImpl implements ProductBasketService {
 
     @Override
     public long countAllByUserId(long userId) {
+        log.info("get count all product in actual basket by user id: {}", userId);
         userServiceSupport.ifPresentOrElseThrow(userId);
         Optional<ProductBasket> productBasketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
         return productBasketOptional.map(productBasket -> productBasketItemRepository.countAllByProductBasketId(productBasket.getId())).orElse(0L);
@@ -90,6 +93,7 @@ public class ProductBasketServiceImpl implements ProductBasketService {
 
     @Override
     public void clear(long userId) {
+        log.info("clear all basket by user id: {}", userId);
         userServiceSupport.ifPresentOrElseThrow(userId);
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
         basketOptional.ifPresent(productBasket -> productBasketItemRepository.deleteAllByProductBasketId(productBasket.getId()));
@@ -97,6 +101,7 @@ public class ProductBasketServiceImpl implements ProductBasketService {
 
     @Override
     public ProductBasketItemResponse update(ProductBasketItemRequest productBasketItemRequest, long userId) {
+        log.info("update by product id: {} quantity and by user id: {}", productBasketItemRequest.getProductId(), userId);
         userServiceSupport.ifPresentOrElseThrow(userId);
         productServiceSupport.ifPresentOrElseThrow(productBasketItemRequest.getProductId());
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
@@ -114,6 +119,7 @@ public class ProductBasketServiceImpl implements ProductBasketService {
 
     @Override
     public BigDecimal amountByUserId(long userId) {
+        log.info("find amount actual basket by user id: {}", userId);
         userServiceSupport.ifPresentOrElseThrow(userId);
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsPaidFalse(userId);
         BigDecimal amount = BigDecimal.ZERO;
