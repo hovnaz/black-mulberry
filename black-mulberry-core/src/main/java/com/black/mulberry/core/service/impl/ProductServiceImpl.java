@@ -133,4 +133,12 @@ public class ProductServiceImpl implements ProductService {
         userService.findById(userId);
         return productRepository.countAllByUserIdAndIsDeleteFalse(userId);
     }
+
+    @Override
+    public List<ProductResponse> findAllByCategoryProduct(long categoryProductId, Pageable pageable) {
+        List<Product> productByCategory = productRepository.findAllByCategoryProductIdAndIsDeleteFalse(categoryProductId, pageable);
+        return productByCategory.stream()
+                .map(productMapper::toResponse)
+                .collect(Collectors.toCollection(LinkedList::new));
+    }
 }

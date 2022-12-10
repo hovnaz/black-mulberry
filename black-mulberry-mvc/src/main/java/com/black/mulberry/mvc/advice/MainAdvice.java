@@ -1,6 +1,7 @@
 package com.black.mulberry.mvc.advice;
 
 import com.black.mulberry.core.security.CurrentUser;
+import com.black.mulberry.data.transfer.model.UserRole;
 import com.black.mulberry.core.service.ProductBasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,9 @@ public class MainAdvice {
             modelMap.addAttribute("basketItemCount", productBasketService.countAllByUserId(currentUser.getId()));
             modelMap.addAttribute("isAuthenticated", true);
             modelMap.addAttribute("currentUserId", currentUser.getId());
+            if (currentUser.getUser().getRole() == UserRole.ADMIN){
+                modelMap.addAttribute("isAdmin", true);
+            }
         }
     }
 }

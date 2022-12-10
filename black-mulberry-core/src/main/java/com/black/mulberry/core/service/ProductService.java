@@ -16,7 +16,7 @@ public interface ProductService {
      * save product by user id
      *
      * @param productRequest
-     * @param user
+     * @param userId
      * @return Product
      */
     Product save(ProductRequest productRequest, long userId);
@@ -84,4 +84,6 @@ public interface ProductService {
     long countAll();
 
     long countAllByUserId(long userId);
+
+    List<ProductResponse> findAllByCategoryProduct(long categoryProductId, Pageable pageable);
 }

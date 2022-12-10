@@ -58,4 +58,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     long countAllByIsDeleteFalse();
 
     int countAllByCategoryProductIdAndIsDeleteFalse(long categoryProductId);
+
+    List<Product> findAllByCategoryProductIdAndIsDeleteFalse(long categoryProductsId, Pageable pageable);
 }
