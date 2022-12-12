@@ -266,7 +266,7 @@
         <div class="new-product-slider swiper-container slider-nav-style-1" data-aos="fade-up" data-aos-delay="200">
             <div class="new-product-wrapper swiper-wrapper">
                 <!-- Single Prodect -->
-                <div class="new-product-item swiper-slide" th:each="product : ${categoryProduct}">
+                <div class="new-product-item swiper-slide" th:each="product : ${data.categoryProduct}">
                     <div class="product">
                         <div class="thumb">
                             <a th:href="'/v1/product/' + ${data.product.id}" class="image">

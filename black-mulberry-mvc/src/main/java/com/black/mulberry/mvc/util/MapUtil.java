@@ -29,6 +29,7 @@ public class MapUtil {
         map.put("yourRating", yourRating);
         map.put("rating", productRatingService.avgProduct(id));
         map.put("ratingCount", productRatingService.countAllByProductId(id));
+        map.put("categoryProduct",productService.findAllByCategoryProduct(id, pageable));
         return map;
     }
 }
