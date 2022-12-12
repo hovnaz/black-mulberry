@@ -30,6 +30,17 @@ spring:
     driver-class-name: org.postgresql.Driver
     validate-on-migrate: false
     baseline-on-migrate: true
+  mail:
+    host: smtp.gmail.com
+    username: sevakmarti@gmail.com
+    password: fnaiyilveagohqtk
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 server:
   port: 8080
 logging:
