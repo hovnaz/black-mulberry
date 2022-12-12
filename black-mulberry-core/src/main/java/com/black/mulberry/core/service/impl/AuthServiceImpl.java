@@ -16,7 +16,6 @@ import com.black.mulberry.data.transfer.response.UserAuthResponse;
 import com.black.mulberry.data.transfer.response.UserRegistrationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.MailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,9 +30,6 @@ public class AuthServiceImpl implements AuthService {
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserRepository userRepository;
     private final JwtTokenUtil jwtTokenUtil;
-
-    private final MailSender mailSender;
-
     private final MailService mailService;
 
     @Override

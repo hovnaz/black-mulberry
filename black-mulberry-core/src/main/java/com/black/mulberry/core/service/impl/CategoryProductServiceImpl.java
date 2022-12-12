@@ -50,7 +50,7 @@ public class CategoryProductServiceImpl implements CategoryProductService {
         CategoryProduct categoryProductById = findById(categoryProductId);
         CategoryParent categoryParentById = categoryParentService.findById(categoryProductRequest.getCategoryParentId());
         categoryProduct.setId(categoryProductById.getId());
-        categoryProduct.setCatParent(categoryParentById);
+        categoryProduct.setCategoryParent(categoryParentById);
         return categoryProductRepository.save(categoryProduct);
     }
 
