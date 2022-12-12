@@ -8,6 +8,7 @@ import com.black.mulberry.core.exception.CategoryProductIsNotEmptyException;
 import com.black.mulberry.core.exception.ProductCommentNotExistException;
 import com.black.mulberry.core.exception.ProductNotFoundException;
 import com.black.mulberry.core.exception.ProductRatingNotExistException;
+import com.black.mulberry.core.exception.RepeatUsersException;
 import com.black.mulberry.core.exception.UserEmailConflictException;
 import com.black.mulberry.core.exception.UserNotFoundException;
 import org.springframework.ui.Model;
@@ -23,7 +24,8 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
             ProductCommentNotExistException.class,
             ProductNotFoundException.class,
             ProductRatingNotExistException.class,
-            UserNotFoundException.class
+            UserNotFoundException.class,
+
     })
     public String handleEntityNotFoundException() {
         return "view/404";
@@ -38,7 +40,9 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {
             AuthenticatedException.class,
             CategoryParentIsNotDeletedException.class,
-            CategoryProductIsNotEmptyException.class})
+            CategoryProductIsNotEmptyException.class,
+            RepeatUsersException.class
+    })
     public String handleIsNotDeleted(Model theModel){
         theModel.addAttribute("error", true);
         return "redirect:/";
