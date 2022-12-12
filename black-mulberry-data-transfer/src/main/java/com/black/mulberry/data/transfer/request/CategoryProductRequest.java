@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class CategoryProductRequest {
+
     private String name;
     private int categoryParentId;
 }

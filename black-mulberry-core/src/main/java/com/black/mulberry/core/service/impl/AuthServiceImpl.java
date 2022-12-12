@@ -16,7 +16,6 @@ import com.black.mulberry.data.transfer.response.UserAuthResponse;
 import com.black.mulberry.data.transfer.response.UserRegistrationResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.MailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,18 +25,16 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
+
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserRepository userRepository;
     private final JwtTokenUtil jwtTokenUtil;
-
-    private final MailSender mailSender;
-
     private final MailService mailService;
 
     @Override
-    public UserAuthResponse auth(final UserAuthRequest userAuthRequest) {
+    public UserAuthResponse auth(UserAuthRequest userAuthRequest) {
         log.info("Request from user {} to get authenticated", userAuthRequest.getEmail());
         Optional<User> optionalUser = userRepository.findByEmail(userAuthRequest.getEmail());
 
@@ -54,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserRegistrationResponse registration(final UserRegistrationRequest userRequest) {
+    public UserRegistrationResponse registration(UserRegistrationRequest userRequest) {
         log.info("Request from user {} to registration", userRequest.getEmail());
         Optional<User> byEmail = userRepository.findByEmail(userRequest.getEmail());
         if (byEmail.isPresent()) {

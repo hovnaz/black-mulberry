@@ -12,7 +12,7 @@ public interface AuthService {
      * @param userAuthRequest
      * @return UserAuthRequest (token and UserResponse )
      */
-    UserAuthResponse auth(final UserAuthRequest userAuthRequest);
+    UserAuthResponse auth(UserAuthRequest userAuthRequest);
 
     /**
      * New user
@@ -20,6 +20,6 @@ public interface AuthService {
      * @param userRegistrationRequest
      * @return UserRegistrationResponse
      */
-    UserRegistrationResponse registration(final UserRegistrationRequest userRegistrationRequest);
+    UserRegistrationResponse registration(UserRegistrationRequest userRegistrationRequest);
 
 }
