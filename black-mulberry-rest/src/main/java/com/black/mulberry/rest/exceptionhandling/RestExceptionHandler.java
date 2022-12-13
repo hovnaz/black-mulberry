@@ -1,7 +1,7 @@
 package com.black.mulberry.rest.exceptionhandling;
 
 import com.black.mulberry.core.exception.*;
-import com.black.mulberry.data.transfer.response.RestErrorDto;
+import com.black.mulberry.data.transfer.response.RestErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,37 +17,37 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
             ProductNotFoundException.class, ProductCommentNotExistException.class, UserNotFoundException.class,
             CategoryParentNotFoundException.class})
     public ResponseEntity<Object> handleEntityNotFoundException(Exception ex, WebRequest request){
-        RestErrorDto restErrorDto = RestErrorDto.builder()
+        RestErrorResponse restErrorResponse = RestErrorResponse.builder()
                 .statusCode(HttpStatus.NOT_FOUND.value())
                 .errorMessage(ex.getMessage())
                 .build();
-        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+        return handleExceptionInternal(ex, restErrorResponse, new HttpHeaders(), HttpStatus.NOT_FOUND, request);
     }
 
     @ExceptionHandler(value = UserEmailConflictException.class)
     public ResponseEntity<Object> handleUserEmailConflict(Exception ex, WebRequest request){
-        RestErrorDto restErrorDto = RestErrorDto.builder()
+        RestErrorResponse restErrorResponse = RestErrorResponse.builder()
                 .statusCode(HttpStatus.CONFLICT.value())
                 .errorMessage(ex.getMessage())
                 .build();
-        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.CONFLICT, request);
+        return handleExceptionInternal(ex, restErrorResponse, new HttpHeaders(), HttpStatus.CONFLICT, request);
     }
 
     @ExceptionHandler(value = AuthenticatedException.class)
     public ResponseEntity<Object> handleAuthenticatedException(Exception ex, WebRequest request){
-        RestErrorDto restErrorDto = RestErrorDto.builder()
+        RestErrorResponse restErrorResponse = RestErrorResponse.builder()
                 .statusCode(HttpStatus.UNAUTHORIZED.value())
                 .errorMessage(ex.getMessage())
                 .build();
-        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
+        return handleExceptionInternal(ex, restErrorResponse, new HttpHeaders(), HttpStatus.UNAUTHORIZED, request);
     }
 
     @ExceptionHandler(value = {CategoryProductIsNotEmptyException.class, CategoryParentIsNotDeletedException.class})
     public ResponseEntity<Object> handleNonDeleteableDataException(Exception ex, WebRequest request){
-        RestErrorDto restErrorDto = RestErrorDto.builder()
+        RestErrorResponse restErrorResponse = RestErrorResponse.builder()
                 .statusCode(HttpStatus.METHOD_NOT_ALLOWED.value())
                 .errorMessage(ex.getMessage())
                 .build();
-        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED, request);
+        return handleExceptionInternal(ex, restErrorResponse, new HttpHeaders(), HttpStatus.METHOD_NOT_ALLOWED, request);
     }
 }
