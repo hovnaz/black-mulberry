@@ -1,4 +1,4 @@
-package com.black.mulberry.data.transfer.request;
+package com.black.mulberry.data.transfer.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CategoryParentRequest {
+public class ProductBasketItemResponse {
 
-    private String name;
+    private int quantity;
+    private ProductResponse product;
 }

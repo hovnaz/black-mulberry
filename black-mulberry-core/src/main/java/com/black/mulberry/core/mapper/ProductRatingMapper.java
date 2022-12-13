@@ -23,5 +23,4 @@ public class ProductRatingMapper implements BaseMapper<ProductRating, ProductRat
     public ProductRatingResponse toResponse(ProductRating productRating) {
         return modelMapper.map(productRating, ProductRatingResponse.class);
     }
-
 }

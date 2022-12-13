@@ -30,7 +30,6 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private CategoryProduct categoryProduct;
-    @Column(name = "is_delete")
     private boolean isDelete;
     @ManyToOne
     private User user;

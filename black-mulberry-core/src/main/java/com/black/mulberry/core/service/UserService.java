@@ -7,6 +7,7 @@ import com.black.mulberry.data.transfer.response.UserResponse;
 import java.util.List;
 
 public interface UserService {
+
     /**
      * Change of personal data
      * Except password, phone number and email

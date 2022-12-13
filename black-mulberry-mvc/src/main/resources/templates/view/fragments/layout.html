@@ -82,10 +82,9 @@
                 </ul>
               </div>
               <!-- Single Wedge End -->
-              <a href="/basket/" class="header-action-btn pr-0">
+              <a href="/v1/basket" class="header-action-btn pr-0">
                 <i class='bx bx-basket' ></i>
-                <span class="header-action-num">01</span>
-                <!-- <span class="cart-amount">€30.00</span> -->
+                <span class="header-action-num" th:if="${basketItemCount}" th:text="${basketItemCount}"></span>
               </a>
               <a href="#" class="header-action-btn header-action-btn-menu offcanvas-toggle d-lg-none">
                 <i class='bx bx-menu' ></i>

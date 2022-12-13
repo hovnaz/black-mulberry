@@ -55,6 +55,11 @@ public class ProductEndpoint {
         return productService.findAllByUserId(currentUser.getId(), pageable);
     }
 
+    @GetMapping("/category/{id}")
+    public List<ProductResponse> getAllProductsByCategoryId(@PageableDefault(sort = {"createAt"}, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable("id") long categoryProductId ) {
+        return productService.findAllByCategoryProduct(categoryProductId, pageable);
+    }
+
     @GetMapping("/count")
     public ResponseEntity<Long> countAllProducts() {
         return ResponseEntity.ok(productService.countAll());

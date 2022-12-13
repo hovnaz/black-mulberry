@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class UserUpdateRequest {
+
     private String name;
     private String surname;
 }

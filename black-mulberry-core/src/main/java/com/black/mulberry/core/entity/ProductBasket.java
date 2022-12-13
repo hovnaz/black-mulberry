@@ -1,7 +1,6 @@
 package com.black.mulberry.core.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 
 @Getter

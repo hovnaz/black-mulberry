@@ -8,123 +8,95 @@
 </head>
 
 <body>
-    <th:block th:insert="view/fragments/layout::header"></th:block>
+<th:block th:insert="view/fragments/layout::header"></th:block>
 
-
-    <div class="offcanvas-overlay"></div>
-    <!-- breadcrumb-area start -->
-    <div class="breadcrumb-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row breadcrumb_box  align-items-center">
-                        <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
-                            <h2 class="breadcrumb-title">Shop</h2>
-                        </div>
-                        <div class="col-lg-6  col-md-6 col-sm-12">
-                            <!-- breadcrumb-list start -->
-                            <ul class="breadcrumb-list text-center text-md-end">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active">Cart</li>
-                            </ul>
-                            <!-- breadcrumb-list end -->
-                        </div>
+<div class="offcanvas-overlay"></div>
+<!-- breadcrumb-area start -->
+<div class="breadcrumb-area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row breadcrumb_box  align-items-center">
+                    <div class="col-lg-6 col-md-6 col-sm-12 text-center text-md-start">
+                        <h2 class="breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-lg-6  col-md-6 col-sm-12">
+                        <!-- breadcrumb-list start -->
+                        <ul class="breadcrumb-list text-center text-md-end">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item active">Cart</li>
+                        </ul>
+                        <!-- breadcrumb-list end -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- breadcrumb-area end -->
-
+<!-- breadcrumb-area end -->
+<th:block th:if="${data.isEmptyPage == false}">
     <!-- Cart Area Start -->
     <div class="cart-main-area pt-100px pb-100px">
         <div class="container">
             <h3 class="cart-page-title">Your cart items</h3>
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-12">
-                    <form action="cart.html#">
-                        <div class="table-content table-responsive cart-table-content">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Image</th>
-                                        <th>Product Name</th>
-                                        <th>Until Price</th>
-                                        <th>Qty</th>
-                                        <th>Subtotal</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="product-thumbnail">
-                                            <a href="cart.html#"><img class="img-responsive ml-15px" src="view/images/product-image/1.jpg" alt="" /></a>
-                                        </td>
-                                        <td class="product-name"><a href="cart.html#">Product Name</a></td>
-                                        <td class="product-price-cart"><span class="amount">$60.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">$70.00</td>
-                                        <td class="product-remove">
-                                            <a href="cart.html#"><i class="icon-pencil"></i></a>
-                                            <a href="cart.html#"><i class="icon-close"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-thumbnail">
-                                            <a href="cart.html#"><img class="img-responsive ml-15px" src="view/images/product-image/2.jpg" alt="" /></a>
-                                        </td>
-                                        <td class="product-name"><a href="cart.html#">Product Name</a></td>
-                                        <td class="product-price-cart"><span class="amount">$50.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">$80.00</td>
-                                        <td class="product-remove">
-                                            <a href="cart.html#"><i class="icon-pencil"></i></a>
-                                            <a href="cart.html#"><i class="icon-close"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-thumbnail">
-                                            <a href="cart.html#"><img class="img-responsive ml-15px" src="view/images/product-image/3.jpg" alt="" /></a>
-                                        </td>
-                                        <td class="product-name"><a href="cart.html#">Product Name</a></td>
-                                        <td class="product-price-cart"><span class="amount">$70.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus">
-                                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1" />
-                                            </div>
-                                        </td>
-                                        <td class="product-subtotal">$90.00</td>
-                                        <td class="product-remove">
-                                            <a href="cart.html#"><i class="icon-pencil"></i></a>
-                                            <a href="cart.html#"><i class="icon-close"></i></a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="cart-shiping-update-wrapper">
-                                    <div class="cart-shiping-update">
-                                        <a href="cart.html#">Continue Shopping</a>
-                                    </div>
-                                    <div class="cart-clear">
-                                        <button>Update Shopping Cart</button>
-                                        <a href="cart.html#">Clear Shopping Cart</a>
-                                    </div>
+                    <div class="table-content table-responsive cart-table-content">
+                        <table>
+                            <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Until Price</th>
+                                <th>Qty</th>
+                                <th>Subtotal</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="item : ${data.products}">
+                                <form action="/v1/basket/update" method="post">
+                                    <td class="product-thumbnail">
+                                        <a th:href="'/v1/product/' + ${item.product.id}">
+                                            <img class="img-responsive ml-15px" th:src="'/v1/product/getProductPic/' + ${item.product.picUrl}" alt="product">
+                                        </a>
+                                    </td>
+                                    <td class="product-name"><a th:href="'/v1/product/' + ${item.product.id}"
+                                                                th:text="${item.product.title}"></a></td>
+                                    <td class="product-price-cart"><span class="amount">$<span
+                                            th:text="${item.product.price}"></span></span>
+                                    </td>
+                                    <td class="product-quantity">
+                                        <div class="cart-plus-minus">
+                                            <input class="cart-plus-minus-box" type="text" name="quantity" th:value="${item.quantity}">
+                                            <input type="hidden" readonly name="productId" th:value="${item.product.id}">
+                                        </div>
+                                    </td>
+                                    <td class="product-subtotal">$<span th:text="${item.product.price} * ${item.quantity}"></span></td>
+                                    <td class="product-remove">
+                                        <button type="submit"><i class='bx bxs-edit-alt'></i></button>
+                                        <a th:href="'/v1/basket/cansel/' + ${item.product.id}">
+                                            <i class='bx bx-minus-circle'></i>
+                                        </a>
+                                    </td>
+                                </form>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="cart-shiping-update-wrapper">
+                                <div class="cart-shiping-update">
+                                    <a href="cart.html#">Continue Shopping</a>
+                                </div>
+                                <div class="cart-clear">
+                                    <a href="/v1/basket/clear">Clear Shopping Cart</a>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                     <div class="row">
                         <div class="col-lg-4 col-md-6 mb-lm-30px">
                             <div class="cart-tax">
@@ -162,7 +134,7 @@
                                             <label>
                                                 * Zip/Postal Code
                                             </label>
-                                            <input type="text" />
+                                            <input type="text"/>
                                         </div>
                                         <button class="cart-btn-2" type="submit">Get A Quote</button>
                                     </div>
@@ -177,7 +149,7 @@
                                 <div class="discount-code">
                                     <p>Enter your coupon code if you have one.</p>
                                     <form>
-                                        <input type="text" required="" name="name" />
+                                        <input type="text" required="" name="name"/>
                                         <button class="cart-btn-2" type="submit">Apply Coupon</button>
                                     </form>
                                 </div>
@@ -192,8 +164,8 @@
                                 <div class="total-shipping">
                                     <h5>Total shipping</h5>
                                     <ul>
-                                        <li><input type="checkbox" /> Standard <span>$20.00</span></li>
-                                        <li><input type="checkbox" /> Express <span>$30.00</span></li>
+                                        <li><input type="checkbox"/> Standard <span>$20.00</span></li>
+                                        <li><input type="checkbox"/> Express <span>$30.00</span></li>
                                     </ul>
                                 </div>
                                 <h4 class="grand-totall-title">Grand Total <span>$260.00</span></h4>
@@ -206,11 +178,12 @@
         </div>
     </div>
     <!-- Cart Area End -->
-
-    <th:block th:insert="view/fragments/layout::footer"></th:block>
-
-
-    <th:block th:insert="view/fragments/import::footerImport"></th:block>
+</th:block>
+<th:block th:if="${data.isEmptyPage}">
+    <h2 style="margin: 80px; text-align: center">Basket is empty</h2>
+</th:block>
+<th:block th:insert="view/fragments/layout::footer"></th:block>
+<th:block th:insert="view/fragments/import::footerImport"></th:block>
 </body>
 
 </html>

@@ -5,11 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Min;
+
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class CategoryParentRequest {
+public class ProductBasketItemRequest {
 
-    private String name;
+    @Min(1)
+    private int quantity;
+    @Min(1)
+    private long productId;
 }

@@ -31,4 +31,5 @@ public class User {
     @CreationTimestamp
     @Column(name = "create_at", nullable = false, updatable = false)
     private LocalDate createAt;
+    private boolean enable;
 }

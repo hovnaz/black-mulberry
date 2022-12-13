@@ -11,11 +11,12 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ProductService {
+
     /**
      * save product by user id
      *
      * @param productRequest
-     * @param user
+     * @param userId
      * @return Product
      */
     Product save(ProductRequest productRequest, long userId);

@@ -3,12 +3,11 @@ package com.black.mulberry.core.repository;
 import com.black.mulberry.core.entity.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
     /**
      * find all products
@@ -58,8 +57,18 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
      */
     long countAllByIsDeleteFalse();
 
+    /**
+     *
+     * @param categoryProductId
+     * @return sum all products by their category product
+     */
     int countAllByCategoryProductIdAndIsDeleteFalse(long categoryProductId);
 
-    List<Product> findAllByCategoryProductIdAndIsDeleteFalse(long categoryProductId, Pageable pageable);
-
+    /**
+     *
+     * @param categoryProductsId
+     * @param pageable
+     * @return find all products by their category product
+     */
+    List<Product> findAllByCategoryProductIdAndIsDeleteFalse(long categoryProductsId, Pageable pageable);
 }
