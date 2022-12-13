@@ -30,3 +30,10 @@
     height: 50px;
     border-radius: 10px;
 }
+
+.product-filter-block {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+}

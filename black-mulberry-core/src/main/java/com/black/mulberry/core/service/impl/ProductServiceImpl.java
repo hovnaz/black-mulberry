@@ -2,16 +2,22 @@ package com.black.mulberry.core.service.impl;
 
 import com.black.mulberry.core.entity.CategoryProduct;
 import com.black.mulberry.core.entity.Product;
+import com.black.mulberry.core.entity.QProduct;
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.ProductNotFoundException;
+import com.black.mulberry.core.mapper.CategoryProductMapper;
 import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.CategoryProductService;
 import com.black.mulberry.core.service.ProductService;
 import com.black.mulberry.core.service.UserService;
 import com.black.mulberry.core.util.IOUtil;
+import com.black.mulberry.data.transfer.request.CategoryProductRequest;
 import com.black.mulberry.data.transfer.request.ProductRequest;
+import com.black.mulberry.data.transfer.request.ProductFilterRequest;
+import com.black.mulberry.data.transfer.response.CategoryProductResponse;
 import com.black.mulberry.data.transfer.response.ProductResponse;
+import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,6 +25,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,9 +38,12 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
+    @PersistenceContext
+    EntityManager entityManager;
     private final UserService userService;
     private final CategoryProductService categoryProductService;
     private final ProductMapper productMapper;
+    private final CategoryProductMapper categoryProductMapper;
     private final IOUtil ioUtil;
     @Value("${blackMulberry.images.product}")
     private String folderPath;
@@ -129,8 +140,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public long countAllByCategoryId(long categoryId) {
+        return productRepository.countAllByCategoryProductIdAndIsDeleteFalse(categoryId);
+    }
+
+    @Override
     public long countAllByUserId(long userId) {
         userService.findById(userId);
         return productRepository.countAllByUserIdAndIsDeleteFalse(userId);
+    }
+
+    @Override
+    public List<ProductResponse> findAllByCategoryProduct(long categoryProductId, Pageable pageable) {
+        List<Product> productByCategory = productRepository.findAllByCategoryProductIdAndIsDeleteFalse(categoryProductId, pageable);
+        return productByCategory.stream()
+                .map(productMapper::toResponse)
+                .collect(Collectors.toCollection(LinkedList::new));
     }
 }

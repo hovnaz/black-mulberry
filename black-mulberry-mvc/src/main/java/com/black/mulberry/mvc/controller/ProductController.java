@@ -1,8 +1,12 @@
 package com.black.mulberry.mvc.controller;
 
+import com.black.mulberry.core.entity.Product;
+import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.security.CurrentUser;
 import com.black.mulberry.core.service.CategoryProductService;
+import com.black.mulberry.core.service.ProductSearchService;
 import com.black.mulberry.core.service.ProductService;
+import com.black.mulberry.data.transfer.request.ProductFilterRequest;
 import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.response.CategoryProductResponse;
 import com.black.mulberry.data.transfer.response.ProductResponse;
@@ -16,13 +20,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -37,6 +35,8 @@ public class ProductController {
     private final ProductService productService;
     private final CategoryProductService categoryProductService;
     private final MapUtil mapUtil;
+    private final ProductMapper productMapper;
+    private final ProductSearchService productSearchService;
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/add")
@@ -107,5 +107,34 @@ public class ProductController {
         Map<String, Object> map = mapUtil.productDetail(id, currentUser, pageable);
         modelMap.addAttribute("data", map);
         return "view/product-details";
+    }
+
+    @GetMapping("/filteredPage")
+    public String goToFilterPage(ModelMap modelMap, @PageableDefault Pageable pageable){
+        List<CategoryProductResponse> categories = categoryProductService.findAll();
+        modelMap.addAttribute("categories", categories);
+        List<ProductResponse> all = productService.findAll(pageable);
+        modelMap.addAttribute("products", all);
+        return "view/products-filter";
+    }
+
+    @GetMapping("/search")
+    public String searchForProduct(@ModelAttribute ProductFilterRequest productFilterRequest, ModelMap modelMap){
+        List<Product> search = productSearchService.searchForProduct(productFilterRequest);
+        String title = productFilterRequest.getTitle();
+        modelMap.addAttribute("searchedProduct", search);
+        modelMap.addAttribute( "title",title);
+        return "view/products-filter";
+    }
+
+    @GetMapping("/filter")
+    public String filterByPrice(@ModelAttribute ProductFilterRequest productFilterRequest, ModelMap modelMap){
+        List<Product> products = productSearchService.filterProductByPrice(productFilterRequest);
+        long minPrice = productFilterRequest.getMinPrice();
+        long maxPrice  = productFilterRequest.getMinPrice();
+        modelMap.addAttribute("searchedProduct", products);
+        modelMap.addAttribute( "minPrice", minPrice);
+        modelMap.addAttribute( "maxPrice", maxPrice);
+        return "view/products-filter";
     }
 }
