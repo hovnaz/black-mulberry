@@ -31,13 +31,13 @@ public class ProductBasketEndpoint {
 
     private final ProductBasketService productBasketService;
 
-    @GetMapping
+    @GetMapping("/actual/list")
     public ResponseEntity<List<ProductBasketItemResponse>> findAll(@PageableDefault Pageable pageable,
                                                                    @AuthenticationPrincipal CurrentUser currentUser) {
         return ResponseEntity.ok(productBasketService.findAllByActual(currentUser.getId(), pageable));
     }
 
-    @GetMapping
+    @GetMapping("/amount")
     public ResponseEntity<BigDecimal> amount(@AuthenticationPrincipal CurrentUser currentUser) {
         return ResponseEntity.ok(productBasketService.amountByUserId(currentUser.getId()));
     }
