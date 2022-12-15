@@ -1,12 +1,17 @@
 package com.black.mulberry.data.transfer.request;
 
-import com.black.mulberry.data.transfer.response.CategoryProductResponse;
 import lombok.Data;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Data
 public class ProductFilterRequest {
-
+    @NotEmpty
     private String title;
-    private long minPrice;
-    private long maxPrice;
+    @Min(0)
+    private Long minPrice;
+    @Min(1)
+    private Long maxPrice;
 }

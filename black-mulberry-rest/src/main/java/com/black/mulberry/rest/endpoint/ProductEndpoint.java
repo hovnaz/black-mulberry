@@ -35,15 +35,15 @@ public class ProductEndpoint {
     }
 
     @GetMapping("/search")
-    public List<ProductResponse> searchProduct(@RequestBody ProductFilterRequest productFilterRequest) {
+    public List<ProductResponse> searchProduct(ProductFilterRequest productFilterRequest) {
         List<Product> searchedProducts = productSearchService.searchForProduct(productFilterRequest);
         return searchedProducts.stream()
                 .map(productMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    @GetMapping("/filtered")
-    public List<ProductResponse> getAllFilteredProducts(@RequestBody ProductFilterRequest productFilterRequest) {
+    @GetMapping("/filter")
+    public List<ProductResponse> getAllFilteredProducts(ProductFilterRequest productFilterRequest) {
         List<Product> searchedProducts = productSearchService.filterProductByPrice(productFilterRequest);
         return searchedProducts.stream()
                 .map(productMapper::toResponse)

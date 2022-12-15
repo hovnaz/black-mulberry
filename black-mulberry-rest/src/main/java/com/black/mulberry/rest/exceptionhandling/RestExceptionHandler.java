@@ -1,7 +1,6 @@
 package com.black.mulberry.rest.exceptionhandling;
 
 import com.black.mulberry.core.exception.*;
-import com.black.mulberry.data.transfer.response.RestErrorDto;
 import com.black.mulberry.data.transfer.response.RestErrorResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

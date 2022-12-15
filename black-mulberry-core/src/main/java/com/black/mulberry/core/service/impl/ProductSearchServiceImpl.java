@@ -5,11 +5,10 @@ import com.black.mulberry.core.entity.QProduct;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.ProductSearchService;
 import com.black.mulberry.data.transfer.request.ProductFilterRequest;
-import com.black.mulberry.data.transfer.response.ProductResponse;
-import com.querydsl.core.types.dsl.StringExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -35,11 +34,8 @@ public class ProductSearchServiceImpl implements ProductSearchService {
 
         var from = jpaQuery.from(qProduct);
 
-        if (productFilterRequest.getTitle() != null && !productFilterRequest.getTitle().equals("")){
+        if (StringUtils.isNotBlank(productFilterRequest.getTitle())) {
             from.where(qProduct.title.contains(productFilterRequest.getTitle()));
-        }
-        if (productFilterRequest.getDescription() != null && !productFilterRequest.getDescription().equals("")){
-            from.where(qProduct.description.contains(productFilterRequest.getDescription()));
         }
 
         return from.fetch();
@@ -57,7 +53,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
 
         var from = jpaQuery.from(qProduct);
 
-        if (minPrice >= 0 && maxPrice >=0 && maxPrice >= minPrice){
+        if (maxPrice >= minPrice) {
             from.where(qProduct.price.between(minPrice, maxPrice));
         }
 
