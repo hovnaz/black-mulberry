@@ -8,6 +8,7 @@ import com.black.mulberry.core.service.ProductSearchService;
 import com.black.mulberry.core.service.ProductService;
 import com.black.mulberry.data.transfer.request.ProductFilterRequest;
 import com.black.mulberry.data.transfer.request.ProductRequest;
+import com.black.mulberry.data.transfer.request.ProductSearchRequest;
 import com.black.mulberry.data.transfer.response.CategoryProductResponse;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import com.black.mulberry.mvc.util.MapUtil;
@@ -119,9 +120,9 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String searchForProduct(@ModelAttribute ProductFilterRequest productFilterRequest, ModelMap modelMap){
-        List<Product> search = productSearchService.searchForProduct(productFilterRequest);
-        String title = productFilterRequest.getTitle();
+    public String searchForProduct(@ModelAttribute ProductSearchRequest productSearchRequest, ModelMap modelMap){
+        List<Product> search = productSearchService.searchForProduct(productSearchRequest);
+        String title = productSearchRequest.getTitle();
         modelMap.addAttribute("searchedProduct", search);
         modelMap.addAttribute( "title",title);
         return "view/products-filter";

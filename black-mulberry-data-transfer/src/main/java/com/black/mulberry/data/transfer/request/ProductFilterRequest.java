@@ -3,15 +3,12 @@ package com.black.mulberry.data.transfer.request;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Data
 public class ProductFilterRequest {
-    @NotEmpty
-    private String title;
-    @Min(0)
+
+    @Min(value = 0, message = "minimal price should be at least 0")
     private Long minPrice;
-    @Min(1)
+    @Min(value = 1, message = "maximum price should be at least 1")
     private Long maxPrice;
 }

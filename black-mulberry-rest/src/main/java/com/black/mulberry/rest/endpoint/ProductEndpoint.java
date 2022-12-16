@@ -5,8 +5,9 @@ import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.security.CurrentUser;
 import com.black.mulberry.core.service.ProductSearchService;
 import com.black.mulberry.core.service.ProductService;
-import com.black.mulberry.data.transfer.request.ProductRequest;
 import com.black.mulberry.data.transfer.request.ProductFilterRequest;
+import com.black.mulberry.data.transfer.request.ProductRequest;
+import com.black.mulberry.data.transfer.request.ProductSearchRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,16 +36,16 @@ public class ProductEndpoint {
         return productService.findAll(pageable);
     }
 
-    @GetMapping("/search")
-    public List<ProductResponse> searchProduct(ProductFilterRequest productFilterRequest) {
-        List<Product> searchedProducts = productSearchService.searchForProduct(productFilterRequest);
+    @PostMapping("/search")
+    public List<ProductResponse> searchProduct(@Valid @RequestBody ProductSearchRequest productSearchRequest) {
+        List<Product> searchedProducts = productSearchService.searchForProduct(productSearchRequest);
         return searchedProducts.stream()
                 .map(productMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    @GetMapping("/filter")
-    public List<ProductResponse> getAllFilteredProducts(ProductFilterRequest productFilterRequest) {
+    @PostMapping("/filter")
+    public List<ProductResponse> getAllFilteredProducts(@Valid @RequestBody ProductFilterRequest productFilterRequest) {
         List<Product> searchedProducts = productSearchService.filterProductByPrice(productFilterRequest);
         return searchedProducts.stream()
                 .map(productMapper::toResponse)
@@ -56,7 +58,7 @@ public class ProductEndpoint {
     }
 
     @GetMapping("/category/{id}")
-    public List<ProductResponse> getAllProductsByCategoryId(@PageableDefault(sort = {"createAt"}, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable("id") long categoryProductId ) {
+    public List<ProductResponse> getAllProductsByCategoryId(@PageableDefault(sort = {"createAt"}, direction = Sort.Direction.DESC) Pageable pageable, @PathVariable("id") long categoryProductId) {
         return productService.findAllByCategoryProduct(categoryProductId, pageable);
     }
 

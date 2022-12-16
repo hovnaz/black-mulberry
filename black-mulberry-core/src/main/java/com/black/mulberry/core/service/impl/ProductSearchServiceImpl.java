@@ -5,6 +5,7 @@ import com.black.mulberry.core.entity.QProduct;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.ProductSearchService;
 import com.black.mulberry.data.transfer.request.ProductFilterRequest;
+import com.black.mulberry.data.transfer.request.ProductSearchRequest;
 import com.querydsl.jpa.impl.JPAQuery;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,7 +26,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
     EntityManager entityManager;
 
     @Override
-    public List<Product> searchForProduct(ProductFilterRequest productFilterRequest) {
+    public List<Product> searchForProduct(ProductSearchRequest productSearchRequest) {
         log.info("request filtered product");
 
         QProduct qProduct = QProduct.product;
@@ -34,9 +35,7 @@ public class ProductSearchServiceImpl implements ProductSearchService {
 
         var from = jpaQuery.from(qProduct);
 
-        if (StringUtils.isNotBlank(productFilterRequest.getTitle())) {
-            from.where(qProduct.title.contains(productFilterRequest.getTitle()));
-        }
+        from.where(qProduct.title.contains(productSearchRequest.getTitle()));
 
         return from.fetch();
     }
