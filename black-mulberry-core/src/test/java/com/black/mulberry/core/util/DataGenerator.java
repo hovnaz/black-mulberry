@@ -42,7 +42,6 @@ public class DataGenerator {
 
     public static ProductRequest generateProductRequest(){
         return ProductRequest.builder()
-                .id(555L)
                 .title("pencil")
                 .description("black pencil")
                 .stock(11)
