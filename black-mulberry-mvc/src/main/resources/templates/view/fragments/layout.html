@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org/" lang="en">
+<html xmlns:th="http://www.thymeleaf.org/" xmlns:form="http://www.w3.org/1999/html" lang="en">
 <body>
 
       <th:block th:fragment="header">
@@ -64,9 +64,9 @@
               <div class="header_account_list">
                 <a href="javascript:void(0)" class="header-action-btn search-btn"><i class='bx bx-search-alt-2' ></i></a>
                 <div class="dropdown_search">
-                  <form class="action-form" action="404.html#">
-                    <input class="form-control" placeholder="Enter your search key" type="text">
-                    <button class="submit" type="submit"><i class='bx bx-search-alt-2' ></i></button>
+                  <form class="action-form"  action="/v1/product/search" method="get">
+                    <input name="title"  class="form-control" th:value="${param.search}" placeholder="Enter product title" type="text">
+                    <button class="submit" type="submit"><i class='bx bx-search-alt-2'></i></button>
                   </form>
                 </div>
               </div>
@@ -216,6 +216,7 @@
                     <li><a href="/checkout/">Checkout</a></li>
                     <li><a href="/orders/">Orders</a></li>
                     <li><a href="/v1/product/add/">Product Add</a></li>
+                    <li><a href="/v1/product/filteredPage">Filter Product</a></li>
                     <li th:if="${isAdmin}"><a href="/v1/admin/users/">User Management</a></li></li>
                     <li th:if="${isAdmin}"><a href="/v1/admin/products/">Product Management</a></li></li>
                   </ul>

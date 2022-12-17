@@ -4,6 +4,7 @@ import com.black.mulberry.core.entity.CategoryProduct;
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.ProductNotFoundException;
+import com.black.mulberry.core.mapper.CategoryProductMapper;
 import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.CategoryProductService;
@@ -20,6 +21,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -32,9 +35,12 @@ public class ProductServiceImpl implements ProductService {
 
     private final ProductPriceHistoryService productPriceHistoryService;
     private final ProductRepository productRepository;
+    @PersistenceContext
+    EntityManager entityManager;
     private final UserService userService;
     private final CategoryProductService categoryProductService;
     private final ProductMapper productMapper;
+    private final CategoryProductMapper categoryProductMapper;
     private final IOUtil ioUtil;
     @Value("${blackMulberry.images.product}")
     private String folderPath;
@@ -130,6 +136,11 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public long countAll() {
         return productRepository.countAllByIsDeleteFalse();
+    }
+
+    @Override
+    public long countAllByCategoryId(long categoryId) {
+        return productRepository.countAllByCategoryProductIdAndIsDeleteFalse(categoryId);
     }
 
     @Override
