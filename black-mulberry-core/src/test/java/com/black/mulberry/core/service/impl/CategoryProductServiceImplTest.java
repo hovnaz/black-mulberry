@@ -1,11 +1,13 @@
 package com.black.mulberry.core.service.impl;
 
+import com.black.mulberry.core.entity.CategoryProduct;
 import com.black.mulberry.core.mapper.CategoryParentMapper;
 import com.black.mulberry.core.mapper.CategoryProductMapper;
 import com.black.mulberry.core.repository.CategoryParentRepository;
 import com.black.mulberry.core.repository.CategoryProductRepository;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.CategoryParentService;
+import com.black.mulberry.data.transfer.request.CategoryProductRequest;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -35,31 +37,8 @@ public class CategoryProductServiceImplTest {
     @Mock
     private ModelMapper modelMapper;
 
-//    private CategoryProduct categoryProduct;
-//
-//    private CategoryProductRequest categoryProductRequest;
-//
-//    @BeforeEach
-//    void init() {
-//        categoryProduct = DataGenerator.generateCategoryProduct();
-//        categoryProductRequest = DataGenerator.generateCategoryProductRequest();
-//    }
-//
-//    @Test
-//    void update_successTest() {
-//        when(categoryProductRepository.findById(anyLong()))
-//                .thenReturn(Optional.empty());
-//        when(categoryProductRepository.save(any(CategoryProduct.class)))
-//                .thenReturn(new CategoryProduct());
-//        assertDoesNotThrow(() -> categoryProductService.update(1, categoryProductRequest));
-//        assertEquals(categoryProduct.getName(), categoryProductRequest.getName());
-//    }
-//
-//    @Test
-//    void update_throwsUserNotFoundException() {
-//        when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
-//        assertThrows(UserNotFoundException.class, () -> userService
-//                .update(DataGenerator.generateUserUpdateRequest(), 555L));
-//    }
+    private CategoryProduct categoryProduct;
+
+    private CategoryProductRequest categoryProductRequest;
 
 }
