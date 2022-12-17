@@ -72,5 +72,4 @@ public class UserServiceImpl implements UserService {
                 .map(userMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
-
 }
