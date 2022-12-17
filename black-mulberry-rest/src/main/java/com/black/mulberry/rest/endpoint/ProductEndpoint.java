@@ -14,8 +14,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import java.util.LinkedList;
@@ -67,6 +75,7 @@ public class ProductEndpoint {
         return ResponseEntity.ok(productService.countAll());
     }
 
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/my/count")
     public ResponseEntity<Long> countAllProductsByUser(@AuthenticationPrincipal CurrentUser currentUser) {
         return ResponseEntity.ok(productService.countAllByUserId(currentUser.getId()));
@@ -77,17 +86,20 @@ public class ProductEndpoint {
         return productMapper.toResponse(productService.findById(id));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping
     public ResponseEntity<?> saveProduct(@RequestBody ProductRequest productRequest, @AuthenticationPrincipal CurrentUser currentUser) {
         return ResponseEntity.ok(productMapper.toResponse(productService.save(productRequest, currentUser.getId())));
     }
 
+    @PreAuthorize("isAuthenticated()")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProductById(@PathVariable("id") int id, @AuthenticationPrincipal CurrentUser currentUser) {
         productService.deleteById(id, currentUser.getId());
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}")
     public ResponseEntity<ProductResponse> updateProduct(@PathVariable("id") long id, @RequestBody ProductRequest productRequest,
                                                          @AuthenticationPrincipal CurrentUser currentUser) {
