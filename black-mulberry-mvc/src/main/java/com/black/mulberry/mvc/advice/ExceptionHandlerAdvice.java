@@ -1,15 +1,6 @@
 package com.black.mulberry.mvc.advice;
 
-import com.black.mulberry.core.exception.AuthenticatedException;
-import com.black.mulberry.core.exception.CategoryNotFoundException;
-import com.black.mulberry.core.exception.CategoryParentIsNotDeletedException;
-import com.black.mulberry.core.exception.CategoryParentNotFoundException;
-import com.black.mulberry.core.exception.CategoryProductIsNotEmptyException;
-import com.black.mulberry.core.exception.ProductCommentNotExistException;
-import com.black.mulberry.core.exception.ProductNotFoundException;
-import com.black.mulberry.core.exception.ProductRatingNotExistException;
-import com.black.mulberry.core.exception.UserEmailConflictException;
-import com.black.mulberry.core.exception.UserNotFoundException;
+import com.black.mulberry.core.exception.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -18,12 +9,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {CategoryNotFoundException.class,
-            CategoryParentNotFoundException.class,
-            ProductCommentNotExistException.class,
-            ProductNotFoundException.class,
+    @ExceptionHandler(value = {
+            CategoryNotFoundException.class,
             ProductRatingNotExistException.class,
-            UserNotFoundException.class
+            ProductNotFoundException.class,
+            ProductCommentNotExistException.class,
+            UserNotFoundException.class,
+            CategoryParentNotFoundException.class,
+            FileNotExistException.class,
+            OrderCancelNotFoundException.class,
+            OrderNotFoundException.class,
+            PaymentNotFoundException.class,
     })
     public String handleEntityNotFoundException() {
         return "view/404";
@@ -38,10 +34,20 @@ public class ExceptionHandlerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = {
             AuthenticatedException.class,
             CategoryParentIsNotDeletedException.class,
-            CategoryProductIsNotEmptyException.class})
+            CategoryProductIsNotEmptyException.class,
+            RepeatUsersException.class,
+            OrderCancelFailException.class,
+            OrderCompletedFailException.class,
+            OrderConfirmedFailException.class,
+            OrderOpenFailException.class,
+            PaymentOpenFailException.class,
+            PaymentPaidFailException.class,
+            OrderConflictException.class,
+            PaymentConflictException.class,
+            ProductBasketNotExistException.class
+    })
     public String handleIsNotDeleted(Model theModel){
         theModel.addAttribute("error", true);
         return "redirect:/";
     }
 }
-

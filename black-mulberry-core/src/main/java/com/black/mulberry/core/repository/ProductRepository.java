@@ -57,7 +57,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
      */
     long countAllByIsDeleteFalse();
 
+    /**
+     *
+     * @param categoryProductId
+     * @return sum all products by their category product
+     */
     int countAllByCategoryProductIdAndIsDeleteFalse(long categoryProductId);
 
+    /**
+     *
+     * @param categoryProductsId
+     * @param pageable
+     * @return find all products by their category product
+     */
     List<Product> findAllByCategoryProductIdAndIsDeleteFalse(long categoryProductsId, Pageable pageable);
 }

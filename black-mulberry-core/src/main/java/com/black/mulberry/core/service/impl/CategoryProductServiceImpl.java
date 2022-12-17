@@ -50,7 +50,7 @@ public class CategoryProductServiceImpl implements CategoryProductService {
         CategoryProduct categoryProductById = findById(categoryProductId);
         CategoryParent categoryParentById = categoryParentService.findById(categoryProductRequest.getCategoryParentId());
         categoryProduct.setId(categoryProductById.getId());
-        categoryProduct.setCatParent(categoryParentById);
+        categoryProduct.setCategoryParent(categoryParentById);
         return categoryProductRepository.save(categoryProduct);
     }
 
@@ -69,11 +69,11 @@ public class CategoryProductServiceImpl implements CategoryProductService {
 
     @Override
     public CategoryProduct findById(long categoryId) {
+        log.info("find category product by id: {}", categoryId);
         CategoryProduct categoryProduct = categoryProductRepository.findById(categoryId).orElseThrow(() -> {
             log.error("category with id: {} not found", categoryId);
             throw new CategoryNotFoundException("category with id: " + categoryId + " does not exist");
         });
-        log.info("succesfully found category with id: {}", categoryId);
         return categoryProduct;
     }
 }

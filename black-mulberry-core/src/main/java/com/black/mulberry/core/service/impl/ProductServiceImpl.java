@@ -7,6 +7,7 @@ import com.black.mulberry.core.exception.ProductNotFoundException;
 import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.service.CategoryProductService;
+import com.black.mulberry.core.service.ProductPriceHistoryService;
 import com.black.mulberry.core.service.ProductService;
 import com.black.mulberry.core.service.UserService;
 import com.black.mulberry.core.util.IOUtil;
@@ -29,6 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ProductServiceImpl implements ProductService {
 
+    private final ProductPriceHistoryService productPriceHistoryService;
     private final ProductRepository productRepository;
     private final UserService userService;
     private final CategoryProductService categoryProductService;
@@ -46,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCategoryProduct(categoryById);
         product.setUser(userById);
         Product save = productRepository.save(product);
+        productPriceHistoryService.add(product);
         log.info("product with id: {} successfully created", save.getId());
         return save;
     }
@@ -100,6 +103,7 @@ public class ProductServiceImpl implements ProductService {
         product.setCategoryProduct(categoryById);
         product.setUser(productById.getUser());
         Product save = productRepository.save(product);
+        productPriceHistoryService.add(product);
         log.info("product with id: {} successfully updated", productId);
         return save;
     }

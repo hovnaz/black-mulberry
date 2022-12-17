@@ -1,6 +1,5 @@
 package com.black.mulberry.core.entity;
 
-
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +19,6 @@ public class CategoryProduct {
     private String name;
     @ManyToOne
     @JoinColumn(name = "category_parent_id")
-    private CategoryParent catParent;
-    @Column(name = "is_delete")
+    private CategoryParent categoryParent;
     private boolean isDelete;
 }

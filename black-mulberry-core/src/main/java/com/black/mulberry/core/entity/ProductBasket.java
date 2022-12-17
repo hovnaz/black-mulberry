@@ -1,8 +1,10 @@
 package com.black.mulberry.core.entity;
 
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,7 +18,10 @@ public class ProductBasket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private boolean isPaid;
+    private boolean isActual;
     @ManyToOne
     private User user;
+    @CreationTimestamp
+    @Column(name = "create_at", nullable = false, updatable = false)
+    private LocalDateTime createAt;
 }

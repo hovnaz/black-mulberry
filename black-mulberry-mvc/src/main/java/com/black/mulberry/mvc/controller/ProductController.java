@@ -100,8 +100,6 @@ public class ProductController {
                                     @AuthenticationPrincipal CurrentUser currentUser) {
         Map<String, Object> map = mapUtil.productDetail(id, currentUser, pageable);
         modelMap.addAttribute("data", map);
-        List<ProductResponse> categoryProduct = productService.findAllByCategoryProduct(id, pageable);
-        modelMap.addAttribute("categoryProduct", categoryProduct);
         return "view/product-details";
     }
 }

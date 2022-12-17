@@ -120,16 +120,20 @@
                         </ul>
                     </div>
                     <p class="quickview-para" th:maxlength="255" th:text="${data.product.description}"></p>
-                    <div class="pro-details-quality">
-                        <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1"/>
+                    <form action="/v1/basket/add" method="post" th:if="${data.product.getUser().getId()} != ${currentUserId}">
+                        <div class="pro-details-quality">
+                            <div class="cart-plus-minus">
+                                <input class="cart-plus-minus-box" type="number" name="quantity" value="1"
+                                       minlength="1" maxlength="100" step="1">
+                                <input type="hidden" name="productId" th:value="${data.product.id}" readonly>
+                            </div>
+                            <div class="pro-details-cart">
+                                <button class="add-cart btn btn-primary btn-hover-primary ml-4" type="submit">Add To
+                                    Cart
+                                </button>
+                            </div>
                         </div>
-                        <div class="pro-details-cart">
-                            <button class="add-cart btn btn-primary btn-hover-primary ml-4" href="#"> Add To
-                                Cart
-                            </button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -266,7 +270,7 @@
         <div class="new-product-slider swiper-container slider-nav-style-1" data-aos="fade-up" data-aos-delay="200">
             <div class="new-product-wrapper swiper-wrapper">
                 <!-- Single Prodect -->
-                <div class="new-product-item swiper-slide" th:each="product : ${categoryProduct}">
+                <div class="new-product-item swiper-slide" th:each="product : ${data.categoryProduct}">
                     <div class="product">
                         <div class="thumb">
                             <a th:href="'/v1/product/' + ${data.product.id}" class="image">

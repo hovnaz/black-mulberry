@@ -7,6 +7,7 @@ import com.black.mulberry.core.mapper.UserMapper;
 import com.black.mulberry.core.mapper.UserRegistrationMapper;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.AuthService;
+import com.black.mulberry.core.service.MailService;
 import com.black.mulberry.core.util.JwtTokenUtil;
 import com.black.mulberry.data.transfer.model.UserRole;
 import com.black.mulberry.data.transfer.request.UserAuthRequest;
@@ -24,15 +25,16 @@ import java.util.Optional;
 @Slf4j
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
+
     private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final UserRegistrationMapper userRegistrationMapper;
     private final UserRepository userRepository;
-
     private final JwtTokenUtil jwtTokenUtil;
+    private final MailService mailService;
 
     @Override
-    public UserAuthResponse auth(final UserAuthRequest userAuthRequest) {
+    public UserAuthResponse auth(UserAuthRequest userAuthRequest) {
         log.info("Request from user {} to get authenticated", userAuthRequest.getEmail());
         Optional<User> optionalUser = userRepository.findByEmail(userAuthRequest.getEmail());
 
@@ -49,7 +51,7 @@ public class AuthServiceImpl implements AuthService {
     }
 
     @Override
-    public UserRegistrationResponse registration(final UserRegistrationRequest userRequest) {
+    public UserRegistrationResponse registration(UserRegistrationRequest userRequest) {
         log.info("Request from user {} to registration", userRequest.getEmail());
         Optional<User> byEmail = userRepository.findByEmail(userRequest.getEmail());
         if (byEmail.isPresent()) {
@@ -60,6 +62,10 @@ public class AuthServiceImpl implements AuthService {
         user.setRole(UserRole.USER);
         user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         userRepository.save(user);
+        mailService.sendEmail(user.getEmail(), "Welcome",
+                "Hi " + user.getName() + " \n" +
+                        "You have successfully registered!!!" +
+                        " Press <a href=\"localhost:8080/loginPage\">Login</a> for login.");
         log.info("Succeed registered user by email: {}", userRequest.getEmail());
         return userRegistrationMapper.toResponse(user);
     }

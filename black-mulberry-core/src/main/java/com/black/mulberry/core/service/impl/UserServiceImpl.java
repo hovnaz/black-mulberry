@@ -5,12 +5,14 @@ import com.black.mulberry.core.exception.UserNotFoundException;
 import com.black.mulberry.core.mapper.UserMapper;
 import com.black.mulberry.core.repository.UserRepository;
 import com.black.mulberry.core.service.UserService;
+import com.black.mulberry.data.transfer.model.UserRole;
 import com.black.mulberry.data.transfer.request.UserUpdateRequest;
 import com.black.mulberry.data.transfer.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
@@ -71,5 +73,20 @@ public class UserServiceImpl implements UserService {
         return userList.stream()
                 .map(userMapper::toResponse)
                 .collect(Collectors.toCollection(LinkedList::new));
+    }
+
+    @PostConstruct
+    private void defaultUserAdmin() {
+        Optional<User> byEmail = userRepository.findByEmail("admin@mail.com");
+        if (byEmail.isEmpty()) {
+            userRepository.save(User.builder()
+                    .name("admin")
+                    .surname("admin")
+                    .email("admin@mail.com")
+                    .password("$2a$10$MSM0ckZ/KkBdUPNtVRfcrezV/0tTSpzl5wxJJmewux6nda7Rh4u5m")
+                    .phone("+37444444444")
+                    .role(UserRole.ADMIN)
+                    .build());
+        }
     }
 }
