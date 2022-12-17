@@ -22,16 +22,18 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "product_basket")
-public class ProductBasket {
+@Table(name = "order_cancel")
+public class OrderCancel {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private boolean isActual;
     @ManyToOne
-    private User user;
+    private Order order;
+    private boolean isApproved;
     @CreationTimestamp
-    @Column(name = "create_at", nullable = false, updatable = false)
-    private LocalDateTime createAt;
+    @Column(name = "cancel_request_date_at", nullable = false, updatable = false)
+    private LocalDateTime canselRequestDateAt;
+    private LocalDateTime canceledDateAt;
+    private String description;
 }
