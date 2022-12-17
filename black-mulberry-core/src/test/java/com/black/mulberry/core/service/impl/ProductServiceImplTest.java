@@ -2,7 +2,6 @@ package com.black.mulberry.core.service.impl;
 
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.exception.ProductNotFoundException;
-import com.black.mulberry.core.mapper.ProductMapper;
 import com.black.mulberry.core.repository.ProductRepository;
 import com.black.mulberry.core.util.DataGenerator;
 import com.black.mulberry.data.transfer.request.ProductRequest;
@@ -14,7 +13,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
 
@@ -29,7 +27,6 @@ class ProductServiceImplTest {
 
     @InjectMocks
     private ProductServiceImpl productService;
-
 
     @Mock
     private ProductRepository productRepository;
@@ -56,13 +53,5 @@ class ProductServiceImplTest {
         when(productRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(ProductNotFoundException.class, () -> productService
                 .findById(4));
-    }
-
-    @Test
-    public void update_throwsProductNotFoundException() {
-        when(productRepository.findById(anyLong()))
-                .thenReturn(Optional.empty());
-        assertThrows(ProductNotFoundException.class, () -> productService
-                .update(555L, 1, DataGenerator.generateProductRequest()));
     }
 }

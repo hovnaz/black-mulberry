@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 
-import java.util.ArrayList;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -86,11 +85,5 @@ public class UserServiceImplTest {
         when(userRepository.findByEmail(any())).thenReturn(Optional.empty());
         assertThrows(UserNotFoundException.class, () -> userService
                 .findByEmail("poxos@gmail.com"));
-    }
-
-    @Test
-    void findAll_successTest() {
-        when(userRepository.findAll()).thenReturn(new ArrayList<>());
-        assertDoesNotThrow(()-> userService.findAll());
     }
 }

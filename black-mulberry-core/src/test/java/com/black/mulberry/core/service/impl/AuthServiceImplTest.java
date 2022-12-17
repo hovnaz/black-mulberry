@@ -48,7 +48,6 @@ class AuthServiceImplTest {
         userAuthRequest = DataGenerator.generateUserAuthRequest();
     }
 
-
     @Test
     void auth_successTest() {
         when(userRepository.findByEmail(any()))
@@ -57,9 +56,5 @@ class AuthServiceImplTest {
                 .thenReturn(user);
         assertDoesNotThrow(() -> userService.findByEmail("test@mail.com"));
         assertEquals(user.getEmail(), userAuthRequest.getEmail());
-    }
-
-    @Test
-    void registration() {
     }
 }
