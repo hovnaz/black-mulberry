@@ -1,4 +1,4 @@
-package com.black.mulberry.core.service.support;
+package com.black.mulberry.core.support;
 
 import com.black.mulberry.core.entity.User;
 import com.black.mulberry.core.exception.RepeatUsersException;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class UserServiceSupport {
+public class UserSupport {
 
     private final UserRepository userRepository;
 

@@ -1,16 +1,6 @@
 package com.black.mulberry.rest.exceptionhandling;
 
-import com.black.mulberry.core.exception.AuthenticatedException;
-import com.black.mulberry.core.exception.CategoryNotFoundException;
-import com.black.mulberry.core.exception.CategoryParentIsNotDeletedException;
-import com.black.mulberry.core.exception.CategoryParentNotFoundException;
-import com.black.mulberry.core.exception.CategoryProductIsNotEmptyException;
-import com.black.mulberry.core.exception.ProductCommentNotExistException;
-import com.black.mulberry.core.exception.ProductNotFoundException;
-import com.black.mulberry.core.exception.ProductRatingNotExistException;
-import com.black.mulberry.core.exception.RepeatUsersException;
-import com.black.mulberry.core.exception.UserEmailConflictException;
-import com.black.mulberry.core.exception.UserNotFoundException;
+import com.black.mulberry.core.exception.*;
 import com.black.mulberry.data.transfer.response.RestErrorDto;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -23,9 +13,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(value = {CategoryNotFoundException.class, ProductRatingNotExistException.class,
-            ProductNotFoundException.class, ProductCommentNotExistException.class, UserNotFoundException.class,
-            CategoryParentNotFoundException.class})
+    @ExceptionHandler(value = {
+            CategoryNotFoundException.class,
+            ProductRatingNotExistException.class,
+            ProductNotFoundException.class,
+            ProductCommentNotExistException.class,
+            UserNotFoundException.class,
+            CategoryParentNotFoundException.class,
+            FileNotExistException.class,
+            OrderCancelNotFoundException.class,
+            OrderNotFoundException.class,
+            PaymentNotFoundException.class,
+    })
     public ResponseEntity<Object> handleEntityNotFoundException(Exception ex, WebRequest request) {
         RestErrorDto restErrorDto = RestErrorDto.builder()
                 .statusCode(HttpStatus.NOT_FOUND.value())
@@ -35,8 +34,27 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = {
+            OrderCancelFailException.class,
+            OrderCompletedFailException.class,
+            OrderConfirmedFailException.class,
+            OrderOpenFailException.class,
+            PaymentOpenFailException.class,
+            PaymentPaidFailException.class,
+    })
+    public ResponseEntity<Object> handleFailedDependency(Exception ex, WebRequest request) {
+        RestErrorDto restErrorDto = RestErrorDto.builder()
+                .statusCode(HttpStatus.FAILED_DEPENDENCY.value())
+                .errorMessage(ex.getMessage())
+                .build();
+        return handleExceptionInternal(ex, restErrorDto, new HttpHeaders(), HttpStatus.CONFLICT, request);
+    }
+
+    @ExceptionHandler(value = {
             UserEmailConflictException.class,
-            RepeatUsersException.class
+            RepeatUsersException.class,
+            OrderConflictException.class,
+            PaymentConflictException.class,
+            ProductBasketNotExistException.class
     })
     public ResponseEntity<Object> handleConflict(Exception ex, WebRequest request) {
         RestErrorDto restErrorDto = RestErrorDto.builder()

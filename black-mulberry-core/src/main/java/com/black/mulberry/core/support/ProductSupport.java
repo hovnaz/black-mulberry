@@ -1,4 +1,4 @@
-package com.black.mulberry.core.service.support;
+package com.black.mulberry.core.support;
 
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.core.exception.ProductNotFoundException;
@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProductServiceSupport {
+public class ProductSupport {
 
     private final ProductRepository productRepository;
 
@@ -23,5 +23,9 @@ public class ProductServiceSupport {
             log.error("Product with id: {} not found", productId);
             throw new ProductNotFoundException("with id: " + productId + " NOT FOUND");
         }
+    }
+
+    public void ifPresentOrElseThrow(Product product) {
+        ifPresentOrElseThrow(product.getId());
     }
 }

@@ -39,7 +39,7 @@ public class ProductBasketEndpoint {
 
     @GetMapping("/amount")
     public ResponseEntity<BigDecimal> amount(@AuthenticationPrincipal CurrentUser currentUser) {
-        return ResponseEntity.ok(productBasketService.amountByUserId(currentUser.getId()));
+        return ResponseEntity.ok(productBasketService.actualAmountByUserId(currentUser.getId()));
     }
 
     @PutMapping
