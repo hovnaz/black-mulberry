@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
 @AllArgsConstructor
 @Data
 public class UserAuthRequest {
+
     @Email
     private String email;
     @Size(min = 5, max = 18, message = "password length is between 3-600")

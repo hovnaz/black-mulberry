@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Data
 public class ProductRequest {
-    private Long id;
+
     @NotBlank(message = "product's title can't be null or empty")
     private String title;
     @Min(1)
