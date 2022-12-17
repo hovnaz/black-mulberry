@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequiredArgsConstructor
 @Slf4j
@@ -19,13 +21,13 @@ public class UserEndpoint {
     private final AuthService authService;
 
     @GetMapping("/auth")
-    public ResponseEntity<?> userAuth(@RequestBody UserAuthRequest userAuthRequest) {
+    public ResponseEntity<?> userAuth(@Valid @RequestBody UserAuthRequest userAuthRequest) {
         UserAuthResponse auth = authService.auth(userAuthRequest);
         return ResponseEntity.ok(auth);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> userRegister(@RequestBody UserRegistrationRequest userRegistrationRequest) {
+    public ResponseEntity<?> userRegister(@Valid @RequestBody UserRegistrationRequest userRegistrationRequest) {
         UserRegistrationResponse register = authService.registration(userRegistrationRequest);
         return ResponseEntity.ok(register);
     }

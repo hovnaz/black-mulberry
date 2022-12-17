@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/v1/auth")
 @RequiredArgsConstructor
@@ -24,7 +26,7 @@ public class AuthController {
     }
     
     @PostMapping("/registration")
-    public String registration(@ModelAttribute UserRegistrationRequest userRegistrationRequest) {
+    public String registration(@Valid @ModelAttribute UserRegistrationRequest userRegistrationRequest) {
         authService.registration(userRegistrationRequest);
         return "redirect:/v1/auth/";
     }
