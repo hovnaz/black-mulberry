@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,7 +28,7 @@ public class CategoryParentEndpoint {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping
-    public ResponseEntity<?> saveCategoryParent(@RequestBody CategoryParentRequest categoryParentRequest) {
+    public ResponseEntity<?> saveCategoryParent(@Valid @RequestBody CategoryParentRequest categoryParentRequest) {
         return ResponseEntity.ok(categoryParentMapper.toResponse(categoryParentService.save(categoryParentRequest)));
     }
 
@@ -40,7 +41,7 @@ public class CategoryParentEndpoint {
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @PutMapping("/{id}")
-    public ResponseEntity<CategoryParentResponse> updateProduct(@PathVariable("id") long id, @RequestBody CategoryParentRequest categoryParentRequest) {
+    public ResponseEntity<CategoryParentResponse> updateProduct(@PathVariable("id") long id, @Valid @RequestBody CategoryParentRequest categoryParentRequest) {
         CategoryParent updatedCategoryParent = categoryParentService.update(id, categoryParentRequest);
         return ResponseEntity.ok(categoryParentMapper.toResponse(updatedCategoryParent));
     }

@@ -24,6 +24,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,7 @@ public class ProductController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/add")
-    public String addProduct(@ModelAttribute ProductRequest productRequest,
+    public String addProduct(@Valid @ModelAttribute ProductRequest productRequest,
                              @RequestParam(value = "image") MultipartFile file,
                              @AuthenticationPrincipal CurrentUser currentUser) {
         String fileName = productService.saveImage(file);
@@ -91,7 +92,7 @@ public class ProductController {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/update/{id}")
-    public String updateProduct(@ModelAttribute ProductRequest productRequest,
+    public String updateProduct(@Valid @ModelAttribute ProductRequest productRequest,
                                 @AuthenticationPrincipal CurrentUser currentUser,
                                 @RequestParam(value = "image") MultipartFile file,
                                 @PathVariable long id) {
@@ -120,7 +121,7 @@ public class ProductController {
     }
 
     @GetMapping("/search")
-    public String searchForProduct(@ModelAttribute ProductSearchRequest productSearchRequest, ModelMap modelMap){
+    public String searchForProduct(@Valid @ModelAttribute ProductSearchRequest productSearchRequest, ModelMap modelMap){
         List<Product> search = productSearchService.searchForProduct(productSearchRequest);
         String title = productSearchRequest.getTitle();
         modelMap.addAttribute("searchedProduct", search);
@@ -129,7 +130,7 @@ public class ProductController {
     }
 
     @GetMapping("/filter")
-    public String filterByPrice(@ModelAttribute ProductFilterRequest productFilterRequest, ModelMap modelMap){
+    public String filterByPrice(@Valid @ModelAttribute ProductFilterRequest productFilterRequest, ModelMap modelMap){
         List<Product> products = productSearchService.filterProductByPrice(productFilterRequest);
         long minPrice = productFilterRequest.getMinPrice();
         long maxPrice  = productFilterRequest.getMinPrice();

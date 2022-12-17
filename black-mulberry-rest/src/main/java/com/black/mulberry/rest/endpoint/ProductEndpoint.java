@@ -81,7 +81,7 @@ public class ProductEndpoint {
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping
-    public ResponseEntity<?> saveProduct(@RequestBody ProductRequest productRequest, @AuthenticationPrincipal CurrentUser currentUser) {
+    public ResponseEntity<?> saveProduct(@Valid @RequestBody ProductRequest productRequest, @AuthenticationPrincipal CurrentUser currentUser) {
         return ResponseEntity.ok(productMapper.toResponse(productService.save(productRequest, currentUser.getId())));
     }
 
@@ -94,7 +94,7 @@ public class ProductEndpoint {
 
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}")
-    public ResponseEntity<ProductResponse> updateProduct(@PathVariable("id") long id, @RequestBody ProductRequest productRequest,
+    public ResponseEntity<ProductResponse> updateProduct(@PathVariable("id") long id, @Valid @RequestBody ProductRequest productRequest,
                                                          @AuthenticationPrincipal CurrentUser currentUser) {
         Product updatedProduct = productService.update(id, currentUser.getId(), productRequest);
         return ResponseEntity.ok(productMapper.toResponse(updatedProduct));
