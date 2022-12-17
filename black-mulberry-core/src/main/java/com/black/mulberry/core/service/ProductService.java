@@ -2,6 +2,7 @@ package com.black.mulberry.core.service;
 
 import com.black.mulberry.core.entity.Product;
 import com.black.mulberry.data.transfer.request.ProductRequest;
+import com.black.mulberry.data.transfer.request.ProductFilterRequest;
 import com.black.mulberry.data.transfer.response.ProductResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
@@ -81,6 +82,7 @@ public interface ProductService {
     String saveImage(MultipartFile file);
 
     long countAll();
+    long countAllByCategoryId(long categoryProductId);
 
     long countAllByUserId(long userId);
 

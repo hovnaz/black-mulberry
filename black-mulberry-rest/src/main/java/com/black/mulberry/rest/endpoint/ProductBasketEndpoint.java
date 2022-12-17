@@ -10,14 +10,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.math.BigDecimal;
@@ -31,15 +24,15 @@ public class ProductBasketEndpoint {
 
     private final ProductBasketService productBasketService;
 
-    @GetMapping
+    @GetMapping("/actual/list")
     public ResponseEntity<List<ProductBasketItemResponse>> findAll(@PageableDefault Pageable pageable,
                                                                    @AuthenticationPrincipal CurrentUser currentUser) {
         return ResponseEntity.ok(productBasketService.findAllByActual(currentUser.getId(), pageable));
     }
 
-    @GetMapping
+    @GetMapping("/amount")
     public ResponseEntity<BigDecimal> amount(@AuthenticationPrincipal CurrentUser currentUser) {
-        return ResponseEntity.ok(productBasketService.amountByUserId(currentUser.getId()));
+        return ResponseEntity.ok(productBasketService.actualAmountByUserId(currentUser.getId()));
     }
 
     @PutMapping

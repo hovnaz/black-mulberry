@@ -41,7 +41,7 @@ public class MapUtil {
         Map<String, Object> map = new HashMap<>();
         List<ProductBasketItemResponse> allByActual = productBasketService.findAllByActual(userId, pageable);
         map.put("products", allByActual);
-        map.put("amount", productBasketService.amountByUserId(userId));
+        map.put("amount", productBasketService.actualAmountByUserId(userId));
         map.put("isEmptyPage", allByActual.isEmpty());
         return map;
     }
