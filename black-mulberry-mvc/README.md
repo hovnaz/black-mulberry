@@ -1,28 +1,26 @@
-<h1 align="center">Black Mulberry Mvc module</h1>
-<p align="center">
-<br>
-  <i>This module is for client</i>
-  <br>
-</p>
-<hr>
+# Black Mulberry Mvc module
+
+This module is for the client.
+
+---
 
 ## Property settings
 
-- port: 8080
+- Port: `8080`
 
 ### Module structure
 
-- config
-- controller
-- security
-- service
+- `config`
+- `controller`
+- `security`
+- `service`
 
 ### Pages
 
-<!-- TOC -->
-  * [login registration](http://localhost:8080/auth)
-<!-- TOC -->
+- [Login Registration](http://localhost:8080/auth)
 
-## Url website
+---
+
+## URL website
 
 [http://localhost:8080/](http://localhost:8080/)
