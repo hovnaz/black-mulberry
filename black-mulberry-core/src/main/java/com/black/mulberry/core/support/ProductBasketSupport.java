@@ -11,18 +11,26 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * The ProductBasketSupport class provides methods for managing and retrieving product baskets.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class ProductBasketSupport {
 
     private final UserService userService;
-    private final UserSupport userSupport;
     private final ProductBasketRepository productBasketRepository;
     private final ProductBasketItemRepository productBasketItemRepository;
 
+    /**
+     * Finds the actual product basket for a given user, or creates one if it doesn't exist.
+     *
+     * @param userId the ID of the user to find the basket for
+     * @return the actual basket for the user
+     */
     public ProductBasket findActualBasketOrCreate(long userId) {
-        log.info("find actual basket or create by user id: {}", userId);
+        log.info("Finding actual basket or creating one for user ID {}", userId);
         User user = userService.findById(userId);
         Optional<ProductBasket> basketOptional = productBasketRepository.findByUserIdAndIsActualTrue(userId);
         if (basketOptional.isEmpty()) {
@@ -30,13 +38,19 @@ public class ProductBasketSupport {
                     .isActual(true)
                     .user(user)
                     .build();
-            log.info("find and create actual basket ");
+            log.info("Creating actual basket for user ID {}", userId);
             return productBasketRepository.save(productBasketOptional);
         }
-        log.info("find actual basket by user id: {}", userId);
+        log.info("Finding actual basket for user ID {}", userId);
         return basketOptional.get();
     }
 
+    /**
+     * Checks if a given product basket is empty.
+     *
+     * @param basketId the ID of the basket to check
+     * @return true if the basket is empty, false otherwise
+     */
     public boolean isEmpty(long basketId) {
         return productBasketItemRepository.countAllByProductBasketId(basketId) == 0;
     }
