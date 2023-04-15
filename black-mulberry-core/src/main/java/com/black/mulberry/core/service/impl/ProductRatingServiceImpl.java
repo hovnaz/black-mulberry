@@ -105,7 +105,7 @@ public class ProductRatingServiceImpl implements ProductRatingService {
     }
 
     @Override
-    public long canselRating(long userId, long productId) {
+    public long cancelRating(long userId, long productId) {
         log.info("Request cansel rating with user id: {} under product id: {}", userId, productId);
         userService.findById(userId);
         productService.findById(productId);

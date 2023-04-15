@@ -87,6 +87,6 @@ public class ProductRatingEndpoint {
     public ResponseEntity<Long> canselRate(
             @RequestParam("product_id") long productId,
             @AuthenticationPrincipal CurrentUser currentUser) {
-        return ResponseEntity.ok(productRatingService.canselRating(currentUser.getId(), productId));
+        return ResponseEntity.ok(productRatingService.cancelRating(currentUser.getId(), productId));
     }
 }

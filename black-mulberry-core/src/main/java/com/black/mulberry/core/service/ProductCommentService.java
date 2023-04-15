@@ -8,6 +8,9 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * The ProductCommentService interface provides methods to manage product comments.
+ */
 public interface ProductCommentService {
 
     /**

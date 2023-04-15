@@ -1,10 +1,16 @@
 package com.black.mulberry.core.service;
 
 /**
- * уsing the method sendEmail() of this interface,
- * we send an email to the user that you are registered.
+ * Provides methods for sending emails.
  */
 public interface MailService {
 
+    /**
+     * Sends an email to the specified email address.
+     *
+     * @param to      the email address of the recipient
+     * @param subject the subject of the email
+     * @param text    the content of the email
+     */
     void sendEmail(String to, String subject, String text);
 }

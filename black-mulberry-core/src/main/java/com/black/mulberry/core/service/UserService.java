@@ -6,44 +6,47 @@ import com.black.mulberry.data.transfer.response.UserResponse;
 
 import java.util.List;
 
+/**
+ * The UserService interface provides methods for managing and retrieving users.
+ */
 public interface UserService {
 
     /**
-     * Change of personal data
-     * Except password, phone number and email
+     * Updates the personal data of a user, except for the password, phone number, and email.
      *
-     * @param userRequest
-     * @return UserResponse
+     * @param userRequest the updated user data
+     * @param userId      the ID of the user to update
+     * @return the updated user
      */
     User update(final UserUpdateRequest userRequest, final long userId);
 
     /**
-     * Remove user from database
+     * Removes a user from the database by their ID.
      *
-     * @param id "user id"
+     * @param id the ID of the user to delete
      */
     void deleteById(final long id);
 
     /**
-     * Find user by id
+     * Finds a user by their ID.
      *
-     * @param id "user id"
-     * @return UserResponse
+     * @param id the ID of the user to find
+     * @return the found user, or null if it doesn't exist
      */
     User findById(final long id);
 
     /**
-     * Find user by email
+     * Finds a user by their email address.
      *
-     * @param email
-     * @return User
+     * @param email the email address of the user to find
+     * @return the found user, or null if it doesn't exist
      */
     User findByEmail(final String email);
 
     /**
-     * Find all user list from database
+     * Finds all users in the database.
      *
-     * @return List of UserResponse
+     * @return the list of all users
      */
     List<UserResponse> findAll();
 }
