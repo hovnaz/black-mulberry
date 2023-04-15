@@ -1,30 +1,22 @@
-<h1 align="center">Black Mulberry Rest module</h1>
-<p align="center">
-<br>
-  <i>This module is for rest API</i>
-  <br>
-</p>
-<hr>
+# Black Mulberry Rest module
 
-## Property settings
+This module provides a REST API for the Black Mulberry platform.
 
-- context path: /api
-- port: 8000
+---
 
-### Module structure
+## Property Settings
 
-- config
-- endpoint
-- security
+- Context Path: `/api`
+- Port: `8000`
 
-## devtools
+### Module Structure
 
-[Swagger](http://localhost:8000/api/swagger-ui/) - documentation API
+- `config`
+- `endpoint`
+- `security`
 
-```
-http://localhost:8000/api/swagger-ui/
-```
+---
 
-## Url website
+## Devtools
 
-[http://localhost:8000/api/](http://localhost:8000/api/)
+[Swagger](http://localhost:8000/api/swagger-ui/) - API documentation

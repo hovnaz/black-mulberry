@@ -8,64 +8,92 @@ import org.springframework.data.domain.Pageable;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * The ProductBasketService interface provides methods to manage product baskets.
+ */
 public interface ProductBasketService {
 
     /**
-     * add to actual basket product
-     * if not found
+     * Adds a new product to the user's basket or updates its quantity if already present.
      *
-     * @param productBasketItemRequest if
-     * @param userId                   from user id
-     * @return added item
+     * @param productBasketItemRequest the product to add or update.
+     * @param userId                   the id of the user.
+     * @return the added or updated item.
      */
     ProductBasketItemResponse add(ProductBasketItemRequest productBasketItemRequest, long userId);
 
     /**
-     * remove the product from the cart
+     * Removes a product from the user's basket.
      *
-     * @param userId    by id
-     * @param productId by id
+     * @param userId    the id of the user.
+     * @param productId the id of the product to remove.
      */
     void cancelByProductId(long userId, long productId);
 
+    /**
+     * Returns a paginated list of all products in the user's actual basket.
+     *
+     * @param userId   the id of the user.
+     * @param pageable the pageable information.
+     * @return the list of products.
+     */
     List<ProductBasketItemResponse> findAllByActual(long userId, Pageable pageable);
 
+    /**
+     * Finds the user's actual basket.
+     *
+     * @param userId the id of the user.
+     * @return the actual basket.
+     */
     ProductBasket findBasketByActual(long userId);
 
+    /**
+     * Finds a basket by id and user id.
+     *
+     * @param basketId the id of the basket to find.
+     * @param userId   the id of the user.
+     * @return the found basket.
+     */
     ProductBasket findByIdAndUserId(long basketId, long userId);
 
+    /**
+     * Counts the number of products in the user's basket.
+     *
+     * @param userId the id of the user.
+     * @return the number of products.
+     */
     long countAllByUserId(long userId);
 
     /**
-     * remove the all products from the cart
+     * Removes all products from the user's basket.
      *
-     * @param userId by id
+     * @param userId the id of the user.
      */
     void clear(long userId);
 
     /**
-     * update item quantity
+     * Updates the quantity of a product in the user's basket.
      *
-     * @param productBasketItemRequest
-     * @param userId
-     * @return new updated item
+     * @param productBasketItemRequest the updated product.
+     * @param userId                   the id of the user.
+     * @return the updated product.
      */
     ProductBasketItemResponse update(ProductBasketItemRequest productBasketItemRequest, long userId);
 
     /**
-     * total amount actual basket
+     * Calculates the total amount of the user's actual basket.
      *
-     * @param userId by id
-     * @return amount all products
+     * @param userId the id of the user.
+     * @return the total amount.
      */
     BigDecimal actualAmountByUserId(long userId);
 
     /**
-     * total amount basket by id
+     * Calculates the total amount of a specific basket for a user.
      *
-     * @param userId
-     * @param basketId sum only this basket total amount
-     * @return amount all products
+     * @param userId   the id of the user.
+     * @param basketId the id of the basket.
+     * @return the total amount.
      */
     BigDecimal amountByUserIdAndBasketId(long userId, long basketId);
 }

@@ -6,6 +6,9 @@ import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
+/**
+ * The ProductRatingService interface provides methods to manage product ratings.
+ */
 public interface ProductRatingService {
 
     /**
@@ -77,18 +80,17 @@ public interface ProductRatingService {
     ProductRatingResponse rate(ProductRatingRequest productRatingRequest, long userId);
 
     /**
-     * cansel rating under product
+     * cancel rating under product
      *
      * @param userId    for to be isolated from other users' data
      * @param productId for find by id
      * @return canceled rating id
      */
-    long canselRating(long userId, long productId);
+    long cancelRating(long userId, long productId);
 
     /**
-     *
      * @param productId find product id
-     * @param userId for to be isolated from other users' data
+     * @param userId    for to be isolated from other users' data
      * @return product rating by rated user
      */
     int findRateByProductIdUserId(long productId, long userId);

@@ -9,58 +9,62 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * This interface represents the repository for ProductRating entities,
+ * extending the JpaRepository interface from Spring Data JPA.
+ */
 public interface ProductRatingRepository extends JpaRepository<ProductRating, Long> {
 
     /**
-     * find all product ratings only to the user
+     * Finds all ProductRating entities for a user with the specified user ID, with pagination.
      *
-     * @param userId   for find by user id
-     * @param pageable for pagination
-     * @return List<ProductRating>
+     * @param userId   the ID of the user to search for
+     * @param pageable the pagination criteria
+     * @return a List containing all ProductRating entities for the specified user, with pagination
      * @see Pageable
      */
     List<ProductRating> findAllByUserId(long userId, Pageable pageable);
 
     /**
-     * count all rating only to the user
+     * Counts all ProductRating entities for a user with the specified user ID.
      *
-     * @param userId for find by user id
-     * @return long
+     * @param userId the ID of the user to search for
+     * @return the total number of ProductRating entities for the specified user
      */
     long countAllByUserId(long userId);
 
     /**
-     * find all product ratings only to the product
+     * Finds all ProductRating entities for a product with the specified product ID, with pagination.
      *
-     * @param productId for find by product id
-     * @param pageable  for pagination
-     * @return List<ProductRating>
+     * @param productId the ID of the product to search for
+     * @param pageable  the pagination criteria
+     * @return a List containing all ProductRating entities for the specified product, with pagination
      * @see Pageable
      */
     List<ProductRating> findAllByProductId(long productId, Pageable pageable);
 
     /**
-     * count all rating only to the product
+     * Counts all ProductRating entities for a product with the specified product ID.
      *
-     * @param productId for find by user id
-     * @return long
+     * @param productId the ID of the product to search for
+     * @return the total number of ProductRating entities for the specified product
      */
     long countAllByProductId(long productId);
 
     /**
-     * find rating by user id and product id
+     * Finds a ProductRating entity with the specified user ID and product ID.
      *
-     * @param userId    for find by user id
-     * @param productId for find product id
-     * @return Optional<ProductRating>
+     * @param userId    the ID of the user to search for
+     * @param productId the ID of the product to search for
+     * @return an Optional containing the ProductRating entity with the specified user ID and product ID, or an empty Optional if no matching entity is found
      */
     Optional<ProductRating> findByUserIdAndProductId(long userId, long productId);
 
     /**
-     * rating average sum for product
+     * Calculates the average rating for a product with the specified product ID.
      *
-     * @param productId for find by id
-     * @return int
+     * @param productId the ID of the product to calculate the average rating for
+     * @return the average rating for the specified product, or 0 if no rating exists for the product
      */
     @Query(value = "select coalesce(AVG(rating), 0) FROM product_rating where product_id = :productId", nativeQuery = true)
     Integer avgProduct(@Param("productId") long productId);

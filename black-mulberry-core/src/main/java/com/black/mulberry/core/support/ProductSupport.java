@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * The ProductSupport class provides methods for checking product-related information.
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -16,15 +19,27 @@ public class ProductSupport {
 
     private final ProductRepository productRepository;
 
+    /**
+     * Checks if a product with a given ID exists, and throws an exception if it doesn't.
+     *
+     * @param productId the ID of the product to check
+     * @throws ProductNotFoundException if a product with the given ID doesn't exist
+     */
     public void ifPresentOrElseThrow(long productId) {
-        log.info("Find by product id: {}", productId);
+        log.info("Finding product by ID: {}", productId);
         Optional<Product> productOptional = productRepository.findById(productId);
         if (productOptional.isEmpty()) {
-            log.error("Product with id: {} not found", productId);
-            throw new ProductNotFoundException("with id: " + productId + " NOT FOUND");
+            log.error("Product with ID {} not found", productId);
+            throw new ProductNotFoundException("Product with ID " + productId + " not found");
         }
     }
 
+    /**
+     * Checks if a product exists, and throws an exception if it doesn't.
+     *
+     * @param product the product to check
+     * @throws ProductNotFoundException if the product doesn't exist
+     */
     public void ifPresentOrElseThrow(Product product) {
         ifPresentOrElseThrow(product.getId());
     }
