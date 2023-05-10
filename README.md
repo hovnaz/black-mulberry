@@ -31,7 +31,7 @@ Java, Spring, Flyway, PostgreSQL, Docker, and other technologies.
 
 To run the project with Docker Compose, use the following command in terminal:
 
--     docker-compose up -d
+     docker-compose up -d
 
 ## Website URLs
 
