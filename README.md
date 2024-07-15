@@ -24,7 +24,6 @@ Java, Spring, Flyway, PostgreSQL, Docker, and other technologies.
 
 3. Build the Maven project:
 
-
 4. Run the `Mvc` project on port 8080:
 
 ## Docker Compose Run
